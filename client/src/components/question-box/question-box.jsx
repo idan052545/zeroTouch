@@ -24,7 +24,7 @@ const QuestionBox = ({ label, name, isDropdown, handleChange }) => (
         labelText={label}
         handleChange={handleChange}
         name={name}
-        list={["all", "b", "c", "d"]}
+        list={["בחר", "b", "c", "d"]}
       />
     )}
   </QuestionBoxWrapper>

@@ -11,6 +11,9 @@ const initialState = {
   numOfUsers: 0,
 };
 
+const regexExp =
+  /^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$/gi; //ip validate
+
 const QuestionsPage = () => {
   const [values, setValues] = useState(initialState);
 
@@ -24,9 +27,6 @@ const QuestionsPage = () => {
   }, [curQue]);
 
   const handleChange = (e) => {
-    console.log(e.target.name);
-    console.log(e.target.value);
-
     const name = e.target.name;
     const value = e.target.value;
 
@@ -43,6 +43,12 @@ const QuestionsPage = () => {
         break;
       case 1:
         check = IP;
+        //check if id in correct format
+        if (!regexExp.test(check)) {
+          toast.error("Please fill out the field in a correct IP format ");
+          check = "";
+        }
+
         break;
       case 2:
         check = siteNumber;
