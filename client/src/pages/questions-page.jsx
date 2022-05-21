@@ -37,30 +37,41 @@ const QuestionsPage = () => {
     e.preventDefault();
     const { network, IP, siteNumber, numOfUsers } = values;
     let check = "";
+    let valid = true;
     switch (curQue) {
       case 0:
         check = network;
+        if (!check) {
+          toast.error("בבקשה מלא את השדה");
+          valid = false;
+        }
         break;
       case 1:
         check = IP;
         //check if id in correct format
         if (!regexExp.test(check)) {
-          toast.error("Please fill out the field in a correct IP format ");
-          check = "";
+          toast.error("בבקשה מלא את השדה בפורמט נכון ");
+          valid = false;
         }
-
         break;
       case 2:
         check = siteNumber;
+        if (!check) {
+          toast.error("בבקשה מלא את השדה");
+          valid = false;
+        }
         break;
       case 3:
         check = numOfUsers;
+        if (isNaN(check)) {
+          toast.error("בבקשה הכנס מספר ");
+          check = "";
+          valid = false;
+        }
         break;
+      default:
     }
-
-    if (!check) {
-      toast.error("Please fill out the field");
-    } else {
+    if (valid) {
       setCurQue(curQue + 1);
     }
   };
