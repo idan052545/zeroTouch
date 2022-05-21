@@ -1,7 +1,6 @@
 import main from "../assets/images/main.svg";
 import HomePageWrapper from "../assets/wrappers/homePage-wrapper";
 import { Link } from "react-router-dom";
-import Logo from "../components/logo/logo";
 const HomePage = () => {
   return (
     <HomePageWrapper>
@@ -18,7 +17,7 @@ const HomePage = () => {
             crucifix heirloom meggings bicycle rights.
           </p>
           <Link to="/questions" className="btn btn-hero">
-            Start
+            התחל
           </Link>
         </div>
         <img src={main} alt="job hunt" className="img main-img" />

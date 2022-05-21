@@ -13,6 +13,7 @@ const QuestionBoxWrapper = styled.div`
     appearance: button;
     align-items: center;
     justify-content: center;
+    opacity: 0.8;
   }
 
   .btn svg {
@@ -46,6 +47,8 @@ const QuestionBoxWrapper = styled.div`
 
   .btn:hover {
     transform: scale(0.98);
+    transition: opacity 0.5s;
+    opacity: 1;
   }
   .form {
     width: 70%;
