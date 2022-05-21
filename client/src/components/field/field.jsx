@@ -7,7 +7,7 @@ const Field = () => {
   return (
     <FieldWrapper>
       <header>
-        <div className="main-icon">{"Simantov"}</div>
+        <div className="main-icon">{"S"}</div>
         <div className="info">
           <h5>{"Simantov"}</h5>
           <p>{"Simantov"}</p>
@@ -21,9 +21,9 @@ const Field = () => {
         </div>
         <footer>
           <div className="actions">
-            <div to="/" className="btn edit-btn">
+            <Link to="/" className="btn edit-btn">
               Edit
-            </div>
+            </Link>
             <button type="button" className="btn delete-btn">
               delete
             </button>
