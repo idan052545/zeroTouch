@@ -11,11 +11,7 @@ const HomePage = () => {
           <h1>
             ZERO <span>TOUCH</span>
           </h1>
-          <p>
-            Crucifix narwhal street art asymmetrical, humblebrag tote bag pop-up
-            fixie raclette taxidermy craft beer. Brunch bitters synth, VHS
-            crucifix heirloom meggings bicycle rights.
-          </p>
+          <p>נשמר פה מקום לטקסט בהמשך</p>
           <Link to="/questions" className="btn btn-hero">
             התחל
           </Link>

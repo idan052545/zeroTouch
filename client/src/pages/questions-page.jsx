@@ -3,6 +3,9 @@ import QuestionBox from "../components/question-box/question-box";
 import CustomButton from "../components/custom-button/custom-button";
 import QuestionBoxWrapper from "../assets/wrappers/questionBox-wrapper";
 import { toast } from "react-toastify";
+import { useDispatch } from "react-redux";
+import { signInStart } from "../redux/user/user-actions";
+import { useNavigate } from "react-router-dom";
 
 const initialState = {
   network: "",
@@ -15,16 +18,18 @@ const regexExp =
   /^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$/gi; //ip validate
 
 const QuestionsPage = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [values, setValues] = useState(initialState);
 
   const numOfQue = 4;
   const [curQue, setCurQue] = useState(0);
-  useEffect(() => {
+  /* useEffect(() => {
     if (curQue >= numOfQue) {
       setCurQue(0);
       setValues(initialState);
     }
-  }, [curQue]);
+  }, [curQue]);*/
 
   const handleChange = (e) => {
     const name = e.target.name;
@@ -33,7 +38,7 @@ const QuestionsPage = () => {
     setValues({ ...values, [name]: value });
   };
 
-  const onSubmit = (e) => {
+  const onSubmit = async (e) => {
     e.preventDefault();
     const { network, IP, siteNumber, numOfUsers } = values;
     let check = "";
@@ -73,6 +78,10 @@ const QuestionsPage = () => {
     }
     if (valid) {
       setCurQue(curQue + 1);
+      if (curQue >= numOfQue - 1) {
+        dispatch(signInStart(values));
+        navigate("/user");
+      }
     }
   };
 

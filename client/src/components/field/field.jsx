@@ -3,7 +3,7 @@ import { BiChevronRight } from "react-icons/bi";
 import { Link } from "react-router-dom";
 import FieldInfo from "../fieldInfo/fieldInfo";
 import FieldWrapper from "../../assets/wrappers/field-wrapper";
-const Field = ({ status }) => {
+const Field = ({ status, label, value }) => {
   const INITIAL_STATE = {
     hidden: true,
   };
@@ -13,17 +13,16 @@ const Field = ({ status }) => {
   return (
     <FieldWrapper onClick={() => setHidden(!hidden)}>
       <header className={`${!hidden ? "hidden" : ""}`}>
-        <div className="main-icon">{"S"}</div>
+        <div className="main-icon">{label ? label.charAt(0) : ""}</div>
         <div className="info">
-          <h5>{"Simantov"}</h5>
+          <h5>{label}</h5>
           <p>{"Simantov"}</p>
         </div>
       </header>
       <div className="content">
         <div className="content-center">
-          <FieldInfo icon={<BiChevronRight />} text="Idan" />
+          <FieldInfo icon={<BiChevronRight />} text={value} />
           <div className={`status ${status}`}>
-            {" "}
             {status === "fixed" ? " קשיח" : ""}
           </div>
         </div>
