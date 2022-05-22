@@ -110,7 +110,7 @@ const QuestionsPage = () => {
           onClick={onSubmit}
           className="btn btn-block"
         >
-          NEXT
+          המשך
         </CustomButton>
       </form>
     </QuestionBoxWrapper>

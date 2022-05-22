@@ -1,11 +1,28 @@
 import styled from "styled-components";
 
 const FieldWrapper = styled.article`
+  @media (min-width: 992px) {
+    width: 22vw;
+    display: flex;
+    flex-direction: column;
+    height: 250px;
+    align-items: center;
+    position: relative;
+  }
+  @media (max-width: 992px) {
+    width: 22vw;
+    display: flex;
+    flex-direction: column;
+    height: 250px;
+    align-items: center;
+    position: relative;
+  }
   background: var(--white);
   border-radius: var(--borderRadius);
   display: grid;
   grid-template-rows: 1fr auto;
   box-shadow: var(--shadow-2);
+
   header {
     padding: 1rem 1.5rem;
     border-bottom: 1px solid var(--grey-100);
@@ -21,7 +38,7 @@ const FieldWrapper = styled.article`
     height: 60px;
     display: grid;
     place-items: center;
-    background: var(--primary-500);
+    background: #dbaa18;
     border-radius: var(--borderRadius);
     font-size: 1.5rem;
     font-weight: 700;
@@ -44,14 +61,7 @@ const FieldWrapper = styled.article`
     background: #fcefc7;
     color: #e9b949;
   }
-  .interview {
-    background: #e0e8f9;
-    color: #647acb;
-  }
-  .declined {
-    color: #d66a6a;
-    background: #ffeeee;
-  }
+
   .content {
     padding: 1rem 1.5rem;
   }
@@ -77,6 +87,18 @@ const FieldWrapper = styled.article`
     width: 100px;
     height: 30px;
     margin-top: 0.5rem;
+    @media (max-width: 992px) {
+      width: 50px;
+      height: 30px;
+    }
+  }
+  .editable {
+    background: #e0e8f9;
+    color: #647acb;
+  }
+  .fixed {
+    color: #d66a6a;
+    background: #ffeeee;
   }
   footer {
     margin-top: 1rem;
@@ -91,13 +113,25 @@ const FieldWrapper = styled.article`
     color: var(--green-dark);
     background: var(--green-light);
     margin-right: 0.5rem;
+    transform: scale(0.98);
+    transition: opacity 0.5s;
   }
   .delete-btn {
     color: var(--red-dark);
     background: var(--red-light);
+    transform: scale(0.98);
+    transition: opacity 0.5s;
+  }
+  .hidden {
+    opacity: 0.6;
   }
   &:hover .actions {
     visibility: visible;
+  }
+  &:hover {
+    transform: scale(0.98);
+    transition: opacity 0.5s;
+    opacity: 0.8;
   }
 `;
 

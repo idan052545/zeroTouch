@@ -1,12 +1,18 @@
-import React from "react";
-import { FaLocationArrow, FaBriefcase, FaCalendarAlt } from "react-icons/fa";
+import React, { useState } from "react";
+import { BiChevronRight } from "react-icons/bi";
 import { Link } from "react-router-dom";
 import FieldInfo from "../fieldInfo/fieldInfo";
 import FieldWrapper from "../../assets/wrappers/field-wrapper";
-const Field = () => {
+const Field = ({ status }) => {
+  const INITIAL_STATE = {
+    hidden: true,
+  };
+
+  const [hidden, setHidden] = useState(INITIAL_STATE);
+
   return (
-    <FieldWrapper>
-      <header>
+    <FieldWrapper onClick={() => setHidden(!hidden)}>
+      <header className={`${!hidden ? "hidden" : ""}`}>
         <div className="main-icon">{"S"}</div>
         <div className="info">
           <h5>{"Simantov"}</h5>
@@ -15,18 +21,24 @@ const Field = () => {
       </header>
       <div className="content">
         <div className="content-center">
-          <FieldInfo icon={<FaLocationArrow />} text="Idan" />
-          <FieldInfo icon={<FaCalendarAlt />} text="Siman" />
-          <FieldInfo icon={<FaBriefcase />} text="Tov" />
+          <FieldInfo icon={<BiChevronRight />} text="Idan" />
+          <div className={`status ${status}`}>
+            {" "}
+            {status === "fixed" ? " קשיח" : ""}
+          </div>
         </div>
         <footer>
           <div className="actions">
-            <Link to="/" className="btn edit-btn">
-              Edit
-            </Link>
-            <button type="button" className="btn delete-btn">
-              delete
-            </button>
+            {status !== "fixed" && !hidden ? (
+              <Link to="/" className="btn edit-btn">
+                ערוך
+              </Link>
+            ) : null}
+            {status !== "fixed" && !hidden ? (
+              <button type="button" className="btn delete-btn">
+                מחק
+              </button>
+            ) : null}
           </div>
         </footer>
       </div>
