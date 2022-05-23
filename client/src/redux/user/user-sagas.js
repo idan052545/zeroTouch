@@ -8,6 +8,8 @@ import {
   signOutSuccess,
   signUpFailure,
   signUpSuccess,
+  updateSuccess,
+  updateFailure,
 } from "./user-actions";
 
 export function* getSnapshotFromUserAuth(userAuth) {
@@ -60,6 +62,15 @@ export function* signUp(payload) {
     yield put(signUpFailure(error));
   }
 }
+export function* updateUser(payload) {
+  try {
+    //update the user at the server
+
+    yield put(updateSuccess(payload));
+  } catch (error) {
+    yield put(updateFailure(error));
+  }
+}
 
 export function* onSignInStart() {
   yield takeLatest(UserActionTypes.SIGN_IN_START, signInWithCredentials);
@@ -77,11 +88,16 @@ export function* onSignUpStart() {
   yield takeLatest(UserActionTypes.SIGN_UP_START, signUp);
 }
 
+export function* onUpdateStart() {
+  yield takeLatest(UserActionTypes.UPDATE_START, updateUser);
+}
+
 export function* userSagas() {
   yield all([
     call(onSignInStart),
     call(onCheckUserSession),
     call(onSignOutStart),
     call(onSignUpStart),
+    call(onUpdateStart),
   ]);
 }

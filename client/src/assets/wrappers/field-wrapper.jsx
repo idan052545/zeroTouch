@@ -34,17 +34,20 @@ const FieldWrapper = styled.article`
     }
   }
   .main-icon {
-    width: 60px;
-    height: 60px;
     display: grid;
     place-items: center;
-    background: #dbaa18;
+    background: #eab619;
     border-radius: var(--borderRadius);
     font-size: 1.5rem;
     font-weight: 700;
     text-transform: uppercase;
     color: var(--white);
     margin-right: 2rem;
+    width: 90%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    margin-bottom: 5px;
   }
   .info {
     h5 {

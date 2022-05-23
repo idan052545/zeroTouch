@@ -1,27 +1,117 @@
 import React, { useState } from "react";
 import { BiChevronRight } from "react-icons/bi";
-import { Link } from "react-router-dom";
 import FieldInfo from "../fieldInfo/fieldInfo";
 import FieldWrapper from "../../assets/wrappers/field-wrapper";
-const Field = ({ status, label, value }) => {
-  const INITIAL_STATE = {
-    hidden: true,
+import DropdownList from "../dropdown-list/dropdown-list";
+import FormInput from "../form-input/form-input";
+import { selectCurrentUser } from "../../redux/user/user-selectors";
+import { useDispatch, useSelector } from "react-redux";
+import { updateStart } from "../../redux/user/user-actions";
+import { toast } from "react-toastify";
+
+const Field = ({ name, status, label, value, isDropdown, imageUrl }) => {
+  const [hidden, setHidden] = useState(true);
+  const [editMode, setEditMode] = useState(false);
+  const currentUser = useSelector(selectCurrentUser);
+  const [values, setValues] = useState(currentUser.payload);
+  const dispatch = useDispatch();
+
+  const regexExp =
+    /^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$/gi; //ip validate
+
+  const onSubmit = async (e) => {
+    e.preventDefault();
+    const { network, IP, siteNumber, numOfUsers } = values;
+    let check = "";
+    let valid = true;
+    switch (name) {
+      case "network":
+        check = network;
+        if (!check) {
+          toast.error("בבקשה מלא את השדה");
+          valid = false;
+        }
+        break;
+      case "IP":
+        check = IP;
+        //check if id in correct format
+        if (!regexExp.test(check)) {
+          toast.error("בבקשה מלא את השדה בפורמט נכון ");
+          valid = false;
+        }
+        break;
+      case "siteNumber":
+        check = siteNumber;
+        if (!check) {
+          toast.error("בבקשה מלא את השדה");
+          valid = false;
+        }
+        break;
+      case "numOfUsers":
+        check = numOfUsers;
+        if (isNaN(check)) {
+          toast.error("בבקשה הכנס מספר ");
+          check = "";
+          valid = false;
+        }
+        break;
+      default:
+    }
+    if (valid) {
+      dispatch(updateStart(values));
+      setEditMode(false);
+    }
   };
 
-  const [hidden, setHidden] = useState(INITIAL_STATE);
+  const handleChange = (e) => {
+    const name = e.target.name;
+    const value = e.target.value;
+    console.log(name);
+    console.log(value);
+
+    setValues({ ...values, [name]: value });
+  };
 
   return (
-    <FieldWrapper onClick={() => setHidden(!hidden)}>
+    <FieldWrapper
+      onClick={() => (editMode ? setHidden(false) : setHidden(!hidden))}
+    >
       <header className={`${!hidden ? "hidden" : ""}`}>
-        <div className="main-icon">{label ? label.charAt(0) : ""}</div>
+        <div
+          className="main-icon"
+          style={{
+            backgroundImage: `url(${imageUrl})`,
+          }}
+        ></div>
         <div className="info">
           <h5>{label}</h5>
-          <p>{"Simantov"}</p>
         </div>
       </header>
       <div className="content">
         <div className="content-center">
-          <FieldInfo icon={<BiChevronRight />} text={value} />
+          {editMode ? (
+            isDropdown ? (
+              <DropdownList
+                handleChange={handleChange}
+                labelText={value}
+                name={name}
+                list={["בחר", "b", "c", "d"]}
+              />
+            ) : (
+              <FormInput
+                type="text"
+                className="s form-input"
+                id={label}
+                name={name}
+                placeholder={value}
+                handleChange={handleChange}
+                required
+              />
+            )
+          ) : (
+            <FieldInfo icon={<BiChevronRight />} text={value} />
+          )}
+
           <div className={`status ${status}`}>
             {status === "fixed" ? " קשיח" : ""}
           </div>
@@ -29,13 +119,23 @@ const Field = ({ status, label, value }) => {
         <footer>
           <div className="actions">
             {status !== "fixed" && !hidden ? (
-              <Link to="/" className="btn edit-btn">
-                ערוך
-              </Link>
+              <button
+                type="submit"
+                className="btn edit-btn"
+                onClick={editMode ? onSubmit : () => setEditMode(true)}
+              >
+                {`${editMode ? "שמור שינויים" : "ערוך"}`}
+              </button>
             ) : null}
-            {status !== "fixed" && !hidden ? (
-              <button type="button" className="btn delete-btn">
-                מחק
+            {status !== "fixed" && !hidden && editMode ? (
+              <button
+                type="button"
+                className="btn delete-btn"
+                onClick={() => {
+                  if (editMode) setEditMode(false);
+                }}
+              >
+                {`${editMode ? "בטל עריכה" : "מחק"}`}
               </button>
             ) : null}
           </div>

@@ -44,3 +44,16 @@ export const signUpFailure = (error) => ({
   type: UserActionTypes.SIGN_UP_FAILURE,
   payload: error,
 });
+
+export const updateStart = (updatedUser) => ({
+  type: UserActionTypes.UPDATE_START,
+  payload: updatedUser,
+});
+export const updateSuccess = (updatedUser) => ({
+  type: UserActionTypes.UPDATE_SUCCESS,
+  payload: updatedUser,
+});
+export const updateFailure = (error) => ({
+  type: UserActionTypes.UPDATE_FAILURE,
+  payload: error,
+});
