@@ -170,8 +170,17 @@ ul {
   color: var(--primary-200);
   background: var(--primary-700);
 }
+.center {
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+}
 .btn-block {
-  width: 100%;
+  width: 30%;
+  position: relative;
 }
 .btn-hero {
   font-size: 1.25rem;

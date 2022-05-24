@@ -20,6 +20,10 @@ const FieldCollectionWrapper = styled.section`
       }
     }
   }
+  .btn-block {
+    margin-top: 100px;
+  }
+
   h2 {
     text-transform: none;
   }

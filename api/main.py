@@ -1,7 +1,7 @@
 # import os
 # import requests
 # from flask import Flask, json, request, jsonify
-# from dotenv import load_dotenvד
+# from dotenv import load_dotenv
 # from flask_cors import CORS
 # from mongo_client import mongo_client
 

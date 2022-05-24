@@ -5,7 +5,7 @@ const FieldWrapper = styled.article`
     width: 22vw;
     display: flex;
     flex-direction: column;
-    height: 250px;
+    height: 200px;
     align-items: center;
     position: relative;
   }
@@ -13,7 +13,7 @@ const FieldWrapper = styled.article`
     width: 22vw;
     display: flex;
     flex-direction: column;
-    height: 250px;
+    height: 200px;
     align-items: center;
     position: relative;
   }

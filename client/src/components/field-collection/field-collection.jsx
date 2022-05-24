@@ -39,6 +39,9 @@ const FieldCollection = () => {
           />
         </div>
       </div>
+      <button className="btn btn-close btn-reverse btn-block center">
+        קנפג
+      </button>
     </FieldCollectionWrapper>
   );
 };
