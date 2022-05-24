@@ -17,13 +17,13 @@ export function* getSnapshotFromUserAuth(userAuth) {
     //get the user from the server
     //const userRef = yield call(createUserProfileDocument, userAuth);
     //const userSnapshot = yield userRef.get();
-    yield put(signInSuccess({ id: userAuth.payload.IP, ...userAuth }));
+    yield put(signInSuccess({ id: userAuth.IP, ...userAuth }));
   } catch (error) {
     yield put(signInFailure(error));
   }
 }
 //: { network, IP, siteNumber, numOfUsers }
-export function* signInWithCredentials(payload) {
+export function* signInWithCredentials({ payload }) {
   try {
     //const { user } = yield auth.signInWithEmailAndPassword(email, password);
     yield getSnapshotFromUserAuth(payload);
