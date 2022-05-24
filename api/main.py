@@ -1,3 +1,6 @@
+"""
+high level support for doing this and that.
+"""
 import os
 import requests
 from flask import Flask, json, request, jsonify
@@ -5,7 +8,10 @@ from dotenv import load_dotenv
 from flask_cors import CORS
 from mongo_client import mongo_client
 
-load_dotenv(dotenv_path="./.env")
+# gallery = mongo_client.gallery
+# images_collection = gallery.images
+
+load_dotenv(dotenv_path="./.env.local")
 
 DEBUG = bool(os.environ.get("DEBUG", True))
 
@@ -13,18 +19,18 @@ DEBUG = bool(os.environ.get("DEBUG", True))
 app = Flask(__name__)
 CORS(app)
 
-# app.config["DEBUG"] = DEBUG
+app.config["DEBUG"] = DEBUG
 
 
-# @app.route("/")
-# def new_image():
-#     word = request.args.get("query")
-#     headers = {"Accept-Version": "v1", "Authorization": "Client-ID " }
-#     params = {"query": word}
-#     response = requests.get( headers=headers, params=params)
+@app.route("/new-image")
+def new_image():
+    """cool explain"""
+    word = request.args.get("query")
+    # headers = {"Accept-Version": "v1", "Authorization": "Client-ID " }
+    # params = {"query": word}
+    # response = requests.get(url= headers=headers, params=params)
 
-#     data = response.json()
-#     return data
+    return {"word": word}
 
 
 # @app.route("/images", methods=["GET", "POST"])

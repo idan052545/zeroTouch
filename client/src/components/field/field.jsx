@@ -13,7 +13,7 @@ const Field = ({ name, status, label, value, isDropdown, imageUrl }) => {
   const [hidden, setHidden] = useState(true);
   const [editMode, setEditMode] = useState(false);
   const currentUser = useSelector(selectCurrentUser);
-  const [values, setValues] = useState(currentUser.payload);
+  const [values, setValues] = useState(currentUser);
   const dispatch = useDispatch();
 
   const regexExp =

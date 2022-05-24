@@ -1,8 +1,11 @@
+"""
+high level support for doing this and that. 2
+"""
 import os
 from pymongo import MongoClient
 from dotenv import load_dotenv
 
-load_dotenv(dotenv_path="./.env")
+load_dotenv(dotenv_path="./.env.local")
 
 MONGO_URL = os.environ.get("MONGO_URL", "mongo")
 MONGO_USERNAME = os.environ.get("MONGO_USERNAME", "root")
@@ -16,7 +19,8 @@ mongo_client = MongoClient(
     port=MONGO_PORT,
 )
 
-print(MONGO_URL,MONGO_USERNAME,MONGO_PASSWORD,MONGO_PORT,mongo_client)
+print(MONGO_URL, MONGO_USERNAME, MONGO_PASSWORD, MONGO_PORT, mongo_client)
+
 # def insert_test_document():
 #     """Inserts sample document to the test_collection in the test db"""
 #     db = mongo_client.test

@@ -52,7 +52,7 @@ export function* signOut() {
   }
 }
 //: { network, IP, siteNumber, numOfUsers }
-export function* signUp(payload) {
+export function* signUp({ payload }) {
   try {
     //create the user at the server
     //const { user } = yield auth.createUserWithEmailAndPassword(email, password);
@@ -62,11 +62,11 @@ export function* signUp(payload) {
     yield put(signUpFailure(error));
   }
 }
-export function* updateUser(payload) {
+export function* updateUser({ payload }) {
   try {
     //update the user at the server
 
-    yield put(updateSuccess(payload));
+    yield put(updateSuccess({ ...payload }));
   } catch (error) {
     yield put(updateFailure(error));
   }
