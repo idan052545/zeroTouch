@@ -9,7 +9,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { updateStart } from "../../redux/user/user-actions";
 import { toast } from "react-toastify";
 
-const Field = ({ name, status, label, value, isDropdown, imageUrl }) => {
+const Field = ({ name, status, label, isDropdown, imageUrl }) => {
   const [hidden, setHidden] = useState(true);
   const [editMode, setEditMode] = useState(false);
   const currentUser = useSelector(selectCurrentUser);
@@ -67,9 +67,9 @@ const Field = ({ name, status, label, value, isDropdown, imageUrl }) => {
     const name = e.target.name;
     const value = e.target.value;
     console.log(name);
-    console.log(value);
+    console.log(values);
 
-    setValues({ ...values, [name]: value });
+    setValues({ ...currentUser, [name]: value });
   };
 
   return (
@@ -93,7 +93,7 @@ const Field = ({ name, status, label, value, isDropdown, imageUrl }) => {
             isDropdown ? (
               <DropdownList
                 handleChange={handleChange}
-                labelText={value}
+                labelText={currentUser[name]}
                 name={name}
                 list={["בחר", "b", "c", "d"]}
               />
@@ -103,13 +103,13 @@ const Field = ({ name, status, label, value, isDropdown, imageUrl }) => {
                 className="s form-input"
                 id={label}
                 name={name}
-                placeholder={value}
+                placeholder={currentUser[name]}
                 handleChange={handleChange}
                 required
               />
             )
           ) : (
-            <FieldInfo icon={<BiChevronRight />} text={value} />
+            <FieldInfo icon={<BiChevronRight />} text={currentUser[name]} />
           )}
 
           <div className={`status ${status}`}>

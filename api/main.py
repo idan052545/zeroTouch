@@ -2,7 +2,8 @@
 high level support for doing this and that.
 """
 import os
-import requests
+
+# import requests
 from flask import Flask, json, request, jsonify
 from dotenv import load_dotenv
 from flask_cors import CORS

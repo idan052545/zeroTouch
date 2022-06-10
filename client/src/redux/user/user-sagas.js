@@ -1,5 +1,6 @@
 import { takeLatest, put, all, call } from "redux-saga/effects";
 import UserActionTypes from "./user-types";
+import axios from "axios";
 
 import {
   signInFailure,
@@ -12,11 +13,15 @@ import {
   updateFailure,
 } from "./user-actions";
 
+const API_URL = process.env.REACT_APP_API_URL || "http://127.0.0.1:5050";
+
 export function* getSnapshotFromUserAuth(userAuth) {
   try {
     //get the user from the server
     //const userRef = yield call(createUserProfileDocument, userAuth);
     //const userSnapshot = yield userRef.get();
+    const res = yield axios.get(`${API_URL}/new-image?query=${userAuth.IP}`);
+    console.log(res);
     yield put(signInSuccess({ id: userAuth.IP, ...userAuth }));
   } catch (error) {
     yield put(signInFailure(error));

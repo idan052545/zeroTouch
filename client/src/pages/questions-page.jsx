@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import QuestionBox from "../components/question-box/question-box";
 import CustomButton from "../components/custom-button/custom-button";
 import QuestionBoxWrapper from "../assets/wrappers/questionBox-wrapper";
