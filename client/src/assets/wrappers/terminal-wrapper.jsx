@@ -17,7 +17,7 @@ const TerminalWrapper = styled.div`
   }
   .Terminal {
     width: 600px;
-    height: 400px;
+    height: 80;
     box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.5);
   }
 
@@ -98,13 +98,17 @@ const TerminalWrapper = styled.div`
   .Prompt__dollar {
     color: #ddd;
   }
-  .Prompt__cursor {
-    height: 17px;
-    width: 8px;
-    background: white;
-    display: block;
+
+  .Prompt__Input {
+    border-color: rgba(56, 4, 40, 0.9);
+    backface-visibility: hidden;
+    display: flex;
+    width: 500px;
     margin-left: 8px;
-    animation: 2000ms ease infinite alternate blink;
+    outline: none;
+    background: none;
+    border: none;
+    -webkit-text-fill-color: white;
   }
 
   @keyframes blink {

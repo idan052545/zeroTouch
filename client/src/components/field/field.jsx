@@ -4,72 +4,56 @@ import FieldInfo from "../fieldInfo/fieldInfo";
 import FieldWrapper from "../../assets/wrappers/field-wrapper";
 import DropdownList from "../dropdown-list/dropdown-list";
 import FormInput from "../form-input/form-input";
-import { selectCurrentUser } from "../../redux/user/user-selectors";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { updateStart } from "../../redux/user/user-actions";
 import { toast } from "react-toastify";
 
-const Field = ({ name, status, label, isDropdown, imageUrl }) => {
+const Field = ({
+  name,
+  status,
+  value,
+  label,
+  isDropdown,
+  imageUrl,
+  readFrom,
+}) => {
   const [hidden, setHidden] = useState(true);
   const [editMode, setEditMode] = useState(false);
-  const currentUser = useSelector(selectCurrentUser);
-  const [values, setValues] = useState(currentUser);
+  const [values, setValues] = useState(readFrom);
   const dispatch = useDispatch();
-
-  const regexExp =
-    /^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$/gi; //ip validate
-
-  const onSubmit = async (e) => {
-    e.preventDefault();
-    const { network, IP, siteNumber, numOfUsers } = values;
-    let check = "";
-    let valid = true;
-    switch (name) {
-      case "network":
-        check = network;
-        if (!check) {
-          toast.error("בבקשה מלא את השדה");
-          valid = false;
-        }
-        break;
-      case "IP":
-        check = IP;
-        //check if id in correct format
-        if (!regexExp.test(check)) {
-          toast.error("בבקשה מלא את השדה בפורמט נכון ");
-          valid = false;
-        }
-        break;
-      case "siteNumber":
-        check = siteNumber;
-        if (!check) {
-          toast.error("בבקשה מלא את השדה");
-          valid = false;
-        }
-        break;
-      case "numOfUsers":
-        check = numOfUsers;
-        if (isNaN(check)) {
-          toast.error("בבקשה הכנס מספר ");
-          check = "";
-          valid = false;
-        }
-        break;
-      default:
-    }
-    if (valid) {
-      dispatch(updateStart(values));
-      setEditMode(false);
-    }
-  };
 
   const handleChange = (e) => {
     const name = e.target.name;
     const value = e.target.value;
     console.log(name);
-    console.log(values);
+    console.log(value);
 
-    setValues({ ...currentUser, [name]: value });
+    setValues({ ...readFrom, [name]: value });
+  };
+
+  const onSubmit = async (e) => {
+    e.preventDefault();
+    const regexExp =
+      /^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$/gi; //ip validate
+    const check = values[name];
+    let valid = true;
+    if (!check) {
+      toast.error("בבקשה מלא את השדה");
+      valid = false;
+    }
+    if (name === "IP" && !regexExp.test(check)) {
+      toast.error("בבקשה מלא את השדה בפורמט נכון ");
+      valid = false;
+    }
+    if (name === "numOfUsers" && isNaN(check)) {
+      toast.error("בבקשה הכנס מספר ");
+      valid = false;
+    }
+
+    if (valid) {
+      dispatch(updateStart(values));
+      setEditMode(false);
+    }
   };
 
   return (
@@ -93,7 +77,7 @@ const Field = ({ name, status, label, isDropdown, imageUrl }) => {
             isDropdown ? (
               <DropdownList
                 handleChange={handleChange}
-                labelText={currentUser[name]}
+                labelText={value}
                 name={name}
                 list={["בחר", "b", "c", "d"]}
               />
@@ -103,13 +87,13 @@ const Field = ({ name, status, label, isDropdown, imageUrl }) => {
                 className="s form-input"
                 id={label}
                 name={name}
-                placeholder={currentUser[name]}
+                placeholder={value}
                 handleChange={handleChange}
                 required
               />
             )
           ) : (
-            <FieldInfo icon={<BiChevronRight />} text={currentUser[name]} />
+            <FieldInfo icon={<BiChevronRight />} text={value} />
           )}
 
           <div className={`status ${status}`}>
