@@ -5,7 +5,6 @@ import FieldWrapper from "../../assets/wrappers/field-wrapper";
 import DropdownList from "../dropdown-list/dropdown-list";
 import FormInput from "../form-input/form-input";
 import { useDispatch } from "react-redux";
-import { updateStart } from "../../redux/user/user-actions";
 import { toast } from "react-toastify";
 
 const Field = ({
@@ -16,6 +15,7 @@ const Field = ({
   isDropdown,
   imageUrl,
   readFrom,
+  reduxUpdateFunc,
 }) => {
   const [hidden, setHidden] = useState(true);
   const [editMode, setEditMode] = useState(false);
@@ -51,7 +51,7 @@ const Field = ({
     }
 
     if (valid) {
-      dispatch(updateStart(values));
+      dispatch(reduxUpdateFunc(values));
       setEditMode(false);
     }
   };

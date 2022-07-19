@@ -1,6 +1,7 @@
 import { takeLatest, put, all, call } from "redux-saga/effects";
 import UserActionTypes from "./user-types";
 import axios from "axios";
+//import FormData from "form-data";
 
 import {
   signInFailure,
@@ -13,14 +14,58 @@ import {
   updateFailure,
 } from "./user-actions";
 
-const API_URL = process.env.REACT_APP_API_URL || "http://127.0.0.1:5050";
+const API_URL = process.env.REACT_APP_API_URL || "http://127.0.0.1:8000";
 
 export function* getSnapshotFromUserAuth(userAuth) {
   try {
     //get the user from the server
     //const userRef = yield call(createUserProfileDocument, userAuth);
     //const userSnapshot = yield userRef.get();
-    const res = yield axios.get(`${API_URL}/new-image?query=${userAuth.IP}`);
+    //process.env.DJANGO_AUTH_USERNAME ||
+    //var FormData = require("form-data");
+    /*let data = new FormData();
+    data.append("ip", "1.2.5.4");
+
+    const res = yield axios.get(`${API_URL}/zero-touch/api`, {
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+      auth: {
+        username: "idan052545",
+        password: "idan123456",
+      },
+      data: data,
+    });*/
+    const FormData = require("form-data");
+
+    /*let data = new FormData();
+    data.append("ip", userAuth.IP);
+    console.log(data);*/
+    const qs = require("qs");
+    let data = qs.stringify({
+      ip: "1.2.4.1",
+    });
+    console.log(data);
+    let config = {
+      method: "get",
+      url: "http://127.0.0.1:8000/zero-touch/api",
+      headers: {
+        Authorization: "Basic aWRhbjA1MjU0NTppZGFuMTIzNDU2",
+        "Content-Type": "application/json",
+      },
+      params: { ip: userAuth.IP },
+      data: data,
+    };
+
+    const res = yield axios(config)
+      .then((response) => {
+        console.log(JSON.stringify(response.data));
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+
     console.log(res);
     yield put(signInSuccess({ id: userAuth.IP, ...userAuth }));
   } catch (error) {

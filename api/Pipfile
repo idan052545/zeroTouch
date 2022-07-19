@@ -10,11 +10,15 @@ requests = "*"
 flask-cors = "*"
 python-dotenv = "*"
 pymongo = "*"
+django = "*"
+djangorestframework = "*"
+django-cors-headers = "*"
 
 [dev-packages]
 black = "*"
 pylint = "*"
 pycodestyle = "*"
+pylint-django = "*"
 
 [requires]
 python_version = "3.10"

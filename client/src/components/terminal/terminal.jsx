@@ -9,6 +9,7 @@ const Terminal = ({ text, user }) => {
 
   return (
     <TerminalWrapper>
+      <input disabled className="Prompt__Output" />
       <div className="container">
         <div className="Terminal">
           <div className="Terminal__Toolbar">

@@ -8,16 +8,16 @@ const TerminalWrapper = styled.div`
     background: linear-gradient(45deg, #57003f 0%, #f57453 100%);
     font-family: "Ubuntu";
   }
-
+  display: grid;
+  place-items: center;
   .container {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
   }
   .Terminal {
     width: 600px;
-    height: 80;
+    height: 80px;
     box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.5);
   }
 
@@ -108,6 +108,18 @@ const TerminalWrapper = styled.div`
     outline: none;
     background: none;
     border: none;
+    -webkit-text-fill-color: white;
+  }
+  .Prompt__Output {
+    background: linear-gradient(45deg, #57003f 0%, #f57453 100%);
+    width: 600px;
+    height: 600px;
+    box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.5);
+    padding: 0 8px;
+    box-sizing: border-box;
+    border-top-left-radius: 6px;
+    border-top-right-radius: 6px;
+    position: relative;
     -webkit-text-fill-color: white;
   }
 
