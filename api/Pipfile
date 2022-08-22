@@ -13,6 +13,9 @@ pymongo = "*"
 django = "*"
 djangorestframework = "*"
 django-cors-headers = "*"
+dnspython = "*"
+mongoengine = "*"
+django-debug-toolbar = "*"
 
 [dev-packages]
 black = "*"

@@ -37,16 +37,16 @@ export function* getSnapshotFromUserAuth(userAuth) {
       },
       data: data,
     });*/
-    const FormData = require("form-data");
+    //const FormData = require("form-data");
 
     /*let data = new FormData();
     data.append("ip", userAuth.IP);
     console.log(data);*/
-    const qs = require("qs");
-    let data = qs.stringify({
-      ip: "1.2.4.1",
-    });
-    console.log(data);
+    //const qs = require("qs");
+    // let data = qs.stringify({
+    //   ip: "1.2.4.1",
+    // });
+    // console.log(data);
     let config = {
       method: "get",
       url: "http://127.0.0.1:8000/zero-touch/api",
@@ -54,8 +54,7 @@ export function* getSnapshotFromUserAuth(userAuth) {
         Authorization: "Basic aWRhbjA1MjU0NTppZGFuMTIzNDU2",
         "Content-Type": "application/json",
       },
-      params: { ip: userAuth.IP },
-      data: data,
+      params: { ...userAuth },
     };
 
     const res = yield axios(config)

@@ -13,7 +13,9 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 from pathlib import Path
 
 from flask_cors import cross_origin
-
+import mongoengine
+from dotenv import load_dotenv
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -43,9 +45,11 @@ INSTALLED_APPS = [
     "rest_framework",
     "zero_touch_api",
     "corsheaders",
+    "debug_toolbar",
 ]
 
 MIDDLEWARE = [
+    "debug_toolbar.middleware.DebugToolbarMiddleware"
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
@@ -55,6 +59,8 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "corsheaders.middleware.CorsMiddleware",
 ]
+
+INTERNAL_IPS = ["127.0.0.1"]
 
 
 CORS_ALLOW_ALL_ORIGINS = True
@@ -90,13 +96,27 @@ WSGI_APPLICATION = "zero_backend.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
-DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
-    }
-}
+# DATABASES = {
+#     "default": {
+#         "ENGINE": "django.db.backends.sqlite3",
+#         "NAME": BASE_DIR / "db.sqlite3",
+#     }
+# }
 
+
+load_dotenv(dotenv_path="./.env.local")
+
+MONGO_URL = os.environ.get("MONGO_URL", "mongo")
+MONGO_USERNAME = os.environ.get("MONGO_USERNAME", "root")
+MONGO_PASSWORD = os.environ.get("MONGO_PASSWORD", "")
+MONGO_PORT = os.environ.get("MONGO_PORT", 27017)
+
+mongoengine.connect(
+    db="zeroTouchDB",
+    # host="localhost:27017",
+    # username=MONGO_USERNAME,
+    # password=MONGO_PASSWORD,
+)
 
 # Password validation
 # https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators

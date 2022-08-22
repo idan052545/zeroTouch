@@ -6,6 +6,7 @@ import { toast } from "react-toastify";
 import { useDispatch } from "react-redux";
 import { signInStart } from "../redux/user/user-actions";
 import { useNavigate } from "react-router-dom";
+import questions from "../questions";
 
 const initialState = {
   network: "",
@@ -22,7 +23,6 @@ const QuestionsPage = () => {
   const navigate = useNavigate();
   const [values, setValues] = useState(initialState);
 
-  const numOfQue = 4;
   const [curQue, setCurQue] = useState(0);
   /* useEffect(() => {
     if (curQue >= numOfQue) {
@@ -78,7 +78,7 @@ const QuestionsPage = () => {
     }
     if (valid) {
       setCurQue(curQue + 1);
-      if (curQue >= numOfQue - 1) {
+      if (curQue == questions.length - 1) {
         dispatch(signInStart(values));
         navigate("/user");
       }
@@ -88,32 +88,17 @@ const QuestionsPage = () => {
   return (
     <QuestionBoxWrapper className="full-page">
       <form onSubmit={(e) => e.preventDefault()} className="form">
-        {curQue === 0 ? (
-          <QuestionBox
-            label="מהי הרשת שלך"
-            name="network"
-            isDropdown={true}
-            handleChange={handleChange}
-          />
-        ) : null}
-        {curQue === 1 ? (
-          <QuestionBox label="IP" name="IP" handleChange={handleChange} />
-        ) : null}
-        {curQue === 2 ? (
-          <QuestionBox
-            label="מספר אתר"
-            name="siteNumber"
-            isDropdown={true}
-            handleChange={handleChange}
-          />
-        ) : null}
-        {curQue === 3 ? (
-          <QuestionBox
-            label="כמה משתמשים"
-            name="numOfUsers"
-            handleChange={handleChange}
-          />
-        ) : null}
+        {questions?.map(({ id, name, ...otherCollectionProps }) =>
+          curQue == id ? (
+            <QuestionBox
+              key={id}
+              name={name}
+              {...otherCollectionProps}
+              handleChange={handleChange}
+            />
+          ) : null
+        )}
+
         <CustomButton
           type="submit"
           onClick={onSubmit}
