@@ -45,11 +45,16 @@ INSTALLED_APPS = [
     "rest_framework",
     "zero_touch_api",
     "corsheaders",
-    "debug_toolbar",
+    # "mongoengine.django.mongo_auth"
+    # "mongo_auth.MongoUser"
+    # "debug_toolbar",
 ]
 
+# AUTH_USER_MODEL = "mongo_auth.MongoUser"
+
+
 MIDDLEWARE = [
-    "debug_toolbar.middleware.DebugToolbarMiddleware"
+    # "debug_toolbar.middleware.DebugToolbarMiddleware"
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
@@ -102,7 +107,9 @@ WSGI_APPLICATION = "zero_backend.wsgi.application"
 #         "NAME": BASE_DIR / "db.sqlite3",
 #     }
 # }
+# DATABASES = {}
 
+# DATABASES = {"default": {"ENGINE": "django.db.backends.dummy"}}
 
 load_dotenv(dotenv_path="./.env.local")
 
@@ -113,10 +120,17 @@ MONGO_PORT = os.environ.get("MONGO_PORT", 27017)
 
 mongoengine.connect(
     db="zeroTouchDB",
-    # host="localhost:27017",
     # username=MONGO_USERNAME,
     # password=MONGO_PASSWORD,
 )
+
+
+AUTHENTICATION_BACKENDS = ("mongoengine.django.auth.MongoEngineBackend",)
+# AUTH_USER_MODEL = "mongo_auth.MongoUser"
+
+# AUTHENTICATION_BACKENDS = ("mongoengine.django.auth.MongoEngineBackend",)
+# MONGOENGINE_USER_DOCUMENT = "mongoengine.django.auth.User"
+# AUTH_USER_MODEL = "mongo_auth.MongoUser"
 
 # Password validation
 # https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators
@@ -135,6 +149,8 @@ AUTH_PASSWORD_VALIDATORS = [
         "NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",
     },
 ]
+
+# AUTHENTICATION_BACKENDS = ("mongoengine.django.auth.MongoEngineBackend",)
 
 
 # Internationalization
@@ -157,4 +173,4 @@ STATIC_URL = "static/"
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
-DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+# DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"

@@ -1,0 +1,12 @@
+---
+inventory:
+  plugin: SimpleInventory
+  options:
+    host_file: "C:\\Projects\\zero_touch\\api\\hosts.yaml"
+    group_file: "C:\\Projects\\zero_touch\\api\\groups.yaml"
+    defaults_file: "C:\\Projects\\zero_touch\\api\\defaults.yaml"
+
+runner:
+  plugin: threaded
+  options:
+    num_workers: 10

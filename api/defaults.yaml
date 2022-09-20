@@ -1,0 +1,6 @@
+---
+username: "idan"
+password: "Aa123456"
+platform: "ios"
+data:
+  ntp_server: "9.9.9.9"

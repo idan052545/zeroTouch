@@ -16,6 +16,10 @@ django-cors-headers = "*"
 dnspython = "*"
 mongoengine = "*"
 django-debug-toolbar = "*"
+nornir = "*"
+nornir-utils = "*"
+scrapli = {extras = ["genie"], version = "*"}
+nornir-netmiko = "*"
 
 [dev-packages]
 black = "*"

@@ -1,0 +1,426 @@
+2022-08-22 21:48:03,376 -  nornir.core -     INFO -        run() - Running task 'send_command' with args {'command': 'show ntp config'} on 1 hosts
+2022-08-22 21:48:03,383 - nornir.core.task -    ERROR -      start() - Host 'R1': task 'send_command' failed with traceback:
+Traceback (most recent call last):
+  File "C:\Projects\zero_touch\api\.venv\lib\site-packages\nornir\core\task.py", line 99, in start
+    r = self.task(self, **self.params)
+  File "C:\Projects\zero_touch\api\.venv\lib\site-packages\nornir_scrapli\tasks\core\send_command.py", line 36, in send_command
+    scrapli_conn = task.host.get_connection("scrapli", task.nornir.config)
+  File "C:\Projects\zero_touch\api\.venv\lib\site-packages\nornir\core\inventory.py", line 494, in get_connection
+    self.open_connection(
+  File "C:\Projects\zero_touch\api\.venv\lib\site-packages\nornir\core\inventory.py", line 546, in open_connection
+    conn_obj.open(
+  File "C:\Projects\zero_touch\api\.venv\lib\site-packages\nornir_scrapli\connection.py", line 98, in open
+    connection = Scrapli(**parameters, platform=final_platform)
+  File "C:\Projects\zero_touch\api\.venv\lib\site-packages\scrapli\factory.py", line 506, in __new__
+    final_conn = final_driver(**final_kwargs)
+  File "C:\Projects\zero_touch\api\.venv\lib\site-packages\scrapli\driver\core\cisco_iosxe\sync_driver.py", line 127, in __init__
+    super().__init__(
+  File "C:\Projects\zero_touch\api\.venv\lib\site-packages\scrapli\driver\network\sync_driver.py", line 48, in __init__
+    super().__init__(
+  File "C:\Projects\zero_touch\api\.venv\lib\site-packages\scrapli\driver\generic\sync_driver.py", line 47, in __init__
+    super().__init__(
+  File "C:\Projects\zero_touch\api\.venv\lib\site-packages\scrapli\driver\base\sync_driver.py", line 15, in __init__
+    super().__init__(**kwargs)
+  File "C:\Projects\zero_touch\api\.venv\lib\site-packages\scrapli\driver\base\base_driver.py", line 187, in __init__
+    self.transport = transport_class(
+  File "C:\Projects\zero_touch\api\.venv\lib\site-packages\scrapli\transport\plugins\system\transport.py", line 60, in __init__
+    raise ScrapliUnsupportedPlatform("system transport is not supported on windows devices")
+scrapli.exceptions.ScrapliUnsupportedPlatform: system transport is not supported on windows devices
+
+2022-08-22 21:54:59,504 -  nornir.core -     INFO -        run() - Running task 'send_command' with args {'command': 'show ntp config'} on 1 hosts
+2022-08-22 21:55:06,385 -  nornir.core -     INFO -        run() - Running task 'send_command' with args {'command': 'show ntp config'} on 1 hosts
+2022-08-22 21:55:06,394 - nornir.core.task -    ERROR -      start() - Host 'R1': task 'send_command' failed with traceback:
+Traceback (most recent call last):
+  File "C:\Projects\zero_touch\api\.venv\lib\site-packages\nornir\core\task.py", line 99, in start
+    r = self.task(self, **self.params)
+  File "C:\Projects\zero_touch\api\.venv\lib\site-packages\nornir_scrapli\tasks\core\send_command.py", line 36, in send_command
+    scrapli_conn = task.host.get_connection("scrapli", task.nornir.config)
+  File "C:\Projects\zero_touch\api\.venv\lib\site-packages\nornir\core\inventory.py", line 494, in get_connection
+    self.open_connection(
+  File "C:\Projects\zero_touch\api\.venv\lib\site-packages\nornir\core\inventory.py", line 546, in open_connection
+    conn_obj.open(
+  File "C:\Projects\zero_touch\api\.venv\lib\site-packages\nornir_scrapli\connection.py", line 98, in open
+    connection = Scrapli(**parameters, platform=final_platform)
+  File "C:\Projects\zero_touch\api\.venv\lib\site-packages\scrapli\factory.py", line 506, in __new__
+    final_conn = final_driver(**final_kwargs)
+  File "C:\Projects\zero_touch\api\.venv\lib\site-packages\scrapli\driver\core\cisco_iosxe\sync_driver.py", line 127, in __init__
+    super().__init__(
+  File "C:\Projects\zero_touch\api\.venv\lib\site-packages\scrapli\driver\network\sync_driver.py", line 48, in __init__
+    super().__init__(
+  File "C:\Projects\zero_touch\api\.venv\lib\site-packages\scrapli\driver\generic\sync_driver.py", line 47, in __init__
+    super().__init__(
+  File "C:\Projects\zero_touch\api\.venv\lib\site-packages\scrapli\driver\base\sync_driver.py", line 15, in __init__
+    super().__init__(**kwargs)
+  File "C:\Projects\zero_touch\api\.venv\lib\site-packages\scrapli\driver\base\base_driver.py", line 187, in __init__
+    self.transport = transport_class(
+  File "C:\Projects\zero_touch\api\.venv\lib\site-packages\scrapli\transport\plugins\system\transport.py", line 60, in __init__
+    raise ScrapliUnsupportedPlatform("system transport is not supported on windows devices")
+scrapli.exceptions.ScrapliUnsupportedPlatform: system transport is not supported on windows devices
+
+2022-08-22 21:55:41,513 -  nornir.core -     INFO -        run() - Running task 'send_command' with args {'command': 'show ntp config'} on 1 hosts
+2022-08-22 21:55:41,520 - nornir.core.task -    ERROR -      start() - Host 'R1': task 'send_command' failed with traceback:
+Traceback (most recent call last):
+  File "C:\Projects\zero_touch\api\.venv\lib\site-packages\nornir\core\task.py", line 99, in start
+    r = self.task(self, **self.params)
+  File "C:\Projects\zero_touch\api\.venv\lib\site-packages\nornir_scrapli\tasks\core\send_command.py", line 36, in send_command
+    scrapli_conn = task.host.get_connection("scrapli", task.nornir.config)
+  File "C:\Projects\zero_touch\api\.venv\lib\site-packages\nornir\core\inventory.py", line 494, in get_connection
+    self.open_connection(
+  File "C:\Projects\zero_touch\api\.venv\lib\site-packages\nornir\core\inventory.py", line 546, in open_connection
+    conn_obj.open(
+  File "C:\Projects\zero_touch\api\.venv\lib\site-packages\nornir_scrapli\connection.py", line 98, in open
+    connection = Scrapli(**parameters, platform=final_platform)
+  File "C:\Projects\zero_touch\api\.venv\lib\site-packages\scrapli\factory.py", line 506, in __new__
+    final_conn = final_driver(**final_kwargs)
+  File "C:\Projects\zero_touch\api\.venv\lib\site-packages\scrapli\driver\core\cisco_iosxe\sync_driver.py", line 127, in __init__
+    super().__init__(
+  File "C:\Projects\zero_touch\api\.venv\lib\site-packages\scrapli\driver\network\sync_driver.py", line 48, in __init__
+    super().__init__(
+  File "C:\Projects\zero_touch\api\.venv\lib\site-packages\scrapli\driver\generic\sync_driver.py", line 47, in __init__
+    super().__init__(
+  File "C:\Projects\zero_touch\api\.venv\lib\site-packages\scrapli\driver\base\sync_driver.py", line 15, in __init__
+    super().__init__(**kwargs)
+  File "C:\Projects\zero_touch\api\.venv\lib\site-packages\scrapli\driver\base\base_driver.py", line 187, in __init__
+    self.transport = transport_class(
+  File "C:\Projects\zero_touch\api\.venv\lib\site-packages\scrapli\transport\plugins\system\transport.py", line 60, in __init__
+    raise ScrapliUnsupportedPlatform("system transport is not supported on windows devices")
+scrapli.exceptions.ScrapliUnsupportedPlatform: system transport is not supported on windows devices
+
+2022-08-22 21:56:13,849 -  nornir.core -     INFO -        run() - Running task 'send_command' with args {'command': 'show ntp config'} on 1 hosts
+2022-08-22 21:56:13,857 - nornir.core.task -    ERROR -      start() - Host 'R1': task 'send_command' failed with traceback:
+Traceback (most recent call last):
+  File "C:\Projects\zero_touch\api\.venv\lib\site-packages\nornir\core\task.py", line 99, in start
+    r = self.task(self, **self.params)
+  File "C:\Projects\zero_touch\api\.venv\lib\site-packages\nornir_scrapli\tasks\core\send_command.py", line 36, in send_command
+    scrapli_conn = task.host.get_connection("scrapli", task.nornir.config)
+  File "C:\Projects\zero_touch\api\.venv\lib\site-packages\nornir\core\inventory.py", line 494, in get_connection
+    self.open_connection(
+  File "C:\Projects\zero_touch\api\.venv\lib\site-packages\nornir\core\inventory.py", line 546, in open_connection
+    conn_obj.open(
+  File "C:\Projects\zero_touch\api\.venv\lib\site-packages\nornir_scrapli\connection.py", line 98, in open
+    connection = Scrapli(**parameters, platform=final_platform)
+  File "C:\Projects\zero_touch\api\.venv\lib\site-packages\scrapli\factory.py", line 506, in __new__
+    final_conn = final_driver(**final_kwargs)
+  File "C:\Projects\zero_touch\api\.venv\lib\site-packages\scrapli\driver\core\cisco_iosxe\sync_driver.py", line 127, in __init__
+    super().__init__(
+  File "C:\Projects\zero_touch\api\.venv\lib\site-packages\scrapli\driver\network\sync_driver.py", line 48, in __init__
+    super().__init__(
+  File "C:\Projects\zero_touch\api\.venv\lib\site-packages\scrapli\driver\generic\sync_driver.py", line 47, in __init__
+    super().__init__(
+  File "C:\Projects\zero_touch\api\.venv\lib\site-packages\scrapli\driver\base\sync_driver.py", line 15, in __init__
+    super().__init__(**kwargs)
+  File "C:\Projects\zero_touch\api\.venv\lib\site-packages\scrapli\driver\base\base_driver.py", line 187, in __init__
+    self.transport = transport_class(
+  File "C:\Projects\zero_touch\api\.venv\lib\site-packages\scrapli\transport\plugins\system\transport.py", line 60, in __init__
+    raise ScrapliUnsupportedPlatform("system transport is not supported on windows devices")
+scrapli.exceptions.ScrapliUnsupportedPlatform: system transport is not supported on windows devices
+
+2022-08-22 21:57:06,265 -  nornir.core -     INFO -        run() - Running task 'send_command' with args {'command': 'show ntp config'} on 1 hosts
+2022-08-22 21:57:06,272 - nornir.core.task -    ERROR -      start() - Host 'R1': task 'send_command' failed with traceback:
+Traceback (most recent call last):
+  File "C:\Projects\zero_touch\api\.venv\lib\site-packages\nornir\core\task.py", line 99, in start
+    r = self.task(self, **self.params)
+  File "C:\Projects\zero_touch\api\.venv\lib\site-packages\nornir_scrapli\tasks\core\send_command.py", line 36, in send_command
+    scrapli_conn = task.host.get_connection("scrapli", task.nornir.config)
+  File "C:\Projects\zero_touch\api\.venv\lib\site-packages\nornir\core\inventory.py", line 494, in get_connection
+    self.open_connection(
+  File "C:\Projects\zero_touch\api\.venv\lib\site-packages\nornir\core\inventory.py", line 546, in open_connection
+    conn_obj.open(
+  File "C:\Projects\zero_touch\api\.venv\lib\site-packages\nornir_scrapli\connection.py", line 98, in open
+    connection = Scrapli(**parameters, platform=final_platform)
+  File "C:\Projects\zero_touch\api\.venv\lib\site-packages\scrapli\factory.py", line 506, in __new__
+    final_conn = final_driver(**final_kwargs)
+  File "C:\Projects\zero_touch\api\.venv\lib\site-packages\scrapli\driver\core\cisco_iosxe\sync_driver.py", line 127, in __init__
+    super().__init__(
+  File "C:\Projects\zero_touch\api\.venv\lib\site-packages\scrapli\driver\network\sync_driver.py", line 48, in __init__
+    super().__init__(
+  File "C:\Projects\zero_touch\api\.venv\lib\site-packages\scrapli\driver\generic\sync_driver.py", line 47, in __init__
+    super().__init__(
+  File "C:\Projects\zero_touch\api\.venv\lib\site-packages\scrapli\driver\base\sync_driver.py", line 15, in __init__
+    super().__init__(**kwargs)
+  File "C:\Projects\zero_touch\api\.venv\lib\site-packages\scrapli\driver\base\base_driver.py", line 187, in __init__
+    self.transport = transport_class(
+  File "C:\Projects\zero_touch\api\.venv\lib\site-packages\scrapli\transport\plugins\system\transport.py", line 60, in __init__
+    raise ScrapliUnsupportedPlatform("system transport is not supported on windows devices")
+scrapli.exceptions.ScrapliUnsupportedPlatform: system transport is not supported on windows devices
+
+2022-08-22 22:06:40,311 -  nornir.core -     INFO -        run() - Running task 'send_command' with args {'command': 'show ntp config'} on 1 hosts
+2022-08-22 22:06:40,318 - nornir.core.task -    ERROR -      start() - Host 'R1': task 'send_command' failed with traceback:
+Traceback (most recent call last):
+  File "C:\Projects\zero_touch\api\.venv\lib\site-packages\nornir\core\task.py", line 99, in start
+    r = self.task(self, **self.params)
+  File "C:\Projects\zero_touch\api\.venv\lib\site-packages\nornir_scrapli\tasks\core\send_command.py", line 36, in send_command
+    scrapli_conn = task.host.get_connection("scrapli", task.nornir.config)
+  File "C:\Projects\zero_touch\api\.venv\lib\site-packages\nornir\core\inventory.py", line 494, in get_connection
+    self.open_connection(
+  File "C:\Projects\zero_touch\api\.venv\lib\site-packages\nornir\core\inventory.py", line 546, in open_connection
+    conn_obj.open(
+  File "C:\Projects\zero_touch\api\.venv\lib\site-packages\nornir_scrapli\connection.py", line 98, in open
+    connection = Scrapli(**parameters, platform=final_platform)
+  File "C:\Projects\zero_touch\api\.venv\lib\site-packages\scrapli\factory.py", line 506, in __new__
+    final_conn = final_driver(**final_kwargs)
+  File "C:\Projects\zero_touch\api\.venv\lib\site-packages\scrapli\driver\core\cisco_iosxe\sync_driver.py", line 127, in __init__
+    super().__init__(
+  File "C:\Projects\zero_touch\api\.venv\lib\site-packages\scrapli\driver\network\sync_driver.py", line 48, in __init__
+    super().__init__(
+  File "C:\Projects\zero_touch\api\.venv\lib\site-packages\scrapli\driver\generic\sync_driver.py", line 47, in __init__
+    super().__init__(
+  File "C:\Projects\zero_touch\api\.venv\lib\site-packages\scrapli\driver\base\sync_driver.py", line 15, in __init__
+    super().__init__(**kwargs)
+  File "C:\Projects\zero_touch\api\.venv\lib\site-packages\scrapli\driver\base\base_driver.py", line 187, in __init__
+    self.transport = transport_class(
+  File "C:\Projects\zero_touch\api\.venv\lib\site-packages\scrapli\transport\plugins\system\transport.py", line 60, in __init__
+    raise ScrapliUnsupportedPlatform("system transport is not supported on windows devices")
+scrapli.exceptions.ScrapliUnsupportedPlatform: system transport is not supported on windows devices
+
+2022-08-22 22:16:58,599 -  nornir.core -     INFO -        run() - Running task 'send_command' with args {'command': 'show version '} on 1 hosts
+2022-08-22 22:16:58,605 - nornir.core.task -    ERROR -      start() - Host 'R1': task 'send_command' failed with traceback:
+Traceback (most recent call last):
+  File "C:\Projects\zero_touch\api\.venv\lib\site-packages\nornir\core\task.py", line 99, in start
+    r = self.task(self, **self.params)
+  File "C:\Projects\zero_touch\api\.venv\lib\site-packages\nornir_scrapli\tasks\core\send_command.py", line 36, in send_command
+    scrapli_conn = task.host.get_connection("scrapli", task.nornir.config)
+  File "C:\Projects\zero_touch\api\.venv\lib\site-packages\nornir\core\inventory.py", line 494, in get_connection
+    self.open_connection(
+  File "C:\Projects\zero_touch\api\.venv\lib\site-packages\nornir\core\inventory.py", line 546, in open_connection
+    conn_obj.open(
+  File "C:\Projects\zero_touch\api\.venv\lib\site-packages\nornir_scrapli\connection.py", line 98, in open
+    connection = Scrapli(**parameters, platform=final_platform)
+  File "C:\Projects\zero_touch\api\.venv\lib\site-packages\scrapli\factory.py", line 506, in __new__
+    final_conn = final_driver(**final_kwargs)
+  File "C:\Projects\zero_touch\api\.venv\lib\site-packages\scrapli\driver\core\cisco_iosxe\sync_driver.py", line 127, in __init__
+    super().__init__(
+  File "C:\Projects\zero_touch\api\.venv\lib\site-packages\scrapli\driver\network\sync_driver.py", line 48, in __init__
+    super().__init__(
+  File "C:\Projects\zero_touch\api\.venv\lib\site-packages\scrapli\driver\generic\sync_driver.py", line 47, in __init__
+    super().__init__(
+  File "C:\Projects\zero_touch\api\.venv\lib\site-packages\scrapli\driver\base\sync_driver.py", line 15, in __init__
+    super().__init__(**kwargs)
+  File "C:\Projects\zero_touch\api\.venv\lib\site-packages\scrapli\driver\base\base_driver.py", line 187, in __init__
+    self.transport = transport_class(
+  File "C:\Projects\zero_touch\api\.venv\lib\site-packages\scrapli\transport\plugins\system\transport.py", line 60, in __init__
+    raise ScrapliUnsupportedPlatform("system transport is not supported on windows devices")
+scrapli.exceptions.ScrapliUnsupportedPlatform: system transport is not supported on windows devices
+
+2022-08-22 22:23:02,885 -  nornir.core -     INFO -        run() - Running task 'send_command' with args {'command': 'show version '} on 1 hosts
+2022-08-22 22:23:02,893 - nornir.core.task -    ERROR -      start() - Host 'R1': task 'send_command' failed with traceback:
+Traceback (most recent call last):
+  File "C:\Projects\zero_touch\api\.venv\lib\site-packages\nornir\core\task.py", line 99, in start
+    r = self.task(self, **self.params)
+  File "C:\Projects\zero_touch\api\.venv\lib\site-packages\nornir_scrapli\tasks\core\send_command.py", line 36, in send_command
+    scrapli_conn = task.host.get_connection("scrapli", task.nornir.config)
+  File "C:\Projects\zero_touch\api\.venv\lib\site-packages\nornir\core\inventory.py", line 494, in get_connection
+    self.open_connection(
+  File "C:\Projects\zero_touch\api\.venv\lib\site-packages\nornir\core\inventory.py", line 546, in open_connection
+    conn_obj.open(
+  File "C:\Projects\zero_touch\api\.venv\lib\site-packages\nornir_scrapli\connection.py", line 98, in open
+    connection = Scrapli(**parameters, platform=final_platform)
+  File "C:\Projects\zero_touch\api\.venv\lib\site-packages\scrapli\factory.py", line 506, in __new__
+    final_conn = final_driver(**final_kwargs)
+  File "C:\Projects\zero_touch\api\.venv\lib\site-packages\scrapli\driver\core\cisco_iosxe\sync_driver.py", line 127, in __init__
+    super().__init__(
+  File "C:\Projects\zero_touch\api\.venv\lib\site-packages\scrapli\driver\network\sync_driver.py", line 48, in __init__
+    super().__init__(
+  File "C:\Projects\zero_touch\api\.venv\lib\site-packages\scrapli\driver\generic\sync_driver.py", line 47, in __init__
+    super().__init__(
+  File "C:\Projects\zero_touch\api\.venv\lib\site-packages\scrapli\driver\base\sync_driver.py", line 15, in __init__
+    super().__init__(**kwargs)
+  File "C:\Projects\zero_touch\api\.venv\lib\site-packages\scrapli\driver\base\base_driver.py", line 187, in __init__
+    self.transport = transport_class(
+  File "C:\Projects\zero_touch\api\.venv\lib\site-packages\scrapli\transport\plugins\system\transport.py", line 60, in __init__
+    raise ScrapliUnsupportedPlatform("system transport is not supported on windows devices")
+scrapli.exceptions.ScrapliUnsupportedPlatform: system transport is not supported on windows devices
+
+2022-08-22 22:29:30,358 -  nornir.core -     INFO -        run() - Running task 'another_show_command_test' with args {} on 1 hosts
+2022-08-22 22:33:52,970 -  nornir.core -     INFO -        run() - Running task 'another_show_command_test' with args {} on 1 hosts
+2022-08-22 22:33:54,072 - nornir.core.task -    ERROR -      start() - Host 'R1': task 'another_show_command_test' failed with traceback:
+Traceback (most recent call last):
+  File "C:\Projects\zero_touch\api\.venv\lib\site-packages\nornir\core\task.py", line 99, in start
+    r = self.task(self, **self.params)
+  File "C:\Projects\zero_touch\api\zero_backend\zero_touch_api\views.py", line 22, in another_show_command_test
+    task.host["facts"] = interfaces_result.genie_parse_output()
+  File "C:\Projects\zero_touch\api\.venv\lib\site-packages\nornir\core\task.py", line 255, in __getattr__
+    return getattr(self[0], name)
+AttributeError: 'Result' object has no attribute 'genie_parse_output'
+
+2022-08-22 22:34:25,887 -  nornir.core -     INFO -        run() - Running task 'another_show_command_test' with args {} on 1 hosts
+2022-08-22 22:34:26,709 - nornir.core.task -    ERROR -      start() - Host 'R1': task 'another_show_command_test' failed with traceback:
+Traceback (most recent call last):
+  File "C:\Projects\zero_touch\api\.venv\lib\site-packages\nornir\core\task.py", line 99, in start
+    r = self.task(self, **self.params)
+  File "C:\Projects\zero_touch\api\zero_backend\zero_touch_api\views.py", line 22, in another_show_command_test
+    task.host["facts"] = interfaces_result.genie_parse_output()
+  File "C:\Projects\zero_touch\api\.venv\lib\site-packages\nornir\core\task.py", line 255, in __getattr__
+    return getattr(self[0], name)
+AttributeError: 'Result' object has no attribute 'genie_parse_output'
+
+2022-08-22 22:37:51,466 -  nornir.core -     INFO -        run() - Running task 'another_show_command_test' with args {} on 1 hosts
+2022-08-22 22:38:33,802 -  nornir.core -     INFO -        run() - Running task 'another_show_command_test' with args {} on 1 hosts
+2022-08-22 22:38:34,765 - nornir.core.task -    ERROR -      start() - Host 'R1': task 'another_show_command_test' failed with traceback:
+Traceback (most recent call last):
+  File "C:\Projects\zero_touch\api\.venv\lib\site-packages\nornir\core\task.py", line 99, in start
+    r = self.task(self, **self.params)
+  File "C:\Projects\zero_touch\api\zero_backend\zero_touch_api\views.py", line 24, in another_show_command_test
+    print(interfaces_result["intf"])
+TypeError: list indices must be integers or slices, not str
+
+2022-08-22 23:00:00,106 -  nornir.core -     INFO -        run() - Running task 'another_show_command_test' with args {} on 1 hosts
+2022-08-22 23:00:39,030 -  nornir.core -     INFO -        run() - Running task 'another_show_command_test' with args {} on 1 hosts
+2022-08-22 23:01:29,270 -  nornir.core -     INFO -        run() - Running task 'another_show_command_test' with args {} on 1 hosts
+2022-08-22 23:01:54,294 -  nornir.core -     INFO -        run() - Running task 'another_show_command_test' with args {} on 1 hosts
+2022-08-22 23:02:05,018 -  nornir.core -     INFO -        run() - Running task 'another_show_command_test' with args {} on 1 hosts
+2022-08-22 23:02:06,272 -  nornir.core -     INFO -        run() - Running task 'another_show_command_test' with args {} on 1 hosts
+2022-08-22 23:02:49,648 -  nornir.core -     INFO -        run() - Running task 'another_show_command_test' with args {} on 1 hosts
+2022-08-22 23:03:14,587 -  nornir.core -     INFO -        run() - Running task 'another_show_command_test' with args {} on 1 hosts
+2022-08-22 23:03:32,870 -  nornir.core -     INFO -        run() - Running task 'another_show_command_test' with args {} on 1 hosts
+2022-08-22 23:03:48,962 -  nornir.core -     INFO -        run() - Running task 'another_show_command_test' with args {} on 1 hosts
+2022-08-22 23:04:13,358 -  nornir.core -     INFO -        run() - Running task 'another_show_command_test' with args {} on 1 hosts
+2022-08-22 23:04:35,834 -  nornir.core -     INFO -        run() - Running task 'another_show_command_test' with args {} on 1 hosts
+2022-08-22 23:04:57,476 -  nornir.core -     INFO -        run() - Running task 'another_show_command_test' with args {} on 1 hosts
+2022-08-22 23:05:20,968 -  nornir.core -     INFO -        run() - Running task 'another_show_command_test' with args {} on 1 hosts
+2022-08-22 23:05:30,523 -  nornir.core -     INFO -        run() - Running task 'another_show_command_test' with args {} on 1 hosts
+2022-08-22 23:06:11,092 -  nornir.core -     INFO -        run() - Running task 'another_show_command_test' with args {} on 1 hosts
+2022-08-22 23:07:14,174 -  nornir.core -     INFO -        run() - Running task 'another_show_command_test' with args {} on 1 hosts
+2022-08-22 23:07:59,159 -  nornir.core -     INFO -        run() - Running task 'another_show_command_test' with args {} on 1 hosts
+2022-08-22 23:07:59,980 - nornir.core.task -    ERROR -      start() - Host 'R1': task 'netmiko_send_command' failed with traceback:
+Traceback (most recent call last):
+  File "C:\Projects\zero_touch\api\.venv\lib\site-packages\nornir\core\task.py", line 99, in start
+    r = self.task(self, **self.params)
+  File "C:\Projects\zero_touch\api\.venv\lib\site-packages\nornir_netmiko\tasks\netmiko_send_command.py", line 32, in netmiko_send_command
+    result = net_connect.send_command(command_string, **kwargs)
+  File "C:\Projects\zero_touch\api\.venv\lib\site-packages\netmiko\utilities.py", line 592, in wrapper_decorator
+    return func(self, *args, **kwargs)
+  File "C:\Projects\zero_touch\api\.venv\lib\site-packages\netmiko\base_connection.py", line 1729, in send_command
+    return_val = structured_data_converter(
+  File "C:\Projects\zero_touch\api\.venv\lib\site-packages\netmiko\utilities.py", line 577, in structured_data_converter
+    structured_output_genie = get_structured_data_genie(
+  File "C:\Projects\zero_touch\api\.venv\lib\site-packages\netmiko\utilities.py", line 500, in get_structured_data_genie
+    raise ValueError(msg)
+ValueError: 
+Genie and PyATS are not installed. Please PIP install both Genie and PyATS:
+pip install genie
+pip install pyats
+
+
+2022-08-22 23:07:59,981 - nornir.core.task -    ERROR -      start() - Host 'R1': task 'another_show_command_test' failed with traceback:
+Traceback (most recent call last):
+  File "C:\Projects\zero_touch\api\.venv\lib\site-packages\nornir\core\task.py", line 99, in start
+    r = self.task(self, **self.params)
+  File "C:\Projects\zero_touch\api\zero_backend\zero_touch_api\views.py", line 19, in another_show_command_test
+    interfaces_result = task.run(
+  File "C:\Projects\zero_touch\api\.venv\lib\site-packages\nornir\core\task.py", line 174, in run
+    raise NornirSubTaskError(task=run_task, result=r)
+nornir.core.exceptions.NornirSubTaskError: Subtask: netmiko_send_command (failed)
+
+
+2022-08-22 23:12:58,665 -  nornir.core -     INFO -        run() - Running task 'another_show_command_test' with args {} on 1 hosts
+2022-08-22 23:15:50,326 -  nornir.core -     INFO -        run() - Running task 'another_show_command_test' with args {} on 1 hosts
+2022-08-22 23:15:51,479 - nornir.core.task -    ERROR -      start() - Host 'R1': task 'another_show_command_test' failed with traceback:
+Traceback (most recent call last):
+  File "C:\Projects\zero_touch\api\.venv\lib\site-packages\nornir\core\task.py", line 99, in start
+    r = self.task(self, **self.params)
+  File "C:\Projects\zero_touch\api\zero_backend\zero_touch_api\views.py", line 25, in another_show_command_test
+    print(interfaces_result.result["intf"])
+TypeError: list indices must be integers or slices, not str
+
+2022-08-22 23:16:05,532 -  nornir.core -     INFO -        run() - Running task 'another_show_command_test' with args {} on 1 hosts
+2022-08-22 23:16:46,489 -  nornir.core -     INFO -        run() - Running task 'another_show_command_test' with args {} on 1 hosts
+2022-08-22 23:16:47,735 - nornir.core.task -    ERROR -      start() - Host 'R1': task 'another_show_command_test' failed with traceback:
+Traceback (most recent call last):
+  File "C:\Projects\zero_touch\api\.venv\lib\site-packages\nornir\core\task.py", line 99, in start
+    r = self.task(self, **self.params)
+  File "C:\Projects\zero_touch\api\zero_backend\zero_touch_api\views.py", line 25, in another_show_command_test
+    print(ast.literal_eval(interfaces_result.result))
+NameError: name 'ast' is not defined
+
+2022-08-22 23:17:00,691 -  nornir.core -     INFO -        run() - Running task 'another_show_command_test' with args {} on 1 hosts
+2022-08-22 23:17:01,609 - nornir.core.task -    ERROR -      start() - Host 'R1': task 'another_show_command_test' failed with traceback:
+Traceback (most recent call last):
+  File "C:\Projects\zero_touch\api\.venv\lib\site-packages\nornir\core\task.py", line 99, in start
+    r = self.task(self, **self.params)
+  File "C:\Projects\zero_touch\api\zero_backend\zero_touch_api\views.py", line 26, in another_show_command_test
+    print(ast.literal_eval(interfaces_result.result))
+  File "C:\Users\idan5\AppData\Local\Programs\Python\Python310\lib\ast.py", line 108, in literal_eval
+    return _convert(node_or_string)
+  File "C:\Users\idan5\AppData\Local\Programs\Python\Python310\lib\ast.py", line 107, in _convert
+    return _convert_signed_num(node)
+  File "C:\Users\idan5\AppData\Local\Programs\Python\Python310\lib\ast.py", line 81, in _convert_signed_num
+    return _convert_num(node)
+  File "C:\Users\idan5\AppData\Local\Programs\Python\Python310\lib\ast.py", line 72, in _convert_num
+    _raise_malformed_node(node)
+  File "C:\Users\idan5\AppData\Local\Programs\Python\Python310\lib\ast.py", line 69, in _raise_malformed_node
+    raise ValueError(msg + f': {node!r}')
+ValueError: malformed node or string: [{'intf': 'Ethernet0/0', 'ipaddr': '192.168.19.101', 'status': 'up', 'proto': 'up'}, {'intf': 'Ethernet0/1', 'ipaddr': 'unassigned', 'status': 'administratively down', 'proto': 'down'}, {'intf': 'Ethernet0/2', 'ipaddr': 'unassigned', 'status': 'administratively down', 'proto': 'down'}, {'intf': 'Ethernet0/3', 'ipaddr': 'unassigned', 'status': 'administratively down', 'proto': 'down'}]
+
+2022-08-22 23:18:28,912 -  nornir.core -     INFO -        run() - Running task 'another_show_command_test' with args {} on 1 hosts
+2022-08-22 23:18:30,138 - nornir.core.task -    ERROR -      start() - Host 'R1': task 'another_show_command_test' failed with traceback:
+Traceback (most recent call last):
+  File "C:\Projects\zero_touch\api\.venv\lib\site-packages\nornir\core\task.py", line 99, in start
+    r = self.task(self, **self.params)
+  File "C:\Projects\zero_touch\api\zero_backend\zero_touch_api\views.py", line 26, in another_show_command_test
+    print(ast.literal_eval(interfaces_result.result[1:-1]))
+  File "C:\Users\idan5\AppData\Local\Programs\Python\Python310\lib\ast.py", line 108, in literal_eval
+    return _convert(node_or_string)
+  File "C:\Users\idan5\AppData\Local\Programs\Python\Python310\lib\ast.py", line 107, in _convert
+    return _convert_signed_num(node)
+  File "C:\Users\idan5\AppData\Local\Programs\Python\Python310\lib\ast.py", line 81, in _convert_signed_num
+    return _convert_num(node)
+  File "C:\Users\idan5\AppData\Local\Programs\Python\Python310\lib\ast.py", line 72, in _convert_num
+    _raise_malformed_node(node)
+  File "C:\Users\idan5\AppData\Local\Programs\Python\Python310\lib\ast.py", line 69, in _raise_malformed_node
+    raise ValueError(msg + f': {node!r}')
+ValueError: malformed node or string: [{'intf': 'Ethernet0/1', 'ipaddr': 'unassigned', 'status': 'administratively down', 'proto': 'down'}, {'intf': 'Ethernet0/2', 'ipaddr': 'unassigned', 'status': 'administratively down', 'proto': 'down'}]
+
+2022-08-22 23:19:26,986 -  nornir.core -     INFO -        run() - Running task 'another_show_command_test' with args {} on 1 hosts
+2022-08-22 23:19:27,948 - nornir.core.task -    ERROR -      start() - Host 'R1': task 'another_show_command_test' failed with traceback:
+Traceback (most recent call last):
+  File "C:\Projects\zero_touch\api\.venv\lib\site-packages\nornir\core\task.py", line 99, in start
+    r = self.task(self, **self.params)
+  File "C:\Projects\zero_touch\api\zero_backend\zero_touch_api\views.py", line 26, in another_show_command_test
+    print(ast.literal_eval(interfaces_result.result.lstrip("[").rstrip("]")))
+AttributeError: 'list' object has no attribute 'lstrip'
+
+2022-08-22 23:19:56,806 -  nornir.core -     INFO -        run() - Running task 'another_show_command_test' with args {} on 1 hosts
+2022-08-22 23:22:14,865 -  nornir.core -     INFO -        run() - Running task 'another_show_command_test' with args {} on 1 hosts
+2022-08-22 23:22:48,512 -  nornir.core -     INFO -        run() - Running task 'another_show_command_test' with args {} on 1 hosts
+2022-08-23 20:52:32,032 -  nornir.core -     INFO -        run() - Running task 'another_show_command_test' with args {} on 1 hosts
+2022-08-23 20:52:45,450 -  nornir.core -     INFO -        run() - Running task 'another_show_command_test' with args {} on 1 hosts
+2022-08-23 20:52:49,897 -  nornir.core -     INFO -        run() - Running task 'another_show_command_test' with args {} on 1 hosts
+2022-08-23 20:57:28,976 -  nornir.core -     INFO -        run() - Running task 'another_show_command_test' with args {} on 1 hosts
+2022-08-23 21:44:44,811 -  nornir.core -     INFO -        run() - Running task 'another_show_command_test' with args {} on 1 hosts
+2022-08-23 21:46:59,002 -  nornir.core -     INFO -        run() - Running task 'another_show_command_test' with args {} on 1 hosts
+2022-08-23 21:47:29,770 -  nornir.core -     INFO -        run() - Running task 'another_show_command_test' with args {} on 1 hosts
+2022-08-23 21:47:55,439 -  nornir.core -     INFO -        run() - Running task 'another_show_command_test' with args {} on 1 hosts
+2022-08-23 21:50:41,661 -  nornir.core -     INFO -        run() - Running task 'another_show_command_test' with args {} on 1 hosts
+2022-08-23 21:51:06,781 -  nornir.core -     INFO -        run() - Running task 'another_show_command_test' with args {} on 1 hosts
+2022-08-23 21:55:33,352 -  nornir.core -     INFO -        run() - Running task 'another_show_command_test' with args {} on 1 hosts
+2022-08-23 21:56:50,843 -  nornir.core -     INFO -        run() - Running task 'another_show_command_test' with args {} on 1 hosts
+2022-08-23 21:57:17,809 -  nornir.core -     INFO -        run() - Running task 'another_show_command_test' with args {} on 1 hosts
+2022-08-23 22:12:40,109 -  nornir.core -     INFO -        run() - Running task 'another_show_command_test' with args {} on 1 hosts
+2022-08-23 22:12:55,145 -  nornir.core -     INFO -        run() - Running task 'another_show_command_test' with args {} on 1 hosts
+2022-08-23 22:13:59,032 -  nornir.core -     INFO -        run() - Running task 'another_show_command_test' with args {} on 1 hosts
+2022-08-23 22:14:51,805 -  nornir.core -     INFO -        run() - Running task 'another_show_command_test' with args {} on 1 hosts
+2022-08-23 22:16:00,084 -  nornir.core -     INFO -        run() - Running task 'another_show_command_test' with args {} on 1 hosts
+2022-08-23 22:18:07,448 -  nornir.core -     INFO -        run() - Running task 'another_show_command_test' with args {} on 1 hosts
+2022-08-23 22:18:34,385 -  nornir.core -     INFO -        run() - Running task 'another_show_command_test' with args {} on 1 hosts
+2022-08-23 22:18:44,175 -  nornir.core -     INFO -        run() - Running task 'another_show_command_test' with args {} on 1 hosts
+2022-08-23 22:20:50,039 -  nornir.core -     INFO -        run() - Running task 'another_show_command_test' with args {} on 1 hosts
+2022-08-23 22:21:36,394 -  nornir.core -     INFO -        run() - Running task 'another_show_command_test' with args {} on 1 hosts
+2022-08-23 22:22:01,818 -  nornir.core -     INFO -        run() - Running task 'another_show_command_test' with args {} on 1 hosts
+2022-08-23 22:23:29,412 -  nornir.core -     INFO -        run() - Running task 'another_show_command_test' with args {} on 1 hosts
+2022-08-23 22:24:10,599 -  nornir.core -     INFO -        run() - Running task 'another_show_command_test' with args {} on 1 hosts
+2022-08-23 22:25:20,871 -  nornir.core -     INFO -        run() - Running task 'another_show_command_test' with args {} on 1 hosts
+2022-08-23 22:25:26,547 -  nornir.core -     INFO -        run() - Running task 'another_show_command_test' with args {} on 1 hosts
+2022-08-23 22:25:48,767 -  nornir.core -     INFO -        run() - Running task 'another_show_command_test' with args {} on 1 hosts
+2022-08-23 22:26:30,934 -  nornir.core -     INFO -        run() - Running task 'another_show_command_test' with args {} on 1 hosts
+2022-08-23 22:26:32,035 -  nornir.core -     INFO -        run() - Running task 'another_show_command_test' with args {} on 1 hosts
+2022-08-23 22:27:37,883 -  nornir.core -     INFO -        run() - Running task 'another_show_command_test' with args {} on 1 hosts
+2022-08-23 22:28:24,977 -  nornir.core -     INFO -        run() - Running task 'another_show_command_test' with args {} on 1 hosts
+2022-08-23 22:30:06,112 -  nornir.core -     INFO -        run() - Running task 'another_show_command_test' with args {} on 1 hosts
+2022-08-23 22:30:34,417 -  nornir.core -     INFO -        run() - Running task 'another_show_command_test' with args {} on 1 hosts
+2022-08-23 22:35:26,219 -  nornir.core -     INFO -        run() - Running task 'another_show_command_test' with args {} on 1 hosts
+2022-08-23 22:35:35,669 -  nornir.core -     INFO -        run() - Running task 'another_show_command_test' with args {} on 1 hosts
+2022-08-23 22:35:44,603 -  nornir.core -     INFO -        run() - Running task 'another_show_command_test' with args {} on 1 hosts
+2022-08-23 22:36:30,848 -  nornir.core -     INFO -        run() - Running task 'another_show_command_test' with args {} on 1 hosts
+2022-08-23 22:36:58,952 -  nornir.core -     INFO -        run() - Running task 'another_show_command_test' with args {} on 1 hosts
+2022-08-23 22:43:12,103 -  nornir.core -     INFO -        run() - Running task 'another_show_command_test' with args {} on 1 hosts

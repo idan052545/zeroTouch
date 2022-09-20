@@ -18,9 +18,10 @@ from django.contrib import admin
 from django.urls import path, include
 from zero_touch_api import urls as zero_touch_urls
 
+
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("api-auth/", include("rest_framework.urls")),
     path("zero-touch/", include(zero_touch_urls)),
-    path("__debug__/", include(debug_toolbar.urls)),
+    # path("__debug__/", include(debug_toolbar.urls)),
 ]
