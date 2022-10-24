@@ -13,23 +13,7 @@ const UserPage = () => {
 </button>*/
 
   const validateValues = async (name, toast, values) => {
-    const regexExp =
-      /^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$/gi; //ip validate
-    const check = values[name];
-    let valid = true;
-    if (!check) {
-      toast.error("בבקשה מלא את השדה");
-      valid = false;
-    }
-    if (name === "IP" && !regexExp.test(check)) {
-      toast.error("בבקשה מלא את השדה בפורמט נכון ");
-      valid = false;
-    }
-    if (name === "numOfUsers" && isNaN(check)) {
-      toast.error("בבקשה הכנס מספר ");
-      valid = false;
-    }
-    return valid;
+    return true;
   };
 
   return (

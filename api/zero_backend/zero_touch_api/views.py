@@ -1,11 +1,33 @@
-from typing import Iterable
-from django.shortcuts import render
+# from django_filters.rest_framework import DjangoFilterBackend
+from django.db.models.aggregates import Count
+from rest_framework.decorators import action, permission_classes
+from rest_framework.filters import SearchFilter, OrderingFilter
+from rest_framework.mixins import (
+    CreateModelMixin,
+    DestroyModelMixin,
+    RetrieveModelMixin,
+    UpdateModelMixin,
+)
+from rest_framework.permissions import (
+    AllowAny,
+    DjangoModelPermissions,
+    DjangoModelPermissionsOrAnonReadOnly,
+    IsAdminUser,
+    IsAuthenticated,
+)
+from rest_framework.response import Response
+from rest_framework.viewsets import ModelViewSet, GenericViewSet
+from rest_framework import status
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework import permissions
+from typing import Iterable
+from django.shortcuts import render
 from yaml import serialize
 import json
+from .models import Field
+from .serializers import FieldSerializer
 
 # from .models import ZeroTouch
 # from .serializers import ZeroTouchSerializer
@@ -55,10 +77,28 @@ class ZeroTouchListApiView(APIView):
         # print(request.query_params)
         # print(request.body.decode("utf-8"))
         results = nr.run(task=another_show_command_test)
-        print_result(results)
-        return Response(nr.inventory.hosts["R1"]["facts"], status=status.HTTP_200_OK)
+        # print_result(results)
+        return Response(
+            json.dumps(nr.inventory.hosts["R1"]["facts"]), status=status.HTTP_200_OK
+        )
 
         # return Response(serializer.data, status=status.HTTP_200_OK)
+
+
+class FieldViewSet(ModelViewSet):
+    queryset = Field.objects.annotate(fields_count=Count("id")).all()
+    serializer_class = FieldSerializer
+    # permission_classes = [IsAdminOrReadOnly]
+
+    def destroy(self, request, *args, **kwargs):
+        # if Field.objects.filter(id=kwargs["pk"]):
+        #     return Response(
+        #         {
+        #         },
+        #     status=status.HTTP_405_METHOD_NOT_ALLOWED,
+        # )
+
+        return super().destroy(request, *args, **kwargs)
 
 
 # def post(self, request, *args, **kwargs):

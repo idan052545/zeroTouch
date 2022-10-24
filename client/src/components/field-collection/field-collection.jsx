@@ -2,7 +2,12 @@ import React from "react";
 import FieldCollectionWrapper from "../../assets/wrappers/fieldCollection-wrapper";
 import Field from "../field/field";
 
-const FieldCollection = ({ fields, readFrom, reduxUpdateFunc }) => {
+const FieldCollection = ({
+  fields,
+  readFrom,
+  reduxUpdateFunc,
+  validateValues,
+}) => {
   return (
     <FieldCollectionWrapper>
       <div className="collection-page">
@@ -15,6 +20,7 @@ const FieldCollection = ({ fields, readFrom, reduxUpdateFunc }) => {
               {...otherCollectionProps}
               readFrom={readFrom}
               reduxUpdateFunc={reduxUpdateFunc}
+              validateValues={validateValues}
             />
           ))}
         </div>

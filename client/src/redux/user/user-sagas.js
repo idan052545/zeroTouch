@@ -1,6 +1,7 @@
 import { takeLatest, put, all, call } from "redux-saga/effects";
 import UserActionTypes from "./user-types";
 import axios from "axios";
+
 //import FormData from "form-data";
 
 import {
@@ -59,13 +60,12 @@ export function* getSnapshotFromUserAuth(userAuth) {
 
     const res = yield axios(config)
       .then((response) => {
-        console.log(JSON.stringify(response.data));
+        console.log(JSON.parse(response.data)[1]);
       })
       .catch((error) => {
         console.log(error);
       });
 
-    console.log(res);
     yield put(signInSuccess({ id: userAuth.IP, ...userAuth }));
   } catch (error) {
     yield put(signInFailure(error));

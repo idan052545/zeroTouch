@@ -424,3 +424,122 @@ AttributeError: 'list' object has no attribute 'lstrip'
 2022-08-23 22:36:30,848 -  nornir.core -     INFO -        run() - Running task 'another_show_command_test' with args {} on 1 hosts
 2022-08-23 22:36:58,952 -  nornir.core -     INFO -        run() - Running task 'another_show_command_test' with args {} on 1 hosts
 2022-08-23 22:43:12,103 -  nornir.core -     INFO -        run() - Running task 'another_show_command_test' with args {} on 1 hosts
+2022-09-20 09:38:51,283 -  nornir.core -     INFO -        run() - Running task 'another_show_command_test' with args {} on 1 hosts
+2022-09-20 09:39:01,700 - nornir.core.task -    ERROR -      start() - Host 'R1': task 'netmiko_send_command' failed with traceback:
+Traceback (most recent call last):
+  File "C:\Projects\zero_touch\api\.venv\lib\site-packages\netmiko\base_connection.py", line 1046, in establish_connection
+    self.remote_conn_pre.connect(**ssh_connect_params)
+  File "C:\Projects\zero_touch\api\.venv\lib\site-packages\paramiko\client.py", line 349, in connect
+    retry_on_signal(lambda: sock.connect(addr))
+  File "C:\Projects\zero_touch\api\.venv\lib\site-packages\paramiko\util.py", line 279, in retry_on_signal
+    return function()
+  File "C:\Projects\zero_touch\api\.venv\lib\site-packages\paramiko\client.py", line 349, in <lambda>
+    retry_on_signal(lambda: sock.connect(addr))
+TimeoutError: timed out
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Projects\zero_touch\api\.venv\lib\site-packages\nornir\core\task.py", line 99, in start
+    r = self.task(self, **self.params)
+  File "C:\Projects\zero_touch\api\.venv\lib\site-packages\nornir_netmiko\tasks\netmiko_send_command.py", line 26, in netmiko_send_command
+    net_connect = task.host.get_connection(CONNECTION_NAME, task.nornir.config)
+  File "C:\Projects\zero_touch\api\.venv\lib\site-packages\nornir\core\inventory.py", line 494, in get_connection
+    self.open_connection(
+  File "C:\Projects\zero_touch\api\.venv\lib\site-packages\nornir\core\inventory.py", line 546, in open_connection
+    conn_obj.open(
+  File "C:\Projects\zero_touch\api\.venv\lib\site-packages\nornir_netmiko\connections\netmiko.py", line 59, in open
+    connection = ConnectHandler(**parameters)
+  File "C:\Projects\zero_touch\api\.venv\lib\site-packages\netmiko\ssh_dispatcher.py", line 365, in ConnectHandler
+    return ConnectionClass(*args, **kwargs)
+  File "C:\Projects\zero_touch\api\.venv\lib\site-packages\netmiko\base_connection.py", line 439, in __init__
+    self._open()
+  File "C:\Projects\zero_touch\api\.venv\lib\site-packages\netmiko\base_connection.py", line 444, in _open
+    self.establish_connection()
+  File "C:\Projects\zero_touch\api\.venv\lib\site-packages\netmiko\base_connection.py", line 1068, in establish_connection
+    raise NetmikoTimeoutException(msg)
+netmiko.exceptions.NetmikoTimeoutException: TCP connection to device failed.
+
+Common causes of this problem are:
+1. Incorrect hostname or IP address.
+2. Wrong TCP port.
+3. Intermediate firewall blocking access.
+
+Device settings: cisco_ios 192.168.19.101:22
+
+
+
+2022-09-20 09:39:01,701 - nornir.core.task -    ERROR -      start() - Host 'R1': task 'another_show_command_test' failed with traceback:
+Traceback (most recent call last):
+  File "C:\Projects\zero_touch\api\.venv\lib\site-packages\nornir\core\task.py", line 99, in start
+    r = self.task(self, **self.params)
+  File "C:\Projects\zero_touch\api\zero_backend\zero_touch_api\views.py", line 21, in another_show_command_test
+    interfaces_result = task.run(
+  File "C:\Projects\zero_touch\api\.venv\lib\site-packages\nornir\core\task.py", line 174, in run
+    raise NornirSubTaskError(task=run_task, result=r)
+nornir.core.exceptions.NornirSubTaskError: Subtask: netmiko_send_command (failed)
+
+
+2022-09-20 13:31:09,789 -  nornir.core -     INFO -        run() - Running task 'another_show_command_test' with args {} on 1 hosts
+2022-09-20 13:31:55,086 -  nornir.core -     INFO -        run() - Running task 'another_show_command_test' with args {} on 1 hosts
+2022-09-20 13:32:10,934 -  nornir.core -     INFO -        run() - Running task 'another_show_command_test' with args {} on 1 hosts
+2022-09-20 13:32:58,945 -  nornir.core -     INFO -        run() - Running task 'another_show_command_test' with args {} on 1 hosts
+2022-09-20 13:34:26,661 -  nornir.core -     INFO -        run() - Running task 'another_show_command_test' with args {} on 1 hosts
+2022-09-20 13:34:36,704 - nornir.core.task -    ERROR -      start() - Host 'R1': task 'netmiko_send_command' failed with traceback:
+Traceback (most recent call last):
+  File "C:\Projects\zero_touch\api\.venv\lib\site-packages\netmiko\base_connection.py", line 1046, in establish_connection
+    self.remote_conn_pre.connect(**ssh_connect_params)
+  File "C:\Projects\zero_touch\api\.venv\lib\site-packages\paramiko\client.py", line 349, in connect
+    retry_on_signal(lambda: sock.connect(addr))
+  File "C:\Projects\zero_touch\api\.venv\lib\site-packages\paramiko\util.py", line 279, in retry_on_signal
+    return function()
+  File "C:\Projects\zero_touch\api\.venv\lib\site-packages\paramiko\client.py", line 349, in <lambda>
+    retry_on_signal(lambda: sock.connect(addr))
+TimeoutError: timed out
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Projects\zero_touch\api\.venv\lib\site-packages\nornir\core\task.py", line 99, in start
+    r = self.task(self, **self.params)
+  File "C:\Projects\zero_touch\api\.venv\lib\site-packages\nornir_netmiko\tasks\netmiko_send_command.py", line 26, in netmiko_send_command
+    net_connect = task.host.get_connection(CONNECTION_NAME, task.nornir.config)
+  File "C:\Projects\zero_touch\api\.venv\lib\site-packages\nornir\core\inventory.py", line 494, in get_connection
+    self.open_connection(
+  File "C:\Projects\zero_touch\api\.venv\lib\site-packages\nornir\core\inventory.py", line 546, in open_connection
+    conn_obj.open(
+  File "C:\Projects\zero_touch\api\.venv\lib\site-packages\nornir_netmiko\connections\netmiko.py", line 59, in open
+    connection = ConnectHandler(**parameters)
+  File "C:\Projects\zero_touch\api\.venv\lib\site-packages\netmiko\ssh_dispatcher.py", line 365, in ConnectHandler
+    return ConnectionClass(*args, **kwargs)
+  File "C:\Projects\zero_touch\api\.venv\lib\site-packages\netmiko\base_connection.py", line 439, in __init__
+    self._open()
+  File "C:\Projects\zero_touch\api\.venv\lib\site-packages\netmiko\base_connection.py", line 444, in _open
+    self.establish_connection()
+  File "C:\Projects\zero_touch\api\.venv\lib\site-packages\netmiko\base_connection.py", line 1068, in establish_connection
+    raise NetmikoTimeoutException(msg)
+netmiko.exceptions.NetmikoTimeoutException: TCP connection to device failed.
+
+Common causes of this problem are:
+1. Incorrect hostname or IP address.
+2. Wrong TCP port.
+3. Intermediate firewall blocking access.
+
+Device settings: cisco_ios 192.168.19.101:22
+
+
+
+2022-09-20 13:34:36,705 - nornir.core.task -    ERROR -      start() - Host 'R1': task 'another_show_command_test' failed with traceback:
+Traceback (most recent call last):
+  File "C:\Projects\zero_touch\api\.venv\lib\site-packages\nornir\core\task.py", line 99, in start
+    r = self.task(self, **self.params)
+  File "C:\Projects\zero_touch\api\zero_backend\zero_touch_api\views.py", line 21, in another_show_command_test
+    interfaces_result = task.run(
+  File "C:\Projects\zero_touch\api\.venv\lib\site-packages\nornir\core\task.py", line 174, in run
+    raise NornirSubTaskError(task=run_task, result=r)
+nornir.core.exceptions.NornirSubTaskError: Subtask: netmiko_send_command (failed)
+
+
+2022-09-20 13:35:03,356 -  nornir.core -     INFO -        run() - Running task 'another_show_command_test' with args {} on 1 hosts
+2022-09-20 13:36:11,330 -  nornir.core -     INFO -        run() - Running task 'another_show_command_test' with args {} on 1 hosts
+                                                                                                                                     

@@ -108,24 +108,29 @@ WSGI_APPLICATION = "zero_backend.wsgi.application"
 #     }
 # }
 # DATABASES = {}
-
+DATABASES = {
+    "default": {
+        "ENGINE": "djongo",
+        "NAME": "zeroTouchDB",
+    }
+}
 # DATABASES = {"default": {"ENGINE": "django.db.backends.dummy"}}
 
-load_dotenv(dotenv_path="./.env.local")
+# load_dotenv(dotenv_path="./.env.local")
 
-MONGO_URL = os.environ.get("MONGO_URL", "mongo")
-MONGO_USERNAME = os.environ.get("MONGO_USERNAME", "root")
-MONGO_PASSWORD = os.environ.get("MONGO_PASSWORD", "")
-MONGO_PORT = os.environ.get("MONGO_PORT", 27017)
+# MONGO_URL = os.environ.get("MONGO_URL", "mongo")
+# MONGO_USERNAME = os.environ.get("MONGO_USERNAME", "root")
+# MONGO_PASSWORD = os.environ.get("MONGO_PASSWORD", "")
+# MONGO_PORT = os.environ.get("MONGO_PORT", 27017)
 
-mongoengine.connect(
-    db="zeroTouchDB",
-    # username=MONGO_USERNAME,
-    # password=MONGO_PASSWORD,
-)
+# mongoengine.connect(
+#     db="zeroTouchDB",
+#     # username=MONGO_USERNAME,
+#     # password=MONGO_PASSWORD,
+# )
 
 
-AUTHENTICATION_BACKENDS = ("mongoengine.django.auth.MongoEngineBackend",)
+# AUTHENTICATION_BACKENDS = ("mongoengine.django.auth.MongoEngineBackend",)
 # AUTH_USER_MODEL = "mongo_auth.MongoUser"
 
 # AUTHENTICATION_BACKENDS = ("mongoengine.django.auth.MongoEngineBackend",)

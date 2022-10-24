@@ -16,6 +16,7 @@ const Field = ({
   imageUrl,
   readFrom,
   reduxUpdateFunc,
+  validateValues,
 }) => {
   const [hidden, setHidden] = useState(true);
   const [editMode, setEditMode] = useState(false);
@@ -33,23 +34,8 @@ const Field = ({
 
   const onSubmit = async (e) => {
     e.preventDefault();
-    const regexExp =
-      /^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$/gi; //ip validate
-    const check = values[name];
-    let valid = true;
-    if (!check) {
-      toast.error("בבקשה מלא את השדה");
-      valid = false;
-    }
-    if (name === "IP" && !regexExp.test(check)) {
-      toast.error("בבקשה מלא את השדה בפורמט נכון ");
-      valid = false;
-    }
-    if (name === "numOfUsers" && isNaN(check)) {
-      toast.error("בבקשה הכנס מספר ");
-      valid = false;
-    }
-
+    let valid = await validateValues(name, toast, values);
+    console.log(valid);
     if (valid) {
       dispatch(reduxUpdateFunc(values));
       setEditMode(false);

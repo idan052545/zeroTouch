@@ -9,7 +9,7 @@ netmiko = "*"
 requests = "*"
 flask-cors = "*"
 python-dotenv = "*"
-pymongo = "*"
+pymongo = "==3.12.3"
 django = "*"
 djangorestframework = "*"
 django-cors-headers = "*"
@@ -20,6 +20,8 @@ nornir = "*"
 nornir-utils = "*"
 scrapli = {extras = ["genie"], version = "*"}
 nornir-netmiko = "*"
+djongo = "*"
+drf-nested-routers = "*"
 
 [dev-packages]
 black = "*"
