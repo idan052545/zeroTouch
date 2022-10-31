@@ -7,6 +7,7 @@ from . import views
 
 router = routers.DefaultRouter()
 router.register("fields", views.FieldViewSet)
+router.register("routers", views.RouterViewSet)
 
 
 # urlpatterns = [

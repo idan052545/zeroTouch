@@ -9,9 +9,30 @@ from . import models
 
 
 @admin.register(models.Field)
-class ProductAdmin(admin.ModelAdmin):
+class FieldAdmin(admin.ModelAdmin):
     # autocomplete_fields = ["fields"]
     # prepopulated_fields = {"slug": ["name"]}
-    # actions = ['clear_inventory']
-    # inlines = [ProductImageInline]
     list_display = ["name", "label", "imageUrl", "status", "isDropdown"]
+
+
+@admin.register(models.Router)
+class ProductAdmin(admin.ModelAdmin):
+    # autocomplete_fields = ["groups"]
+    # prepopulated_fields = {
+    #     'slug': ['title']
+    # }
+    list_display = [
+        "hostname",
+        "ip",
+        "platform",
+        "username",
+        "password",
+        "siteNumber",
+        "network",
+        "numOfUsers",
+        "created_at",
+    ]
+    # list_editable = ['unit_price']
+    # list_filter = ['collection', 'last_update', InventoryFilter]
+    list_per_page = 10
+    # search_fields = ['title']

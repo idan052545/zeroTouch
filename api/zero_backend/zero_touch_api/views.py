@@ -1,6 +1,10 @@
 # from django_filters.rest_framework import DjangoFilterBackend
+from xml.etree.ElementTree import tostring
 from django.db.models.aggregates import Count
 from rest_framework.decorators import action, permission_classes
+from .pagination import DefaultPagination
+import yaml
+from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.filters import SearchFilter, OrderingFilter
 from rest_framework.mixins import (
     CreateModelMixin,
@@ -15,6 +19,7 @@ from rest_framework.permissions import (
     IsAdminUser,
     IsAuthenticated,
 )
+from .permissions import IsAdminOrReadOnly
 from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet, GenericViewSet
 from rest_framework import status
@@ -26,8 +31,11 @@ from typing import Iterable
 from django.shortcuts import render
 from yaml import serialize
 import json
-from .models import Field
-from .serializers import FieldSerializer
+
+from .filters import RouterFilter
+from .models import Field, Router
+from .serializers import FieldSerializer, RouterSerializer
+from djongo import database
 
 # from .models import ZeroTouch
 # from .serializers import ZeroTouchSerializer
@@ -39,6 +47,33 @@ from nornir_utils.plugins.functions import print_result
 nr = InitNornir(config_file="C:\\Projects\\zero_touch\\api\\config.yaml")
 
 
+def writeHostsYamlFile():
+    with open("C:\\Projects\\zero_touch\\api\\hostsTemp.yaml", "w") as outfile:
+        routers = Router.objects.all()
+        for router in routers:
+            yaml.dump(
+                {
+                    router.hostname: {
+                        "hostname": router.ip,
+                        # "groups": {router.groups},
+                        "platform": router.platform,
+                        "username": router.username,
+                        "password": router.password,
+                        "data": {
+                            "network": router.network,
+                            "numOfUsers": router.numOfUsers,
+                            "siteNumber": router.siteNumber,
+                        },
+                    }
+                },
+                outfile,
+                default_flow_style=False,
+            )
+
+
+writeHostsYamlFile()
+
+
 def another_show_command_test(task):
     interfaces_result = task.run(
         task=netmiko_send_command,
@@ -47,6 +82,9 @@ def another_show_command_test(task):
     )
     task.host["facts"] = interfaces_result.result
     print(interfaces_result.result[0]["intf"])
+
+
+# task, commandString
 
 
 # Create your views here.
@@ -83,6 +121,35 @@ class ZeroTouchListApiView(APIView):
         )
 
         # return Response(serializer.data, status=status.HTTP_200_OK)
+
+
+class RouterViewSet(ModelViewSet):
+    queryset = Router.objects.all()
+    serializer_class = RouterSerializer
+    filter_backends = [DjangoFilterBackend, SearchFilter, OrderingFilter]
+    filterset_class = RouterFilter
+    pagination_class = DefaultPagination
+    permission_classes = [IsAdminOrReadOnly, IsAdminUser]
+    search_fields = ["ip", "hostname", "groups", "network", "platform"]
+    ordering_fields = ["platform", "network"]
+
+    # def get_serializer_context(self):
+    #     return {"request": self.request}
+
+    def destroy(self, request, *args, **kwargs):
+        writeHostsYamlFile()
+        return super().destroy(request, *args, **kwargs)
+
+    def create(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        # call your function Eg.
+        writeHostsYamlFile()
+        self.perform_create(serializer)
+        headers = self.get_success_headers(serializer.data)
+        return Response(
+            serializer.data, status=status.HTTP_201_CREATED, headers=headers
+        )
 
 
 class FieldViewSet(ModelViewSet):

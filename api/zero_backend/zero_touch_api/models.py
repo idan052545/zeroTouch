@@ -2,6 +2,7 @@ from email.policy import default
 import json
 from random import choices
 from djongo import models
+from uuid import uuid4
 
 # from django.db import models
 # from django.contrib.auth.models import User
@@ -27,6 +28,25 @@ from json import JSONEncoder
 
 #     def __str__(self):
 #         return self.ip
+class Group(models.Model):
+    title = models.CharField(max_length=255)
+
+
+class Router(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid4)
+    hostname = models.CharField(max_length=255)
+    ip = models.CharField(max_length=255)
+    platform = models.CharField(max_length=255)
+    username = models.CharField(max_length=255)
+    password = models.CharField(max_length=255)
+    groups = models.ManyToManyField(Group, blank=True)
+    siteNumber = models.PositiveSmallIntegerField()
+    network = models.CharField(max_length=255)
+    numOfUsers = models.PositiveSmallIntegerField(blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        unique_together = ["ip", "network"]
 
 
 class Field(models.Model):
