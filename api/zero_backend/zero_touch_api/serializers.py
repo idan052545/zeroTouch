@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Field, Router, Group
+from .models import Field, FieldImage, Router, Group
 from django.db import transaction
 
 # from .models import ZeroTouch
@@ -11,10 +11,22 @@ from django.db import transaction
 #         fields = ["IP", "network", "siteNumber", "numOfUsers"]
 
 
+class FieldImageSerializer(serializers.ModelSerializer):
+    def create(self, validated_data):
+        field_id = self.context["field_id"]
+        return FieldImage.objects.create(field_id=field_id, **validated_data)
+
+    class Meta:
+        model = FieldImage
+        fields = ["id", "image"]
+
+
 class FieldSerializer(serializers.ModelSerializer):
+    images = FieldImageSerializer(many=True, read_only=True)
+
     class Meta:
         model = Field
-        fields = ["name", "label", "imageUrl", "status", "isDropdown"]
+        fields = ["name", "label", "imageUrl", "status", "isDropdown", "images"]
 
 
 class GroupSerializer(serializers.ModelSerializer):

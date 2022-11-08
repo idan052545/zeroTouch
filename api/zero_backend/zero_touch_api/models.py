@@ -3,6 +3,7 @@ import json
 from random import choices
 from djongo import models
 from uuid import uuid4
+from .validators import validate_file_size
 
 # from django.db import models
 # from django.contrib.auth.models import User
@@ -60,6 +61,11 @@ class Field(models.Model):
     imageUrl = models.CharField(max_length=6000)
     status = models.CharField(max_length=50, choices=STATUS, default=STATUS_REGULAR)
     isDropdown = models.BooleanField()
+
+
+class FieldImage(models.Model):
+    field = models.ForeignKey(Field, on_delete=models.CASCADE, related_name="images")
+    image = models.ImageField(upload_to="./images", validators=[validate_file_size])
 
 
 # class Field(Document):
