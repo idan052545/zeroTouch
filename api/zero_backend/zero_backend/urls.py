@@ -14,10 +14,15 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 import debug_toolbar
+from django.conf import settings
 from django.contrib import admin
 from django.urls import path, include
 from zero_touch_api import urls as zero_touch_urls
+from django.conf.urls.static import static
 
+
+admin.site.site_header = "ZeroTouch Admin"
+admin.site.index_title = "Admin"
 
 urlpatterns = [
     path("admin/", admin.site.urls),
@@ -25,3 +30,4 @@ urlpatterns = [
     path("zero-touch/", include(zero_touch_urls)),
     # path("__debug__/", include(debug_toolbar.urls)),
 ]
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -1,6 +1,7 @@
 import main from "../assets/images/main.svg";
 import HomePageWrapper from "../assets/wrappers/homePage-wrapper";
 import { Link } from "react-router-dom";
+
 const HomePage = () => {
   return (
     <HomePageWrapper>

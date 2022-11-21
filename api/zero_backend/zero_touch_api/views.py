@@ -33,8 +33,8 @@ from yaml import serialize
 import json
 
 from .filters import RouterFilter
-from .models import Field, Router
-from .serializers import FieldSerializer, RouterSerializer
+from .models import Field, FieldImage, Router
+from .serializers import FieldImageSerializer, FieldSerializer, RouterSerializer
 from djongo import database
 
 # from .models import ZeroTouch
@@ -153,7 +153,8 @@ class RouterViewSet(ModelViewSet):
 
 
 class FieldViewSet(ModelViewSet):
-    queryset = Field.objects.annotate(fields_count=Count("id")).all()
+    # queryset = Field.objects.annotate(fields_count=Count("id")).all()
+    queryset = Field.objects.prefetch_related("images").all()
     serializer_class = FieldSerializer
     # permission_classes = [IsAdminOrReadOnly]
 
@@ -166,6 +167,16 @@ class FieldViewSet(ModelViewSet):
         # )
 
         return super().destroy(request, *args, **kwargs)
+
+
+class FieldImageViewSet(ModelViewSet):
+    serializer_class = FieldImageSerializer
+
+    def get_serializer_context(self):
+        return {"field_id": self.kwargs["field_pk"]}
+
+    def get_queryset(self):
+        return FieldImage.objects.filter(field_id=self.kwargs["field_pk"])
 
 
 # def post(self, request, *args, **kwargs):

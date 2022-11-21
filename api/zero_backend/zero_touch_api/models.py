@@ -58,7 +58,7 @@ class Field(models.Model):
     id = models.IntegerField(primary_key=True)
     name = models.CharField(max_length=50)
     label = models.CharField(max_length=50)
-    imageUrl = models.CharField(max_length=6000)
+    # imageUrl = models.CharField(max_length=6000)
     status = models.CharField(max_length=50, choices=STATUS, default=STATUS_REGULAR)
     isDropdown = models.BooleanField()
 

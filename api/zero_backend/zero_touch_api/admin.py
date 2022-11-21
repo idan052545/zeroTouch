@@ -5,6 +5,17 @@ from django.utils.html import format_html, urlencode
 from django.urls import reverse
 from . import models
 
+
+class FieldImageInline(admin.TabularInline):
+    model = models.FieldImage
+    readonly_fields = ["thumbnail"]
+
+    def thumbnail(self, instance):
+        if instance.image.name != "":
+            return format_html(f'<img src="{instance.image.url}" class="thumbnail" />')
+        return ""
+
+
 # Register your models here.
 
 
@@ -12,7 +23,8 @@ from . import models
 class FieldAdmin(admin.ModelAdmin):
     # autocomplete_fields = ["fields"]
     # prepopulated_fields = {"slug": ["name"]}
-    list_display = ["name", "label", "imageUrl", "status", "isDropdown"]
+    list_display = ["name", "label", "status", "isDropdown"]
+    inlines = [FieldImageInline]
 
 
 @admin.register(models.Router)

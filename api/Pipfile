@@ -23,6 +23,7 @@ nornir-netmiko = "*"
 djongo = "*"
 drf-nested-routers = "*"
 django-filter = "*"
+pillow = "*"
 
 [dev-packages]
 black = "*"

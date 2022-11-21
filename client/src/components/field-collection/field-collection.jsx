@@ -12,17 +12,21 @@ const FieldCollection = ({
     <FieldCollectionWrapper>
       <div className="collection-page">
         <div className="items">
-          {fields?.map(({ id, name, ...otherCollectionProps }) => (
-            <Field
-              key={id}
-              name={name}
-              value={readFrom[name]}
-              {...otherCollectionProps}
-              readFrom={readFrom}
-              reduxUpdateFunc={reduxUpdateFunc}
-              validateValues={validateValues}
-            />
-          ))}
+          {fields?.map(
+            ({ name, images, status, ...otherCollectionProps }, index) => (
+              <Field
+                key={index}
+                name={name}
+                imageUrl={images[0]?.image}
+                value={readFrom[name]}
+                status={status === "F" ? "fixed" : ""}
+                {...otherCollectionProps}
+                readFrom={readFrom}
+                reduxUpdateFunc={reduxUpdateFunc}
+                validateValues={validateValues}
+              />
+            )
+          )}
         </div>
       </div>
     </FieldCollectionWrapper>

@@ -1,12 +1,21 @@
-import React from "react";
+import React, { useEffect } from "react";
 import FieldCollection from "../components/field-collection/field-collection";
 import { selectCurrentUser } from "../redux/user/user-selectors";
 import { useSelector } from "react-redux";
-import fields from "../fields";
+// import fields from "../fields";
 import { updateStart } from "../redux/user/user-actions";
+import {
+  selectFieldsArray,
+  selectIsFieldsLoaded,
+} from "../redux/field/field-selectors";
+//import WithSpinner from "../components/withSpinner/withSpinner";
 
 const UserPage = () => {
   const currentUser = useSelector(selectCurrentUser);
+  const fields = useSelector(selectFieldsArray);
+  let isLoading = !useSelector(selectIsFieldsLoaded);
+
+  useEffect(() => {}, [isLoading]);
 
   /* <button className="btn btn-close btn-reverse btn-block center">
   קנפג

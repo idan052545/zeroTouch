@@ -18,7 +18,7 @@ class FieldImageSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = FieldImage
-        fields = ["id", "image"]
+        fields = ["image"]
 
 
 class FieldSerializer(serializers.ModelSerializer):
@@ -26,7 +26,7 @@ class FieldSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Field
-        fields = ["name", "label", "imageUrl", "status", "isDropdown", "images"]
+        fields = ["name", "label", "status", "isDropdown", "images"]
 
 
 class GroupSerializer(serializers.ModelSerializer):
