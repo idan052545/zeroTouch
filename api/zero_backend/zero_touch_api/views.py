@@ -43,12 +43,11 @@ from netmiko import ConnectHandler
 from nornir import InitNornir
 from nornir_netmiko.tasks import netmiko_send_command
 from nornir_utils.plugins.functions import print_result
-
-nr = InitNornir(config_file="C:\\Projects\\zero_touch\\api\\config.yaml")
+nr = InitNornir(config_file="../config.yaml")
 
 
 def writeHostsYamlFile():
-    with open("C:\\Projects\\zero_touch\\api\\hostsTemp.yaml", "w") as outfile:
+    with open("../hostsTemp.yaml", "w") as outfile:
         routers = Router.objects.all()
         for router in routers:
             yaml.dump(
@@ -92,7 +91,6 @@ class ZeroTouchListApiView(APIView):
     # permission_classes = [permissions.IsAuthenticated]
 
     def get(self, request, *args, **kwargs):
-
         """
         List all the zeroTouch items for given requested user
         """

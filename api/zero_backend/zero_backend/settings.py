@@ -113,6 +113,7 @@ DATABASES = {
     "default": {
         "ENGINE": "djongo",
         "NAME": "zeroTouchDB",
+
     }
 }
 # DATABASES = {"default": {"ENGINE": "django.db.backends.dummy"}}
