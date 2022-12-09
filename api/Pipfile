@@ -18,12 +18,13 @@ mongoengine = "*"
 django-debug-toolbar = "*"
 nornir = "*"
 nornir-utils = "*"
-scrapli = {extras = ["genie"], version = "*"}
 nornir-netmiko = "*"
 djongo = "*"
 drf-nested-routers = "*"
 django-filter = "*"
 pillow = "*"
+pyats = {extras = ["full"], version = "*"}
+genie = "*"
 
 [dev-packages]
 black = "*"

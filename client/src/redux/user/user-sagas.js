@@ -48,7 +48,7 @@ export function* getSnapshotFromUserAuth(userAuth) {
     //   ip: "1.2.4.1",
     // });
     // console.log(data);
-    let config = {
+    /*let config = {
       method: "get",
       url: "http://127.0.0.1:8000/zero-touch/api",
       headers: {
@@ -56,11 +56,21 @@ export function* getSnapshotFromUserAuth(userAuth) {
         "Content-Type": "application/json",
       },
       params: { ...userAuth },
+    };*/
+    
+    let config = {
+      method: "get",
+      url: "http://127.0.0.1:8000/zero-touch/routers/show_ip_int_br/",
+      headers: {
+        Authorization: "Basic aWRhbjA1MjU0NTppZGFuMTIzNDU2",
+        "Content-Type": "application/json",
+      },
+      params: { ...userAuth },
     };
-
+    
     const res = yield axios(config)
       .then((response) => {
-        console.log(JSON.parse(response.data)[1]);
+        console.log(JSON.parse(response.data));
       })
       .catch((error) => {
         console.log(error);
