@@ -34,9 +34,8 @@ from .models import Field, FieldImage, Router
 from .serializers import FieldImageSerializer, FieldSerializer, RouterSerializer
 from djongo import database
 
-from .nornir_netmiko_actions import show_ip_int_br, get_all_ip, locate_ip, get_loopback_ip, ping_test, failed_list, target_list, duplicates, ip_list
+from .nornir_netmiko_actions import generate_node_and_edge_dictionaries, load_ospf, show_ip_int_br, get_all_ip, locate_ip, get_loopback_ip, ping_test, failed_list, show_ip_ospf_database_router, string_result, target_list, duplicates, ip_list
 from collections import Counter
-
 
 from netmiko import ConnectHandler
 from nornir import InitNornir
@@ -141,6 +140,30 @@ class RouterViewSet(ModelViewSet):
                 json.dumps({}, indent=4), status=status.HTTP_200_OK
             )
 
+    @action(detail=False, methods=['GET'], permission_classes=[IsAuthenticated])
+    def send_ospf_config(self, request):
+        results =  nr.run(load_ospf)
+        print_result(results)
+        return Response(
+            json.dumps(string_result(results), indent=4), status=status.HTTP_200_OK
+        )          
+
+    @action(detail=False, methods=['GET'], permission_classes=[IsAuthenticated])
+    def show_ip_ospf_database_router(self, request):
+        if request.method == 'GET':
+            results = nr.run(task=show_ip_ospf_database_router)
+            print_result(results)
+            return Response(
+                json.dumps(nr.inventory.hosts["R1"]["facts"], indent=4), status=status.HTTP_200_OK
+            )
+    @action(detail=False, methods=['GET'], permission_classes=[IsAuthenticated])
+    def generate_node_and_edge_dictionaries(self, request):
+        if request.method == 'GET':
+            results = nr.run(task=generate_node_and_edge_dictionaries)
+            print_result(results)
+            return Response(
+                json.dumps({}, indent=4), status=status.HTTP_200_OK
+            )            
 
 class FieldViewSet(ModelViewSet):
     # queryset = Field.objects.annotate(fields_count=Count("id")).all()
@@ -169,21 +192,3 @@ class FieldImageViewSet(ModelViewSet):
         return FieldImage.objects.filter(field_id=self.kwargs["field_pk"])
 
 
-# def post(self, request, *args, **kwargs):
-#     """
-#     Create the Todo with given todo data
-#     """
-
-#     data = {
-#         "ip": request.data.get("ip"),
-#         "completed": request.data.get("completed"),
-#         "user": request.user.id,
-#     }
-
-#     serializer = ZeroTouchSerializer(data=data)
-
-#     if serializer.is_valid():
-#         serializer.save()
-#         return Response(serializer.data, status=status.HTTP_201_CREATED)
-
-#     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

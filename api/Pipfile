@@ -25,6 +25,8 @@ django-filter = "*"
 pillow = "*"
 pyats = {extras = ["full"], version = "*"}
 genie = "*"
+nornir-jinja2 = "*"
+networkx = {extras = ["default"], version = "*"}
 
 [dev-packages]
 black = "*"

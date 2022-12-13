@@ -18,10 +18,31 @@ const rfStyle = {
 };
 
 const initialNodes = [
+  // {
+  //   id: "node-1",
+  //   type: "ZeroTouchNode",
+  //   position: { x: -4.6911228725903635, y: -9.919504481732364 },
+  //   data: {
+  //     value: 123,
+  //     img: "https://symbols.getvecta.com/stencil_240/204_router.7b208c1133.png",
+  //   },
+  // },
+  // {
+  //   id: "node-2",
+  //   type: "ZeroTouchNode",
+  //   position: { x: 65.20932100627898, y: 100.0 },
+  //   data: {
+  //     value: 123,
+  //     img: "https://symbols.getvecta.com/stencil_240/204_router.7b208c1133.png",
+  //   },
+  // },
   {
     id: "node-1",
     type: "ZeroTouchNode",
-    position: { x: 0, y: 0 },
+    position: {
+      x: -4.6911228725903635,
+      y: -9.919504481732364,
+    },
     data: {
       value: 123,
       img: "https://symbols.getvecta.com/stencil_240/204_router.7b208c1133.png",
@@ -30,7 +51,46 @@ const initialNodes = [
   {
     id: "node-2",
     type: "ZeroTouchNode",
-    position: { x: 0, y: 50 },
+    position: {
+      x: 65.20932100627898,
+      y: 100.0,
+    },
+    data: {
+      value: 123,
+      img: "https://symbols.getvecta.com/stencil_240/204_router.7b208c1133.png",
+    },
+  },
+  {
+    id: "node-3",
+    type: "ZeroTouchNode",
+    position: {
+      x: 1.1244568049374297,
+      y: -0.7537954550501272,
+    },
+    data: {
+      value: 123,
+      img: "https://symbols.getvecta.com/stencil_240/204_router.7b208c1133.png",
+    },
+  },
+  {
+    id: "node-4",
+    type: "ZeroTouchNode",
+    position: {
+      x: -68.29322280210454,
+      y: -97.91766004371908,
+    },
+    data: {
+      value: 123,
+      img: "https://symbols.getvecta.com/stencil_240/204_router.7b208c1133.png",
+    },
+  },
+  {
+    id: "node-5",
+    type: "ZeroTouchNode",
+    position: {
+      x: 6.650567863478483,
+      y: 8.590959980501555,
+    },
     data: {
       value: 123,
       img: "https://symbols.getvecta.com/stencil_240/204_router.7b208c1133.png",
@@ -40,6 +100,7 @@ const initialNodes = [
 
 const initialEdges = [{ id: "1-2", source: "node-1", target: "node-2" }];
 
+// {'10.0.0.1': {'x': -4.6911228725903635, 'y': -9.919504481732364}, '192.160.1.1': {'x': 65.20932100627898, 'y': 100.0}, '255.255.255.255': {'x': 1.1244568049374297, 'y': -0.7537954550501272}, '192.160.1.2': {'x': -68.29322280210454, 'y': -97.91766004371908}, '20.0.0.1': {'x': 6.650567863478483, 'y': 8.590959980501555}}
 // we define the nodeTypes outside of the component to prevent re-renderings
 // you could also use useMemo inside the component
 const nodeTypes = { ZeroTouchNode: ZeroTouchNode };
