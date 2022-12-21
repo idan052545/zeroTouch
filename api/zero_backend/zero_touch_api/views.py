@@ -34,7 +34,7 @@ from .models import Field, FieldImage, Router
 from .serializers import FieldImageSerializer, FieldSerializer, RouterSerializer
 from djongo import database
 
-from .nornir_netmiko_actions import generate_node_and_edge_dictionaries, load_ospf, show_ip_int_br, get_all_ip, locate_ip, get_loopback_ip, ping_test, failed_list, show_ip_ospf_database_router, string_result, target_list, duplicates, ip_list
+from .nornir_netmiko_actions import generate_node_and_edge_dictionaries, get_interfaces_dict, load_ospf, show_ip_int_br, get_all_ip, locate_ip, get_loopback_ip, ping_test, failed_list, show_ip_ospf_database_router, string_result, target_list, duplicates, ip_list,interfaces
 from collections import Counter
 
 from netmiko import ConnectHandler
@@ -159,6 +159,10 @@ class RouterViewSet(ModelViewSet):
     @action(detail=False, methods=['GET'], permission_classes=[IsAuthenticated])
     def generate_node_and_edge_dictionaries(self, request):
         if request.method == 'GET':
+            # interfaces= {}
+            results1 = nr.run(task=get_interfaces_dict)
+            print_result(results1)
+
             results = nr.run(task=generate_node_and_edge_dictionaries)
             print_result(results)
             return Response(

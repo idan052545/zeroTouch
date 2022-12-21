@@ -1915,3 +1915,842 @@ TypeError: Graph.add_edge() takes 3 positional arguments but 4 were given
 2022-12-13 23:07:18,302 -  nornir.core -     INFO -        run() - Running task 'generate_node_and_edge_dictionaries' with args {} on 1 hosts
 2022-12-13 23:15:39,603 -  nornir.core -     INFO -        run() - Running task 'generate_node_and_edge_dictionaries' with args {} on 1 hosts
 2022-12-13 23:17:05,220 -  nornir.core -     INFO -        run() - Running task 'generate_node_and_edge_dictionaries' with args {} on 1 hosts
+2022-12-16 12:02:37,093 -  nornir.core -     INFO -        run() - Running task 'generate_node_and_edge_dictionaries' with args {} on 1 hosts
+2022-12-16 12:02:40,180 - nornir.core.task -    ERROR -      start() - Host 'R1': task 'netmiko_send_command' failed with traceback:
+Traceback (most recent call last):
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/netmiko/base_connection.py", line 1046, in establish_connection
+    self.remote_conn_pre.connect(**ssh_connect_params)
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/paramiko/client.py", line 381, in connect
+    raise NoValidConnectionsError(errors)
+paramiko.ssh_exception.NoValidConnectionsError: [Errno None] Unable to connect to port 22 on 192.168.19.101
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/nornir/core/task.py", line 99, in start
+    r = self.task(self, **self.params)
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/nornir_netmiko/tasks/netmiko_send_command.py", line 26, in netmiko_send_command
+    net_connect = task.host.get_connection(CONNECTION_NAME, task.nornir.config)
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/nornir/core/inventory.py", line 494, in get_connection
+    self.open_connection(
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/nornir/core/inventory.py", line 546, in open_connection
+    conn_obj.open(
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/nornir_netmiko/connections/netmiko.py", line 59, in open
+    connection = ConnectHandler(**parameters)
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/netmiko/ssh_dispatcher.py", line 365, in ConnectHandler
+    return ConnectionClass(*args, **kwargs)
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/netmiko/base_connection.py", line 439, in __init__
+    self._open()
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/netmiko/base_connection.py", line 444, in _open
+    self.establish_connection()
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/netmiko/base_connection.py", line 1068, in establish_connection
+    raise NetmikoTimeoutException(msg)
+netmiko.exceptions.NetmikoTimeoutException: TCP connection to device failed.
+
+Common causes of this problem are:
+1. Incorrect hostname or IP address.
+2. Wrong TCP port.
+3. Intermediate firewall blocking access.
+
+Device settings: cisco_ios 192.168.19.101:22
+
+
+
+2022-12-16 12:02:40,180 - nornir.core.task -    ERROR -      start() - Host 'R1': task 'generate_node_and_edge_dictionaries' failed with traceback:
+Traceback (most recent call last):
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/nornir/core/task.py", line 99, in start
+    r = self.task(self, **self.params)
+  File "/home/idansimantov/projects/zero_touch/api/zero_backend/zero_touch_api/nornir_netmiko_actions.py", line 148, in generate_node_and_edge_dictionaries
+    ospf_output = task.run(
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/nornir/core/task.py", line 174, in run
+    raise NornirSubTaskError(task=run_task, result=r)
+nornir.core.exceptions.NornirSubTaskError: Subtask: netmiko_send_command (failed)
+
+
+2022-12-16 12:05:23,167 -  nornir.core -     INFO -        run() - Running task 'generate_node_and_edge_dictionaries' with args {} on 1 hosts
+2022-12-16 12:07:53,144 -  nornir.core -     INFO -        run() - Running task 'generate_node_and_edge_dictionaries' with args {} on 1 hosts
+2022-12-16 12:08:00,923 -  nornir.core -     INFO -        run() - Running task 'generate_node_and_edge_dictionaries' with args {} on 1 hosts
+2022-12-16 12:08:23,545 -  nornir.core -     INFO -        run() - Running task 'generate_node_and_edge_dictionaries' with args {} on 1 hosts
+2022-12-16 12:08:37,417 - nornir.core.task -    ERROR -      start() - Host 'R1': task 'generate_node_and_edge_dictionaries' failed with traceback:
+Traceback (most recent call last):
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/nornir/core/task.py", line 99, in start
+    r = self.task(self, **self.params)
+  File "/home/idansimantov/projects/zero_touch/api/zero_backend/zero_touch_api/nornir_netmiko_actions.py", line 163, in generate_node_and_edge_dictionaries
+    for area in instance["areas"].values():
+KeyError: 'areas'
+
+2022-12-16 12:27:17,315 -  nornir.core -     INFO -        run() - Running task 'generate_node_and_edge_dictionaries' with args {} on 1 hosts
+2022-12-16 12:27:43,325 -  nornir.core -     INFO -        run() - Running task 'generate_node_and_edge_dictionaries' with args {} on 1 hosts
+2022-12-16 12:27:58,194 - nornir.core.task -    ERROR -      start() - Host 'R1': task 'generate_node_and_edge_dictionaries' failed with traceback:
+Traceback (most recent call last):
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/nornir/core/task.py", line 99, in start
+    r = self.task(self, **self.params)
+  File "/home/idansimantov/projects/zero_touch/api/zero_backend/zero_touch_api/nornir_netmiko_actions.py", line 222, in generate_node_and_edge_dictionaries
+    new_dict = {
+  File "/home/idansimantov/projects/zero_touch/api/zero_backend/zero_touch_api/nornir_netmiko_actions.py", line 222, in <setcomp>
+    new_dict = {
+TypeError: unhashable type: 'dict'
+
+2022-12-16 12:32:28,717 -  nornir.core -     INFO -        run() - Running task 'generate_node_and_edge_dictionaries' with args {} on 1 hosts
+2022-12-16 12:32:37,945 - nornir.core.task -    ERROR -      start() - Host 'R1': task 'generate_node_and_edge_dictionaries' failed with traceback:
+Traceback (most recent call last):
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/nornir/core/task.py", line 99, in start
+    r = self.task(self, **self.params)
+  File "/home/idansimantov/projects/zero_touch/api/zero_backend/zero_touch_api/nornir_netmiko_actions.py", line 237, in generate_node_and_edge_dictionaries
+    print(json.dumps(new_dict,indent=4))
+  File "/usr/lib/python3.10/json/__init__.py", line 238, in dumps
+    **kw).encode(obj)
+  File "/usr/lib/python3.10/json/encoder.py", line 201, in encode
+    chunks = list(chunks)
+  File "/usr/lib/python3.10/json/encoder.py", line 431, in _iterencode
+    yield from _iterencode_dict(o, _current_indent_level)
+  File "/usr/lib/python3.10/json/encoder.py", line 376, in _iterencode_dict
+    raise TypeError(f'keys must be str, int, float, bool or None, '
+TypeError: keys must be str, int, float, bool or None, not tuple
+
+2022-12-16 12:35:28,872 -  nornir.core -     INFO -        run() - Running task 'generate_node_and_edge_dictionaries' with args {} on 1 hosts
+2022-12-16 15:02:10,849 -  nornir.core -     INFO -        run() - Running task 'generate_node_and_edge_dictionaries' with args {} on 1 hosts
+2022-12-16 15:02:54,844 -  nornir.core -     INFO -        run() - Running task 'generate_node_and_edge_dictionaries' with args {} on 1 hosts
+2022-12-16 16:17:57,777 -  nornir.core -     INFO -        run() - Running task 'generate_node_and_edge_dictionaries' with args {} on 1 hosts
+2022-12-16 16:18:04,848 - nornir.core.task -    ERROR -      start() - Host 'R1': task 'generate_node_and_edge_dictionaries' failed with traceback:
+Traceback (most recent call last):
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/nornir/core/task.py", line 99, in start
+    r = self.task(self, **self.params)
+  File "/home/idansimantov/projects/zero_touch/api/zero_backend/zero_touch_api/nornir_netmiko_actions.py", line 245, in generate_node_and_edge_dictionaries
+    edges.append({
+AttributeError: 'dict' object has no attribute 'append'
+
+2022-12-16 16:18:35,012 -  nornir.core -     INFO -        run() - Running task 'generate_node_and_edge_dictionaries' with args {} on 1 hosts
+2022-12-16 16:18:48,958 -  nornir.core -     INFO -        run() - Running task 'generate_node_and_edge_dictionaries' with args {} on 1 hosts
+2022-12-16 16:18:52,479 - nornir.core.task -    ERROR -      start() - Host 'R1': task 'generate_node_and_edge_dictionaries' failed with traceback:
+Traceback (most recent call last):
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/nornir/core/task.py", line 99, in start
+    r = self.task(self, **self.params)
+  File "/home/idansimantov/projects/zero_touch/api/zero_backend/zero_touch_api/nornir_netmiko_actions.py", line 245, in generate_node_and_edge_dictionaries
+    edges.append({
+AttributeError: 'dict' object has no attribute 'append'
+
+2022-12-16 16:19:10,089 -  nornir.core -     INFO -        run() - Running task 'generate_node_and_edge_dictionaries' with args {} on 1 hosts
+2022-12-16 16:19:14,667 - nornir.core.task -    ERROR -      start() - Host 'R1': task 'generate_node_and_edge_dictionaries' failed with traceback:
+Traceback (most recent call last):
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/nornir/core/task.py", line 99, in start
+    r = self.task(self, **self.params)
+  File "/home/idansimantov/projects/zero_touch/api/zero_backend/zero_touch_api/nornir_netmiko_actions.py", line 245, in generate_node_and_edge_dictionaries
+    new_dict_edges.append({
+TypeError: unhashable type: 'dict'
+
+2022-12-16 16:20:35,390 -  nornir.core -     INFO -        run() - Running task 'generate_node_and_edge_dictionaries' with args {} on 1 hosts
+2022-12-16 16:20:39,490 - nornir.core.task -    ERROR -      start() - Host 'R1': task 'generate_node_and_edge_dictionaries' failed with traceback:
+Traceback (most recent call last):
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/nornir/core/task.py", line 99, in start
+    r = self.task(self, **self.params)
+  File "/home/idansimantov/projects/zero_touch/api/zero_backend/zero_touch_api/nornir_netmiko_actions.py", line 245, in generate_node_and_edge_dictionaries
+    buffer_dict ={
+TypeError: unhashable type: 'dict'
+
+2022-12-16 16:21:50,680 -  nornir.core -     INFO -        run() - Running task 'generate_node_and_edge_dictionaries' with args {} on 1 hosts
+2022-12-16 16:21:54,946 - nornir.core.task -    ERROR -      start() - Host 'R1': task 'generate_node_and_edge_dictionaries' failed with traceback:
+Traceback (most recent call last):
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/nornir/core/task.py", line 99, in start
+    r = self.task(self, **self.params)
+  File "/home/idansimantov/projects/zero_touch/api/zero_backend/zero_touch_api/nornir_netmiko_actions.py", line 245, in generate_node_and_edge_dictionaries
+    buffer_dict = {
+TypeError: unhashable type: 'dict'
+
+2022-12-16 16:23:04,765 -  nornir.core -     INFO -        run() - Running task 'generate_node_and_edge_dictionaries' with args {} on 1 hosts
+2022-12-16 16:41:01,365 -  nornir.core -     INFO -        run() - Running task 'generate_node_and_edge_dictionaries' with args {} on 1 hosts
+2022-12-16 17:04:35,284 -  nornir.core -     INFO -        run() - Running task 'generate_node_and_edge_dictionaries' with args {} on 1 hosts
+2022-12-16 18:42:19,273 -  nornir.core -     INFO -        run() - Running task 'show_ip_int_br' with args {} on 1 hosts
+2022-12-16 18:42:19,392 - nornir.core.task -    ERROR -      start() - Host 'R1': task 'netmiko_send_command' failed with traceback:
+Traceback (most recent call last):
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/nornir/core/task.py", line 99, in start
+    r = self.task(self, **self.params)
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/nornir_netmiko/tasks/netmiko_send_command.py", line 32, in netmiko_send_command
+    result = net_connect.send_command(command_string, **kwargs)
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/netmiko/utilities.py", line 592, in wrapper_decorator
+    return func(self, *args, **kwargs)
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/netmiko/base_connection.py", line 1659, in send_command
+    search_pattern = self._prompt_handler(auto_find_prompt)
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/netmiko/base_connection.py", line 1544, in _prompt_handler
+    prompt = self.find_prompt()
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/netmiko/base_connection.py", line 1335, in find_prompt
+    self.write_channel(self.RETURN)
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/netmiko/base_connection.py", line 97, in wrapper_decorator
+    return_val = func(self, *args, **kwargs)
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/netmiko/base_connection.py", line 111, in wrapper_decorator
+    func(self, out_data)
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/netmiko/base_connection.py", line 537, in write_channel
+    self.channel.write_channel(out_data)
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/netmiko/channel.py", line 74, in write_channel
+    self.remote_conn.sendall(write_bytes(out_data, encoding=self.encoding))
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/paramiko/channel.py", line 846, in sendall
+    sent = self.send(s)
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/paramiko/channel.py", line 801, in send
+    return self._send(s, m)
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/paramiko/channel.py", line 1198, in _send
+    raise socket.error("Socket is closed")
+OSError: Socket is closed
+
+2022-12-16 18:42:19,394 - nornir.core.task -    ERROR -      start() - Host 'R1': task 'show_ip_int_br' failed with traceback:
+Traceback (most recent call last):
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/nornir/core/task.py", line 99, in start
+    r = self.task(self, **self.params)
+  File "/home/idansimantov/projects/zero_touch/api/zero_backend/zero_touch_api/nornir_netmiko_actions.py", line 27, in show_ip_int_br
+    interfaces_result = task.run(
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/nornir/core/task.py", line 174, in run
+    raise NornirSubTaskError(task=run_task, result=r)
+nornir.core.exceptions.NornirSubTaskError: Subtask: netmiko_send_command (failed)
+
+
+2022-12-20 21:54:16,492 -  nornir.core -     INFO -        run() - Running task 'generate_node_and_edge_dictionaries' with args {} on 1 hosts
+2022-12-20 21:54:52,901 - nornir.core.task -    ERROR -      start() - Host 'R1': task 'generate_node_and_edge_dictionaries' failed with traceback:
+Traceback (most recent call last):
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/nornir/core/task.py", line 99, in start
+    r = self.task(self, **self.params)
+  File "/home/idansimantov/projects/zero_touch/api/zero_backend/zero_touch_api/nornir_netmiko_actions.py", line 215, in generate_node_and_edge_dictionaries
+    model = parsed_version_output['version']['chassis']
+KeyError: 'chassis'
+
+2022-12-21 08:12:24,721 -  nornir.core -     INFO -        run() - Running task 'generate_node_and_edge_dictionaries' with args {} on 1 hosts
+2022-12-21 08:12:32,786 - nornir.core.task -    ERROR -      start() - Host 'R1': task 'generate_node_and_edge_dictionaries' failed with traceback:
+Traceback (most recent call last):
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/nornir/core/task.py", line 99, in start
+    r = self.task(self, **self.params)
+  File "/home/idansimantov/projects/zero_touch/api/zero_backend/zero_touch_api/nornir_netmiko_actions.py", line 215, in generate_node_and_edge_dictionaries
+    model = parsed_version_output['version']['chassis']
+KeyError: 'chassis'
+
+2022-12-21 08:14:31,587 -  nornir.core -     INFO -        run() - Running task 'generate_node_and_edge_dictionaries' with args {} on 1 hosts
+2022-12-21 08:14:38,479 - nornir.core.task -    ERROR -      start() - Host 'R1': task 'generate_node_and_edge_dictionaries' failed with traceback:
+Traceback (most recent call last):
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/nornir/core/task.py", line 99, in start
+    r = self.task(self, **self.params)
+  File "/home/idansimantov/projects/zero_touch/api/zero_backend/zero_touch_api/nornir_netmiko_actions.py", line 217, in generate_node_and_edge_dictionaries
+    primary_ip = parsed_version_output['ip_addr']['primary']['address']
+KeyError: 'ip_addr'
+
+2022-12-21 08:17:20,609 -  nornir.core -     INFO -        run() - Running task 'generate_node_and_edge_dictionaries' with args {} on 1 hosts
+2022-12-21 16:59:25,633 -  nornir.core -     INFO -        run() - Running task 'generate_node_and_edge_dictionaries' with args {} on 1 hosts
+2022-12-21 17:54:13,930 -  nornir.core -     INFO -        run() - Running task 'get_interfaces_dict' with args {} on 2 hosts
+2022-12-21 17:54:17,009 - nornir.core.task -    ERROR -      start() - Host 'R3': task 'netmiko_send_command' failed with traceback:
+Traceback (most recent call last):
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/netmiko/base_connection.py", line 1046, in establish_connection
+    self.remote_conn_pre.connect(**ssh_connect_params)
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/paramiko/client.py", line 450, in connect
+    self._auth(
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/paramiko/client.py", line 781, in _auth
+    raise saved_exception
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/paramiko/client.py", line 768, in _auth
+    self._transport.auth_password(username, password)
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/paramiko/transport.py", line 1564, in auth_password
+    return self.auth_handler.wait_for_response(my_event)
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/paramiko/auth_handler.py", line 259, in wait_for_response
+    raise e
+paramiko.ssh_exception.AuthenticationException: Authentication failed.
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/nornir/core/task.py", line 99, in start
+    r = self.task(self, **self.params)
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/nornir_netmiko/tasks/netmiko_send_command.py", line 26, in netmiko_send_command
+    net_connect = task.host.get_connection(CONNECTION_NAME, task.nornir.config)
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/nornir/core/inventory.py", line 494, in get_connection
+    self.open_connection(
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/nornir/core/inventory.py", line 546, in open_connection
+    conn_obj.open(
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/nornir_netmiko/connections/netmiko.py", line 59, in open
+    connection = ConnectHandler(**parameters)
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/netmiko/ssh_dispatcher.py", line 365, in ConnectHandler
+    return ConnectionClass(*args, **kwargs)
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/netmiko/base_connection.py", line 439, in __init__
+    self._open()
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/netmiko/base_connection.py", line 444, in _open
+    self.establish_connection()
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/netmiko/base_connection.py", line 1083, in establish_connection
+    raise NetmikoAuthenticationException(msg)
+netmiko.exceptions.NetmikoAuthenticationException: Authentication to device failed.
+
+Common causes of this problem are:
+1. Invalid username and password
+2. Incorrect SSH-key file
+3. Connecting to the wrong device
+
+Device settings: cisco_ios 192.168.19.102:22
+
+
+Authentication failed.
+
+2022-12-21 17:54:17,013 - nornir.core.task -    ERROR -      start() - Host 'R3': task 'get_interfaces_dict' failed with traceback:
+Traceback (most recent call last):
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/nornir/core/task.py", line 99, in start
+    r = self.task(self, **self.params)
+  File "/home/idansimantov/projects/zero_touch/api/zero_backend/zero_touch_api/nornir_netmiko_actions.py", line 41, in get_interfaces_dict
+    interfaces_result = task.run(
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/nornir/core/task.py", line 174, in run
+    raise NornirSubTaskError(task=run_task, result=r)
+nornir.core.exceptions.NornirSubTaskError: Subtask: netmiko_send_command (failed)
+
+
+2022-12-21 17:54:26,817 - nornir.core.task -    ERROR -      start() - Host 'R1': task 'netmiko_send_command' failed with traceback:
+Traceback (most recent call last):
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/nornir/core/task.py", line 99, in start
+    r = self.task(self, **self.params)
+TypeError: netmiko_send_command() missing 1 required positional argument: 'command_string'
+
+2022-12-21 17:54:26,818 - nornir.core.task -    ERROR -      start() - Host 'R1': task 'get_interfaces_dict' failed with traceback:
+Traceback (most recent call last):
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/nornir/core/task.py", line 99, in start
+    r = self.task(self, **self.params)
+  File "/home/idansimantov/projects/zero_touch/api/zero_backend/zero_touch_api/nornir_netmiko_actions.py", line 53, in get_interfaces_dict
+    version_result = task.run(
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/nornir/core/task.py", line 174, in run
+    raise NornirSubTaskError(task=run_task, result=r)
+nornir.core.exceptions.NornirSubTaskError: Subtask: netmiko_send_command (failed)
+
+
+2022-12-21 17:54:26,826 -  nornir.core -     INFO -        run() - Running task 'generate_node_and_edge_dictionaries' with args {} on 2 hosts
+2022-12-21 17:54:38,984 -  nornir.core -     INFO -        run() - Running task 'get_interfaces_dict' with args {} on 2 hosts
+2022-12-21 17:54:38,984 -  nornir.core -     INFO -        run() - Running task 'generate_node_and_edge_dictionaries' with args {} on 2 hosts
+2022-12-21 17:54:56,677 -  nornir.core -     INFO -        run() - Running task 'get_interfaces_dict' with args {} on 2 hosts
+2022-12-21 17:54:59,536 - nornir.core.task -    ERROR -      start() - Host 'R3': task 'netmiko_send_command' failed with traceback:
+Traceback (most recent call last):
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/netmiko/base_connection.py", line 1046, in establish_connection
+    self.remote_conn_pre.connect(**ssh_connect_params)
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/paramiko/client.py", line 450, in connect
+    self._auth(
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/paramiko/client.py", line 781, in _auth
+    raise saved_exception
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/paramiko/client.py", line 768, in _auth
+    self._transport.auth_password(username, password)
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/paramiko/transport.py", line 1564, in auth_password
+    return self.auth_handler.wait_for_response(my_event)
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/paramiko/auth_handler.py", line 259, in wait_for_response
+    raise e
+paramiko.ssh_exception.AuthenticationException: Authentication failed.
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/nornir/core/task.py", line 99, in start
+    r = self.task(self, **self.params)
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/nornir_netmiko/tasks/netmiko_send_command.py", line 26, in netmiko_send_command
+    net_connect = task.host.get_connection(CONNECTION_NAME, task.nornir.config)
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/nornir/core/inventory.py", line 494, in get_connection
+    self.open_connection(
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/nornir/core/inventory.py", line 546, in open_connection
+    conn_obj.open(
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/nornir_netmiko/connections/netmiko.py", line 59, in open
+    connection = ConnectHandler(**parameters)
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/netmiko/ssh_dispatcher.py", line 365, in ConnectHandler
+    return ConnectionClass(*args, **kwargs)
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/netmiko/base_connection.py", line 439, in __init__
+    self._open()
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/netmiko/base_connection.py", line 444, in _open
+    self.establish_connection()
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/netmiko/base_connection.py", line 1083, in establish_connection
+    raise NetmikoAuthenticationException(msg)
+netmiko.exceptions.NetmikoAuthenticationException: Authentication to device failed.
+
+Common causes of this problem are:
+1. Invalid username and password
+2. Incorrect SSH-key file
+3. Connecting to the wrong device
+
+Device settings: cisco_ios 192.168.19.102:22
+
+
+Authentication failed.
+
+2022-12-21 17:54:59,551 - nornir.core.task -    ERROR -      start() - Host 'R3': task 'get_interfaces_dict' failed with traceback:
+Traceback (most recent call last):
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/nornir/core/task.py", line 99, in start
+    r = self.task(self, **self.params)
+  File "/home/idansimantov/projects/zero_touch/api/zero_backend/zero_touch_api/nornir_netmiko_actions.py", line 41, in get_interfaces_dict
+    interfaces_result = task.run(
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/nornir/core/task.py", line 174, in run
+    raise NornirSubTaskError(task=run_task, result=r)
+nornir.core.exceptions.NornirSubTaskError: Subtask: netmiko_send_command (failed)
+
+
+2022-12-21 17:55:05,350 - nornir.core.task -    ERROR -      start() - Host 'R1': task 'netmiko_send_command' failed with traceback:
+Traceback (most recent call last):
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/nornir/core/task.py", line 99, in start
+    r = self.task(self, **self.params)
+TypeError: netmiko_send_command() missing 1 required positional argument: 'command_string'
+
+2022-12-21 17:55:05,352 - nornir.core.task -    ERROR -      start() - Host 'R1': task 'get_interfaces_dict' failed with traceback:
+Traceback (most recent call last):
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/nornir/core/task.py", line 99, in start
+    r = self.task(self, **self.params)
+  File "/home/idansimantov/projects/zero_touch/api/zero_backend/zero_touch_api/nornir_netmiko_actions.py", line 53, in get_interfaces_dict
+    version_result = task.run(
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/nornir/core/task.py", line 174, in run
+    raise NornirSubTaskError(task=run_task, result=r)
+nornir.core.exceptions.NornirSubTaskError: Subtask: netmiko_send_command (failed)
+
+
+2022-12-21 17:55:05,354 -  nornir.core -     INFO -        run() - Running task 'generate_node_and_edge_dictionaries' with args {} on 2 hosts
+2022-12-21 17:55:28,313 -  nornir.core -     INFO -        run() - Running task 'get_interfaces_dict' with args {} on 2 hosts
+2022-12-21 17:55:31,223 - nornir.core.task -    ERROR -      start() - Host 'R3': task 'netmiko_send_command' failed with traceback:
+Traceback (most recent call last):
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/netmiko/base_connection.py", line 1046, in establish_connection
+    self.remote_conn_pre.connect(**ssh_connect_params)
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/paramiko/client.py", line 450, in connect
+    self._auth(
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/paramiko/client.py", line 781, in _auth
+    raise saved_exception
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/paramiko/client.py", line 768, in _auth
+    self._transport.auth_password(username, password)
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/paramiko/transport.py", line 1564, in auth_password
+    return self.auth_handler.wait_for_response(my_event)
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/paramiko/auth_handler.py", line 259, in wait_for_response
+    raise e
+paramiko.ssh_exception.AuthenticationException: Authentication failed.
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/nornir/core/task.py", line 99, in start
+    r = self.task(self, **self.params)
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/nornir_netmiko/tasks/netmiko_send_command.py", line 26, in netmiko_send_command
+    net_connect = task.host.get_connection(CONNECTION_NAME, task.nornir.config)
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/nornir/core/inventory.py", line 494, in get_connection
+    self.open_connection(
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/nornir/core/inventory.py", line 546, in open_connection
+    conn_obj.open(
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/nornir_netmiko/connections/netmiko.py", line 59, in open
+    connection = ConnectHandler(**parameters)
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/netmiko/ssh_dispatcher.py", line 365, in ConnectHandler
+    return ConnectionClass(*args, **kwargs)
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/netmiko/base_connection.py", line 439, in __init__
+    self._open()
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/netmiko/base_connection.py", line 444, in _open
+    self.establish_connection()
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/netmiko/base_connection.py", line 1083, in establish_connection
+    raise NetmikoAuthenticationException(msg)
+netmiko.exceptions.NetmikoAuthenticationException: Authentication to device failed.
+
+Common causes of this problem are:
+1. Invalid username and password
+2. Incorrect SSH-key file
+3. Connecting to the wrong device
+
+Device settings: cisco_ios 192.168.19.102:22
+
+
+Authentication failed.
+
+2022-12-21 17:55:31,253 - nornir.core.task -    ERROR -      start() - Host 'R3': task 'get_interfaces_dict' failed with traceback:
+Traceback (most recent call last):
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/nornir/core/task.py", line 99, in start
+    r = self.task(self, **self.params)
+  File "/home/idansimantov/projects/zero_touch/api/zero_backend/zero_touch_api/nornir_netmiko_actions.py", line 41, in get_interfaces_dict
+    interfaces_result = task.run(
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/nornir/core/task.py", line 174, in run
+    raise NornirSubTaskError(task=run_task, result=r)
+nornir.core.exceptions.NornirSubTaskError: Subtask: netmiko_send_command (failed)
+
+
+2022-12-21 17:55:35,776 - nornir.core.task -    ERROR -      start() - Host 'R1': task 'netmiko_send_command' failed with traceback:
+Traceback (most recent call last):
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/nornir/core/task.py", line 99, in start
+    r = self.task(self, **self.params)
+TypeError: netmiko_send_command() missing 1 required positional argument: 'command_string'
+
+2022-12-21 17:55:35,778 - nornir.core.task -    ERROR -      start() - Host 'R1': task 'get_interfaces_dict' failed with traceback:
+Traceback (most recent call last):
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/nornir/core/task.py", line 99, in start
+    r = self.task(self, **self.params)
+  File "/home/idansimantov/projects/zero_touch/api/zero_backend/zero_touch_api/nornir_netmiko_actions.py", line 53, in get_interfaces_dict
+    version_result = task.run(
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/nornir/core/task.py", line 174, in run
+    raise NornirSubTaskError(task=run_task, result=r)
+nornir.core.exceptions.NornirSubTaskError: Subtask: netmiko_send_command (failed)
+
+
+2022-12-21 17:55:35,780 -  nornir.core -     INFO -        run() - Running task 'generate_node_and_edge_dictionaries' with args {} on 2 hosts
+2022-12-21 17:56:01,007 -  nornir.core -     INFO -        run() - Running task 'get_interfaces_dict' with args {} on 2 hosts
+2022-12-21 17:56:01,008 -  nornir.core -     INFO -        run() - Running task 'generate_node_and_edge_dictionaries' with args {} on 2 hosts
+2022-12-21 17:56:31,946 -  nornir.core -     INFO -        run() - Running task 'get_interfaces_dict' with args {} on 2 hosts
+2022-12-21 17:56:35,086 - nornir.core.task -    ERROR -      start() - Host 'R3': task 'netmiko_send_command' failed with traceback:
+Traceback (most recent call last):
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/netmiko/base_connection.py", line 1046, in establish_connection
+    self.remote_conn_pre.connect(**ssh_connect_params)
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/paramiko/client.py", line 450, in connect
+    self._auth(
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/paramiko/client.py", line 781, in _auth
+    raise saved_exception
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/paramiko/client.py", line 768, in _auth
+    self._transport.auth_password(username, password)
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/paramiko/transport.py", line 1564, in auth_password
+    return self.auth_handler.wait_for_response(my_event)
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/paramiko/auth_handler.py", line 259, in wait_for_response
+    raise e
+paramiko.ssh_exception.AuthenticationException: Authentication failed.
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/nornir/core/task.py", line 99, in start
+    r = self.task(self, **self.params)
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/nornir_netmiko/tasks/netmiko_send_command.py", line 26, in netmiko_send_command
+    net_connect = task.host.get_connection(CONNECTION_NAME, task.nornir.config)
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/nornir/core/inventory.py", line 494, in get_connection
+    self.open_connection(
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/nornir/core/inventory.py", line 546, in open_connection
+    conn_obj.open(
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/nornir_netmiko/connections/netmiko.py", line 59, in open
+    connection = ConnectHandler(**parameters)
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/netmiko/ssh_dispatcher.py", line 365, in ConnectHandler
+    return ConnectionClass(*args, **kwargs)
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/netmiko/base_connection.py", line 439, in __init__
+    self._open()
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/netmiko/base_connection.py", line 444, in _open
+    self.establish_connection()
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/netmiko/base_connection.py", line 1083, in establish_connection
+    raise NetmikoAuthenticationException(msg)
+netmiko.exceptions.NetmikoAuthenticationException: Authentication to device failed.
+
+Common causes of this problem are:
+1. Invalid username and password
+2. Incorrect SSH-key file
+3. Connecting to the wrong device
+
+Device settings: cisco_ios 192.168.19.102:22
+
+
+Authentication failed.
+
+2022-12-21 17:56:35,102 - nornir.core.task -    ERROR -      start() - Host 'R3': task 'get_interfaces_dict' failed with traceback:
+Traceback (most recent call last):
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/nornir/core/task.py", line 99, in start
+    r = self.task(self, **self.params)
+  File "/home/idansimantov/projects/zero_touch/api/zero_backend/zero_touch_api/nornir_netmiko_actions.py", line 41, in get_interfaces_dict
+    interfaces_result = task.run(
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/nornir/core/task.py", line 174, in run
+    raise NornirSubTaskError(task=run_task, result=r)
+nornir.core.exceptions.NornirSubTaskError: Subtask: netmiko_send_command (failed)
+
+
+2022-12-21 17:56:39,326 - nornir.core.task -    ERROR -      start() - Host 'R1': task 'netmiko_send_command' failed with traceback:
+Traceback (most recent call last):
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/nornir/core/task.py", line 99, in start
+    r = self.task(self, **self.params)
+TypeError: netmiko_send_command() missing 1 required positional argument: 'command_string'
+
+2022-12-21 17:56:39,326 - nornir.core.task -    ERROR -      start() - Host 'R1': task 'get_interfaces_dict' failed with traceback:
+Traceback (most recent call last):
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/nornir/core/task.py", line 99, in start
+    r = self.task(self, **self.params)
+  File "/home/idansimantov/projects/zero_touch/api/zero_backend/zero_touch_api/nornir_netmiko_actions.py", line 53, in get_interfaces_dict
+    version_result = task.run(
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/nornir/core/task.py", line 174, in run
+    raise NornirSubTaskError(task=run_task, result=r)
+nornir.core.exceptions.NornirSubTaskError: Subtask: netmiko_send_command (failed)
+
+
+2022-12-21 17:56:39,329 -  nornir.core -     INFO -        run() - Running task 'generate_node_and_edge_dictionaries' with args {} on 2 hosts
+2022-12-21 17:57:52,964 -  nornir.core -     INFO -        run() - Running task 'get_interfaces_dict' with args {} on 2 hosts
+2022-12-21 17:57:52,971 -  nornir.core -     INFO -        run() - Running task 'generate_node_and_edge_dictionaries' with args {} on 2 hosts
+2022-12-21 18:00:06,053 -  nornir.core -     INFO -        run() - Running task 'get_interfaces_dict' with args {} on 2 hosts
+2022-12-21 18:00:09,368 - nornir.core.task -    ERROR -      start() - Host 'R3': task 'netmiko_send_command' failed with traceback:
+Traceback (most recent call last):
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/netmiko/base_connection.py", line 1046, in establish_connection
+    self.remote_conn_pre.connect(**ssh_connect_params)
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/paramiko/client.py", line 450, in connect
+    self._auth(
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/paramiko/client.py", line 781, in _auth
+    raise saved_exception
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/paramiko/client.py", line 768, in _auth
+    self._transport.auth_password(username, password)
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/paramiko/transport.py", line 1564, in auth_password
+    return self.auth_handler.wait_for_response(my_event)
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/paramiko/auth_handler.py", line 259, in wait_for_response
+    raise e
+paramiko.ssh_exception.AuthenticationException: Authentication failed.
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/nornir/core/task.py", line 99, in start
+    r = self.task(self, **self.params)
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/nornir_netmiko/tasks/netmiko_send_command.py", line 26, in netmiko_send_command
+    net_connect = task.host.get_connection(CONNECTION_NAME, task.nornir.config)
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/nornir/core/inventory.py", line 494, in get_connection
+    self.open_connection(
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/nornir/core/inventory.py", line 546, in open_connection
+    conn_obj.open(
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/nornir_netmiko/connections/netmiko.py", line 59, in open
+    connection = ConnectHandler(**parameters)
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/netmiko/ssh_dispatcher.py", line 365, in ConnectHandler
+    return ConnectionClass(*args, **kwargs)
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/netmiko/base_connection.py", line 439, in __init__
+    self._open()
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/netmiko/base_connection.py", line 444, in _open
+    self.establish_connection()
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/netmiko/base_connection.py", line 1083, in establish_connection
+    raise NetmikoAuthenticationException(msg)
+netmiko.exceptions.NetmikoAuthenticationException: Authentication to device failed.
+
+Common causes of this problem are:
+1. Invalid username and password
+2. Incorrect SSH-key file
+3. Connecting to the wrong device
+
+Device settings: cisco_ios 192.168.19.102:22
+
+
+Authentication failed.
+
+2022-12-21 18:00:09,369 - nornir.core.task -    ERROR -      start() - Host 'R3': task 'get_interfaces_dict' failed with traceback:
+Traceback (most recent call last):
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/nornir/core/task.py", line 99, in start
+    r = self.task(self, **self.params)
+  File "/home/idansimantov/projects/zero_touch/api/zero_backend/zero_touch_api/nornir_netmiko_actions.py", line 41, in get_interfaces_dict
+    interfaces_result = task.run(
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/nornir/core/task.py", line 174, in run
+    raise NornirSubTaskError(task=run_task, result=r)
+nornir.core.exceptions.NornirSubTaskError: Subtask: netmiko_send_command (failed)
+
+
+2022-12-21 18:00:10,324 - nornir.core.task -    ERROR -      start() - Host 'R1': task 'netmiko_send_command' failed with traceback:
+Traceback (most recent call last):
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/nornir/core/task.py", line 99, in start
+    r = self.task(self, **self.params)
+TypeError: netmiko_send_command() missing 1 required positional argument: 'command_string'
+
+2022-12-21 18:00:10,326 - nornir.core.task -    ERROR -      start() - Host 'R1': task 'get_interfaces_dict' failed with traceback:
+Traceback (most recent call last):
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/nornir/core/task.py", line 99, in start
+    r = self.task(self, **self.params)
+  File "/home/idansimantov/projects/zero_touch/api/zero_backend/zero_touch_api/nornir_netmiko_actions.py", line 53, in get_interfaces_dict
+    version_result = task.run(
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/nornir/core/task.py", line 174, in run
+    raise NornirSubTaskError(task=run_task, result=r)
+nornir.core.exceptions.NornirSubTaskError: Subtask: netmiko_send_command (failed)
+
+
+2022-12-21 18:00:10,396 -  nornir.core -     INFO -        run() - Running task 'generate_node_and_edge_dictionaries' with args {} on 2 hosts
+2022-12-21 18:10:07,984 -  nornir.core -     INFO -        run() - Running task 'get_interfaces_dict' with args {} on 2 hosts
+2022-12-21 18:10:07,996 -  nornir.core -     INFO -        run() - Running task 'generate_node_and_edge_dictionaries' with args {} on 2 hosts
+2022-12-21 18:10:46,522 -  nornir.core -     INFO -        run() - Running task 'get_interfaces_dict' with args {} on 2 hosts
+2022-12-21 18:10:53,579 - nornir.core.task -    ERROR -      start() - Host 'R3': task 'netmiko_send_command' failed with traceback:
+Traceback (most recent call last):
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/nornir/core/task.py", line 99, in start
+    r = self.task(self, **self.params)
+TypeError: netmiko_send_command() missing 1 required positional argument: 'command_string'
+
+2022-12-21 18:10:53,579 - nornir.core.task -    ERROR -      start() - Host 'R1': task 'netmiko_send_command' failed with traceback:
+Traceback (most recent call last):
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/nornir/core/task.py", line 99, in start
+    r = self.task(self, **self.params)
+TypeError: netmiko_send_command() missing 1 required positional argument: 'command_string'
+
+2022-12-21 18:10:53,581 - nornir.core.task -    ERROR -      start() - Host 'R3': task 'get_interfaces_dict' failed with traceback:
+Traceback (most recent call last):
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/nornir/core/task.py", line 99, in start
+    r = self.task(self, **self.params)
+  File "/home/idansimantov/projects/zero_touch/api/zero_backend/zero_touch_api/nornir_netmiko_actions.py", line 53, in get_interfaces_dict
+    version_result = task.run(
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/nornir/core/task.py", line 174, in run
+    raise NornirSubTaskError(task=run_task, result=r)
+nornir.core.exceptions.NornirSubTaskError: Subtask: netmiko_send_command (failed)
+
+
+2022-12-21 18:10:53,591 - nornir.core.task -    ERROR -      start() - Host 'R1': task 'get_interfaces_dict' failed with traceback:
+Traceback (most recent call last):
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/nornir/core/task.py", line 99, in start
+    r = self.task(self, **self.params)
+  File "/home/idansimantov/projects/zero_touch/api/zero_backend/zero_touch_api/nornir_netmiko_actions.py", line 53, in get_interfaces_dict
+    version_result = task.run(
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/nornir/core/task.py", line 174, in run
+    raise NornirSubTaskError(task=run_task, result=r)
+nornir.core.exceptions.NornirSubTaskError: Subtask: netmiko_send_command (failed)
+
+
+2022-12-21 18:10:53,668 -  nornir.core -     INFO -        run() - Running task 'generate_node_and_edge_dictionaries' with args {} on 2 hosts
+2022-12-21 18:11:40,832 -  nornir.core -     INFO -        run() - Running task 'get_interfaces_dict' with args {} on 2 hosts
+2022-12-21 18:11:47,636 - nornir.core.task -    ERROR -      start() - Host 'R1': task 'get_interfaces_dict' failed with traceback:
+Traceback (most recent call last):
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/nornir/core/task.py", line 99, in start
+    r = self.task(self, **self.params)
+  File "/home/idansimantov/projects/zero_touch/api/zero_backend/zero_touch_api/nornir_netmiko_actions.py", line 61, in get_interfaces_dict
+    serial = task.host["verfacts"]["serial_number"]
+KeyError: 'serial_number'
+
+2022-12-21 18:11:47,654 - nornir.core.task -    ERROR -      start() - Host 'R3': task 'get_interfaces_dict' failed with traceback:
+Traceback (most recent call last):
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/nornir/core/task.py", line 99, in start
+    r = self.task(self, **self.params)
+  File "/home/idansimantov/projects/zero_touch/api/zero_backend/zero_touch_api/nornir_netmiko_actions.py", line 61, in get_interfaces_dict
+    serial = task.host["verfacts"]["serial_number"]
+KeyError: 'serial_number'
+
+2022-12-21 18:11:47,713 -  nornir.core -     INFO -        run() - Running task 'generate_node_and_edge_dictionaries' with args {} on 2 hosts
+2022-12-21 18:14:34,436 -  nornir.core -     INFO -        run() - Running task 'get_interfaces_dict' with args {} on 2 hosts
+2022-12-21 18:14:43,397 -  nornir.core -     INFO -        run() - Running task 'generate_node_and_edge_dictionaries' with args {} on 2 hosts
+2022-12-21 18:14:47,460 - nornir.core.task -    ERROR -      start() - Host 'R3': task 'generate_node_and_edge_dictionaries' failed with traceback:
+Traceback (most recent call last):
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/nornir/core/task.py", line 99, in start
+    r = self.task(self, **self.params)
+  File "/home/idansimantov/projects/zero_touch/api/zero_backend/zero_touch_api/nornir_netmiko_actions.py", line 305, in generate_node_and_edge_dictionaries
+    host = interfaces.get(key, None)['host']
+TypeError: 'NoneType' object is not subscriptable
+
+2022-12-21 18:14:47,482 - nornir.core.task -    ERROR -      start() - Host 'R1': task 'generate_node_and_edge_dictionaries' failed with traceback:
+Traceback (most recent call last):
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/nornir/core/task.py", line 99, in start
+    r = self.task(self, **self.params)
+  File "/home/idansimantov/projects/zero_touch/api/zero_backend/zero_touch_api/nornir_netmiko_actions.py", line 305, in generate_node_and_edge_dictionaries
+    host = interfaces.get(key, None)['host']
+TypeError: 'NoneType' object is not subscriptable
+
+2022-12-21 18:23:23,210 -  nornir.core -     INFO -        run() - Running task 'get_interfaces_dict' with args {} on 2 hosts
+2022-12-21 18:23:31,062 -  nornir.core -     INFO -        run() - Running task 'generate_node_and_edge_dictionaries' with args {} on 2 hosts
+2022-12-21 18:23:32,974 - nornir.core.task -    ERROR -      start() - Host 'R3': task 'generate_node_and_edge_dictionaries' failed with traceback:
+Traceback (most recent call last):
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/nornir/core/task.py", line 99, in start
+    r = self.task(self, **self.params)
+  File "/home/idansimantov/projects/zero_touch/api/zero_backend/zero_touch_api/nornir_netmiko_actions.py", line 305, in generate_node_and_edge_dictionaries
+    host = interfaces.get(key, None).get("host", None)
+AttributeError: 'NoneType' object has no attribute 'get'
+
+2022-12-21 18:23:32,978 - nornir.core.task -    ERROR -      start() - Host 'R1': task 'generate_node_and_edge_dictionaries' failed with traceback:
+Traceback (most recent call last):
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/nornir/core/task.py", line 99, in start
+    r = self.task(self, **self.params)
+  File "/home/idansimantov/projects/zero_touch/api/zero_backend/zero_touch_api/nornir_netmiko_actions.py", line 305, in generate_node_and_edge_dictionaries
+    host = interfaces.get(key, None).get("host", None)
+AttributeError: 'NoneType' object has no attribute 'get'
+
+2022-12-21 18:26:34,609 -  nornir.core -     INFO -        run() - Running task 'get_interfaces_dict' with args {} on 2 hosts
+2022-12-21 18:26:42,282 - nornir.core.task -    ERROR -      start() - Host 'R1': task 'get_interfaces_dict' failed with traceback:
+Traceback (most recent call last):
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/nornir/core/task.py", line 99, in start
+    r = self.task(self, **self.params)
+  File "/home/idansimantov/projects/zero_touch/api/zero_backend/zero_touch_api/nornir_netmiko_actions.py", line 77, in get_interfaces_dict
+    for ip_address, intf_name in interfaces.items():
+RuntimeError: dictionary changed size during iteration
+
+2022-12-21 18:26:42,530 -  nornir.core -     INFO -        run() - Running task 'generate_node_and_edge_dictionaries' with args {} on 2 hosts
+2022-12-21 18:26:43,629 - nornir.core.task -    ERROR -      start() - Host 'R3': task 'generate_node_and_edge_dictionaries' failed with traceback:
+Traceback (most recent call last):
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/nornir/core/task.py", line 99, in start
+    r = self.task(self, **self.params)
+  File "/home/idansimantov/projects/zero_touch/api/zero_backend/zero_touch_api/nornir_netmiko_actions.py", line 311, in generate_node_and_edge_dictionaries
+    new_dict["intf"].append(intf)
+TypeError: list indices must be integers or slices, not str
+
+2022-12-21 18:37:55,412 -  nornir.core -     INFO -        run() - Running task 'get_interfaces_dict' with args {} on 2 hosts
+2022-12-21 18:38:03,216 - nornir.core.task -    ERROR -      start() - Host 'R1': task 'get_interfaces_dict' failed with traceback:
+Traceback (most recent call last):
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/nornir/core/task.py", line 99, in start
+    r = self.task(self, **self.params)
+  File "/home/idansimantov/projects/zero_touch/api/zero_backend/zero_touch_api/nornir_netmiko_actions.py", line 77, in get_interfaces_dict
+    for ip_address, intf_name in interfaces.items():
+RuntimeError: dictionary changed size during iteration
+
+2022-12-21 18:38:03,420 -  nornir.core -     INFO -        run() - Running task 'generate_node_and_edge_dictionaries' with args {} on 2 hosts
+2022-12-21 18:38:05,068 - nornir.core.task -    ERROR -      start() - Host 'R3': task 'generate_node_and_edge_dictionaries' failed with traceback:
+Traceback (most recent call last):
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/nornir/core/task.py", line 99, in start
+    r = self.task(self, **self.params)
+  File "/home/idansimantov/projects/zero_touch/api/zero_backend/zero_touch_api/nornir_netmiko_actions.py", line 316, in generate_node_and_edge_dictionaries
+    dictionary['intf'].append(intf)
+KeyError: 'intf'
+
+2022-12-21 18:38:56,746 -  nornir.core -     INFO -        run() - Running task 'get_interfaces_dict' with args {} on 2 hosts
+2022-12-21 18:39:06,710 -  nornir.core -     INFO -        run() - Running task 'generate_node_and_edge_dictionaries' with args {} on 2 hosts
+2022-12-21 18:39:08,788 - nornir.core.task -    ERROR -      start() - Host 'R1': task 'generate_node_and_edge_dictionaries' failed with traceback:
+Traceback (most recent call last):
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/nornir/core/task.py", line 99, in start
+    r = self.task(self, **self.params)
+  File "/home/idansimantov/projects/zero_touch/api/zero_backend/zero_touch_api/nornir_netmiko_actions.py", line 338, in generate_node_and_edge_dictionaries
+    print(json.dumps(new_dict,indent=4))
+  File "/usr/lib/python3.10/json/__init__.py", line 238, in dumps
+    **kw).encode(obj)
+  File "/usr/lib/python3.10/json/encoder.py", line 201, in encode
+    chunks = list(chunks)
+  File "/usr/lib/python3.10/json/encoder.py", line 429, in _iterencode
+    yield from _iterencode_list(o, _current_indent_level)
+  File "/usr/lib/python3.10/json/encoder.py", line 325, in _iterencode_list
+    yield from chunks
+  File "/usr/lib/python3.10/json/encoder.py", line 405, in _iterencode_dict
+    yield from chunks
+  File "/usr/lib/python3.10/json/encoder.py", line 405, in _iterencode_dict
+    yield from chunks
+  File "/usr/lib/python3.10/json/encoder.py", line 438, in _iterencode
+    o = _default(o)
+  File "/usr/lib/python3.10/json/encoder.py", line 179, in default
+    raise TypeError(f'Object of type {o.__class__.__name__} '
+TypeError: Object of type Host is not JSON serializable
+
+2022-12-21 18:39:08,791 - nornir.core.task -    ERROR -      start() - Host 'R3': task 'generate_node_and_edge_dictionaries' failed with traceback:
+Traceback (most recent call last):
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/nornir/core/task.py", line 99, in start
+    r = self.task(self, **self.params)
+  File "/home/idansimantov/projects/zero_touch/api/zero_backend/zero_touch_api/nornir_netmiko_actions.py", line 338, in generate_node_and_edge_dictionaries
+    print(json.dumps(new_dict,indent=4))
+  File "/usr/lib/python3.10/json/__init__.py", line 238, in dumps
+    **kw).encode(obj)
+  File "/usr/lib/python3.10/json/encoder.py", line 201, in encode
+    chunks = list(chunks)
+  File "/usr/lib/python3.10/json/encoder.py", line 429, in _iterencode
+    yield from _iterencode_list(o, _current_indent_level)
+  File "/usr/lib/python3.10/json/encoder.py", line 325, in _iterencode_list
+    yield from chunks
+  File "/usr/lib/python3.10/json/encoder.py", line 405, in _iterencode_dict
+    yield from chunks
+  File "/usr/lib/python3.10/json/encoder.py", line 405, in _iterencode_dict
+    yield from chunks
+  File "/usr/lib/python3.10/json/encoder.py", line 438, in _iterencode
+    o = _default(o)
+  File "/usr/lib/python3.10/json/encoder.py", line 179, in default
+    raise TypeError(f'Object of type {o.__class__.__name__} '
+TypeError: Object of type Host is not JSON serializable
+
+2022-12-21 18:42:00,441 -  nornir.core -     INFO -        run() - Running task 'get_interfaces_dict' with args {} on 2 hosts
+2022-12-21 18:42:07,561 -  nornir.core -     INFO -        run() - Running task 'generate_node_and_edge_dictionaries' with args {} on 2 hosts
+2022-12-21 19:19:25,586 -  nornir.core -     INFO -        run() - Running task 'get_interfaces_dict' with args {} on 2 hosts
+2022-12-21 19:19:34,464 -  nornir.core -     INFO -        run() - Running task 'generate_node_and_edge_dictionaries' with args {} on 2 hosts
+2022-12-21 19:32:12,087 -  nornir.core -     INFO -        run() - Running task 'get_interfaces_dict' with args {} on 2 hosts
+2022-12-21 19:32:25,432 - nornir.core.task -    ERROR -      start() - Host 'R1': task 'get_interfaces_dict' failed with traceback:
+Traceback (most recent call last):
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/nornir/core/task.py", line 99, in start
+    r = self.task(self, **self.params)
+  File "/home/idansimantov/projects/zero_touch/api/zero_backend/zero_touch_api/nornir_netmiko_actions.py", line 77, in get_interfaces_dict
+    for ip_address, intf_name in interfaces.items():
+RuntimeError: dictionary changed size during iteration
+
+2022-12-21 19:32:25,899 -  nornir.core -     INFO -        run() - Running task 'generate_node_and_edge_dictionaries' with args {} on 2 hosts
+2022-12-21 19:35:08,410 -  nornir.core -     INFO -        run() - Running task 'get_interfaces_dict' with args {} on 2 hosts
+2022-12-21 19:35:15,970 -  nornir.core -     INFO -        run() - Running task 'generate_node_and_edge_dictionaries' with args {} on 2 hosts
+2022-12-21 19:35:18,232 - nornir.core.task -    ERROR -      start() - Host 'R1': task 'generate_node_and_edge_dictionaries' failed with traceback:
+Traceback (most recent call last):
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/nornir/core/task.py", line 99, in start
+    r = self.task(self, **self.params)
+  File "/home/idansimantov/projects/zero_touch/api/zero_backend/zero_touch_api/nornir_netmiko_actions.py", line 350, in generate_node_and_edge_dictionaries
+    "targetHandle": target_intf+target,
+TypeError: unsupported operand type(s) for +: 'NoneType' and 'str'
+
+2022-12-21 19:35:18,235 - nornir.core.task -    ERROR -      start() - Host 'R3': task 'generate_node_and_edge_dictionaries' failed with traceback:
+Traceback (most recent call last):
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/nornir/core/task.py", line 99, in start
+    r = self.task(self, **self.params)
+  File "/home/idansimantov/projects/zero_touch/api/zero_backend/zero_touch_api/nornir_netmiko_actions.py", line 350, in generate_node_and_edge_dictionaries
+    "targetHandle": target_intf+target,
+TypeError: unsupported operand type(s) for +: 'NoneType' and 'str'
+
+2022-12-21 19:36:58,771 -  nornir.core -     INFO -        run() - Running task 'get_interfaces_dict' with args {} on 2 hosts
+2022-12-21 19:37:08,876 -  nornir.core -     INFO -        run() - Running task 'generate_node_and_edge_dictionaries' with args {} on 2 hosts
+2022-12-21 19:40:43,475 -  nornir.core -     INFO -        run() - Running task 'get_interfaces_dict' with args {} on 2 hosts
+2022-12-21 19:40:51,718 - nornir.core.task -    ERROR -      start() - Host 'R3': task 'get_interfaces_dict' failed with traceback:
+Traceback (most recent call last):
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/nornir/core/task.py", line 99, in start
+    r = self.task(self, **self.params)
+  File "/home/idansimantov/projects/zero_touch/api/zero_backend/zero_touch_api/nornir_netmiko_actions.py", line 77, in get_interfaces_dict
+    for ip_address, intf_name in interfaces.items():
+RuntimeError: dictionary changed size during iteration
+
+2022-12-21 19:40:51,891 -  nornir.core -     INFO -        run() - Running task 'generate_node_and_edge_dictionaries' with args {} on 2 hosts

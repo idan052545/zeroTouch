@@ -20,6 +20,10 @@ duplicates = {}
 target_list = []
 failed_list = []
 final_string= ""
+topology={}
+interfaces = {}
+
+
 LOCK = threading.Lock()
 
 
@@ -32,6 +36,48 @@ def show_ip_int_br(task):
         # //"show ip interface br"
     )
     task.host["facts"] = interfaces_result.result
+
+def get_interfaces_dict(task):
+    interfaces_result = task.run(
+        task=netmiko_send_command,
+        command_string="show ip interface brief",
+        use_genie=True
+        # use_textfsm=True,
+        # //"show ip interface br"
+    )
+    parsed_interfaces_result = interfaces_result.result
+
+    for intf_name, intf_info in parsed_interfaces_result['interface'].items():
+        ip_address = intf_info.get('ip_address', None)
+        if ip_address is not None:
+            version_result = task.run(
+                task=netmiko_send_command,
+                command_string="show version",
+                use_genie=True
+            )
+            task.host[
+                "verfacts"
+            ] = version_result.result
+            serial = task.host["verfacts"]['version']['chassis_sn']
+            data = task.host.data
+            interfaces[ip_address] = {
+                "hostname": task.host["verfacts"]['version']['hostname'],
+                "intf": intf_name,
+                "serial": serial,
+                "primaryIP": task.host.hostname
+            }
+        else:
+            # Check for VLAN interfaces
+            for vlan_id, vlan_info in intf_info.get('vlan_id', {}).items():
+                ip_address = vlan_info.get('ip_address', None)
+                if ip_address is not None:
+                    interfaces[ip_address] = intf_name
+
+    # Print the interface names and IP addresses
+    for ip_address, intf_name in interfaces.items():
+        print(f"Interface name: {intf_name}, IP address: {ip_address}")
+
+
 
 
 def get_all_ip(task):
@@ -62,7 +108,7 @@ def locate_ip(task, targets):
     """
     response = task.run(
         task=netmiko_send_command,
-        command="show interfaces",
+        command_string="show interfaces",
         use_genie=True
     )
     task.host["facts"] = response.result
@@ -81,7 +127,7 @@ def locate_ip(task, targets):
                     task.host[
                         "verfacts"
                     ] = version_result.result
-                    serial = task.host["verfacts"]["serial_number"]
+                    serial = task.host["verfacts"]['version']['chassis_sn']
                     data = task.host.data
                     duplicates = {
                         "host": task.host,
@@ -117,8 +163,7 @@ def ping_test(task, sorted_list):
         if not "!!!" in response:
             failed_list.append({"host": task.host, "ip_address": ip_address})
 
-# /home/idansimantov/projects/zero_touch/api/host_vars/R1.yaml
-# /home/idansimantov/projects/zero_touch/api/zero_backend/zero_touch_api/nornir_netmiko_actions.py
+
 def load_ospf(task):
     data = task.run(task=load_yaml,file=f'../host_vars/{task.host}.yaml')
     task.host["OSPF"] = data.result["OSPF"]
@@ -140,7 +185,26 @@ def show_ip_ospf_database_router(task):
     )
     task.host["facts"] = interfaces_result.result
 
+interface_full_name_map = {
+    'Eth': 'Ethernet',
+    'Fa': 'FastEthernet',
+    'Gi': 'GigabitEthernet',
+    'Te': 'TenGigabitEthernet',
+}
 
+def if_fullname(ifname):
+    for k, v in interface_full_name_map.items():
+        if ifname.startswith(v):
+            return ifname
+        if ifname.startswith(k):
+            return ifname.replace(k, v)
+    return ifname
+
+def if_shortname(ifname):
+    for k, v in interface_full_name_map.items():
+        if ifname.startswith(v):
+            return ifname.replace(v, k)
+    return ifname
 
 def generate_node_and_edge_dictionaries(task):
 
@@ -150,6 +214,22 @@ def generate_node_and_edge_dictionaries(task):
     command_string="show ip ospf database router",
     use_genie=True,
     )
+
+    version_output = task.run(
+    task= netmiko_send_command,
+    command_string="show version",
+    use_genie=True,
+    )
+
+
+    parsed_version_output = version_output.result
+    print(parsed_version_output)
+
+    # hostname = parsed_version_output['version']['hostname']
+    # model = parsed_version_output['version']['os']
+    # serial_number = parsed_version_output['version']['chassis_sn']
+    # primary_ip = parsed_version_output['ip_addr']['primary']['address']
+
 
     parsed_output = ospf_output.result
 
@@ -166,23 +246,21 @@ def generate_node_and_edge_dictionaries(task):
                             for link_id, link_data in nodes_data["ospfv2"]["body"]["router"]["links"].items():
 
                                 nodes[link_id] = {}
-                                # nodes[link_id]["interface"] = "Unknown"  # assume interface is unknown unless specified
-                                # nodes[link_id]["status"] = "up"  # assume status is up unless specified
-                                # node_interface = list(nodes_data['ospfv2']['body']['router']['links'].keys())[0]
-                                # nodes[link_id]["cost"] = nodes_data['ospfv2']['body']['router']['links'][node_interface]['topologies'][0]['metric']                           
                                 
-                            node_id = nodes_data['lsa_id']
-                            node_links = nodes_data['ospfv2']['body']['router']['links']
-                            for link_info in node_links.values():
-                                if link_info['link_data'] not in nodes.keys():
-                                    nodes[link_info['link_data']] = {}
-                            edges[node_id] = {
-                                "destination": [link_info['link_data'] for link_info in node_links.values()],
-                                "type": [link_info['type'] for link_info in node_links.values()],
-                                "cost": [link_info['topologies'][0]['metric']  for link_info in node_links.values()],
-                            }
-    # nodes_data = parsed_output['vrf']['default']['address_family']['ipv4']['instance']['1']['areas']['0.0.0.0']['database']['lsa_types'][1]['lsas']
+                                if link_data['link_data'] not in nodes.keys():
+                                    nodes[link_data['link_data']] = {}
+                                
 
+                                if link_id not in edges.keys():
+                                    edges[link_id]={
+                                        "destination": [],
+                                        "type": [],
+                                        "cost" : [],
+                                    }
+
+                                edges[link_id]["destination"].append(link_data['link_data'])
+                                edges[link_id]["type"].append(link_data['type'])
+                                edges[link_id]["cost"].append(link_data['topologies'][0]['metric'])
 
     print(nodes)
     print(edges)
@@ -197,16 +275,10 @@ def generate_node_and_edge_dictionaries(task):
     for source, data in edges.items():
         destinations = data['destination']
         costs = data['cost']
+
         for destination, cost in zip(destinations, costs):
             list_of_edges.append((source, destination, cost))
 
-
-    # for key, value in edges.items():
-    # # For each key, get the 'destination' value and iterate over it
-    #     for dest in value['destination']:
-    #         # Create a new tuple with the key and the destination, and append it to the list
-    #         tuples_edges.append((key, dest))
-    #         G.add_edge(key, dest,value['cost'])
 
     G.add_nodes_from(list(nodes.keys()))
     for edge in list_of_edges:
@@ -215,138 +287,134 @@ def generate_node_and_edge_dictionaries(task):
     # G.add_edges_from(tuples_edges)
 
     # compute the x and y coordinates for each node using the Kamada-Kawai algorithm
-    node_positions = nx.kamada_kawai_layout(G,scale = 100)
+    node_positions = nx.kamada_kawai_layout(G,scale = 250)
     pos = {node: {"x": x, "y": y} for node, (x, y) in node_positions.items()}
     print(pos)
 
-    new_dict = {
-        "node-" + str(i): {
-            "type": "ZeroTouchNode",
-            "position": {
-                "x": pos[key]["x"],
-                "y": pos[key]["y"]
-            },
-            "data": {
-                "value": 123,
-                "img": "https://symbols.getvecta.com/stencil_240/204_router.7b208c1133.png"
-            }
-        }
-        for i, key in enumerate(pos.keys(), 1)
-    }
+    
+    new_dict=[]
+    
+    for i, key in enumerate(pos.keys(), 1):
+        # host = interfaces.get(key, {}).get("host", None)
+        intf = interfaces.get(key, {}).get("intf", None)
+        serial = interfaces.get(key, {}).get("serial", None)
+        hostname = interfaces.get(key, {}).get("hostname", None)
+        isExist= False
+
+
+        for dictionary in new_dict:
+            # Check if the dictionary with the matching id is present in the list
+            if serial == dictionary['id']:
+                 # Append the value to the dictionary
+                 dictionary["data"]['intf'].append(intf)
+                 dictionary["data"]['intfIP'].append(key)
+
+                 isExist = True
+                 break
+
+        if(not isExist and serial):    
+            buffer_dict = {
+                    "id": serial,
+                    "type": "ZeroTouchNode",
+                    "position": {
+                        "x": pos[key]["x"],
+                        "y": pos[key]["y"]
+                    },
+                    "data": {
+                        # "host": host,
+                        "intf": [intf],
+                        "intfIP": [key],
+                        "serial": serial,
+                        "hostname": hostname,
+                        "value": key,
+                        "img": "https://symbols.getvecta.com/stencil_240/204_router.7b208c1133.png"
+                    }
+                }
+            new_dict.append(buffer_dict)
     print(json.dumps(new_dict,indent=4))
 
+    new_dict_edges = []
 
-    # nodes = []
-    # edges = []
-    # parsed_output= ospf_output.result
-    # for vrf in parsed_output["vrf"].values():
-    #         for af in vrf["address_family"].values():
-    #             for instance in af["instance"].values():
-    #                 for area in instance["areas"].values():
-    #                     for lsa in area["database"]["lsa_types"].values():
-    #                         for lsa_id, data in lsa["lsas"].items():
-    #                             # Add the router that originated the LSA to the list of nodes
-    #                             nodes.append(data["lsa_id"])
-    #                             # Add the attached routers to the list of edges
-    #                             for router in data["ospfv2"]["body"]["network"]["attached_routers"].keys():
-    #                                 edges.append((data["adv_router"], router))
+    for src, data in edges.items():
+        for i, target in enumerate(data['destination']):
+            src_intf = interfaces.get(src, {}).get("intf", None)  # Look up the source interface name using the source IP address
+            target_intf = interfaces.get(target, {}).get("intf", None)   # Look up the target interface name using the destination IP address
+            srcDevice = interfaces.get(src, {}).get("serial", None)
+            tgtDevice = interfaces.get(target, {}).get("serial", None)
 
-
-    # print(nodes)
-    # print(edges)
-
-    # Extract the nodes of the network topology
-    # nodes = parsed_output['vrf']['default']['address_family']['ipv4']['instance']['1']['areas']['0.0.0.0']['database']['lsa_types'].get('1', {}).get('lsa_type', {}).get('lsas', {})
-
-    # # Extract the edges of the network topology
-    # edges = parsed_output['vrf']['default']['address_family']['ipv4']['instance']['1']['areas']['0.0.0.0']['database']['lsa_types'].get('2', {}).get('lsa_type', {}).get('lsas', {})
-    # if not parsed_output:
-    #     print("no ospf neighboor on this host")
-    # else :
-    #     nodes = {}
-    #     edges = {}
-    #     for host, task_result in ospf_output.dict().items():
-    #     # Extract the OSPF neighbor information from the command output
-    #         neighbors = task_result.result.strip().split("\n")[2:]
-    #         nodes[host] = set()
-    #         edges[host] = set()
-    #         for neighbor in neighbors:
-    #             # Add the current host and its neighbor to the nodes dictionary
-    #             nodes[host].add(host)
-    #             nodes[host].add(neighbor.split()[0])
-
-    #             # Add the current host and its neighbor to the edges dictionary
-    #             edges[host].add((host, neighbor.split()[0]))
-
-        # for neighbor in parsed_output["neighbors"]:
-        #     local_interface = neighbor["local_interface"]
-        #     remote_interface = neighbor["neighbor_interface"]
-        #     nodes[local_interface] = parsed_output["interfaces"][local_interface]["ipv4"]["address"]
-        #     nodes[remote_interface] = parsed_output["interfaces"][remote_interface]["ipv4"]["address"]
-        #     edges[(local_interface, remote_interface)] = neighbor["state"]
-
-        # Use spring_layout from NetworkX to compute x and y coordinates for each node
-    # G = nx.Graph()
-    # G.add_nodes_from(nodes.keys())
-    # G.add_edges_from(edges.keys())
-    # node_positions = nx.kamada_kawai_layout(G)
-    # for node, pos in node_positions.items():
-    #     nodes[node] = {
-    #         "ip_address": nodes[node],
-    #         "x": pos[0],
-    #         "y": pos[1],
-    #     }
-    # print(nodes)
-    # print(edges)
-
-    # return nodes, edges
+            buffer_dict = { 
+                "id":f'{src}-{target}',
+                "source": srcDevice,
+                "target": tgtDevice,
+                "sourceHandle": f'src-{src_intf}-{src}',
+                "targetHandle": f'tgt-{target_intf}-{target}',
+                "type": "ZeroTouchEdge",
+                "data":{
+                    'weight': data['cost'][i],
+                    'type': data['type'][i],
+                    'srcIfName': src_intf,
+                    'srcDevice': srcDevice,
+                    'tgtIfName': target_intf,
+                    'tgtDevice': tgtDevice,
+                    'srcIP' : src,
+                    'tgtIP' : target,
+                }
+            }
+            new_dict_edges.append(buffer_dict)
+    
+    print(json.dumps(new_dict_edges,indent=4))
 
 
+icon_capability_map = {
+    'router': 'router',
+    'switch': 'switch',
+    'bridge': 'switch',
+    'station': 'host'
+}
+
+icon_model_map = {
+    'CSR1000V': 'router',
+    'Nexus': 'switch',
+    'IOSXRv': 'router',
+    'IOSv': 'switch',
+    '2901': 'router',
+    '2911': 'router',
+    '2921': 'router',
+    '2951': 'router',
+    '4321': 'router',
+    '4331': 'router',
+    '4351': 'router',
+    '4421': 'router',
+    '4431': 'router',
+    '4451': 'router',
+    '2960': 'switch',
+    '3750': 'switch',
+    '3850': 'switch',
+}
+
+def get_icon_type(device_cap_name, device_model=''):
+    """
+    Device icon selection function. Selection order:
+    - LLDP capabilities mapping.
+    - Device model mapping.
+    - Default 'unknown'.
+    """
+    if device_cap_name:
+        icon_type = icon_capability_map.get(device_cap_name)
+        if icon_type:
+            return icon_type
+    if device_model:
+        # Check substring presence in icon_model_map keys
+        # string until the first match
+        for model_shortname, icon_type in icon_model_map.items():
+            if model_shortname in device_model:
+                return icon_type
+    return 'unknown'
 
 
-# def show_ip_ospf_database_router_self_originiate(task):
-#     interfaces_result = task.run(
-#         task=netmiko_send_command,
-#         command_string="show ip ospf database router self-originate",
-#         use_genie=True
-#         # use_textfsm=True,
-#         # //"show ip interface br"
-#     )
-#     task.host["facts"] = interfaces_result.result
-#     regex = re.compile(r"^Link connected to: (.*) \((.*)\)$")
 
-#     # create a dictionary to store the nodes and edges
-#     network = {}
 
-#     # split the string into lines
-#     lines = interfaces_result.result.split("\n")
 
-#     # iterate over the lines and extract the information
-#     for line in lines:
-#         # get the link type and link data
-#         match = regex.match(line)
-#         if match is None:
-#             # the line does not match the expected format, print an error message
-#             print(f"Error: invalid line '{line}'")
-#             continue
-
-#         link_type = match.group(1)
-#         link_data = match.group(2)
-
-#         # handle the different link types
-#         if link_type == "a Transit Network" and link_data.startswith("Link Data"):
-#             # extract the link id and link data
-#             link_id = link_data.split(" ")[0]
-#             link_data = link_data.split("(Link Data)")[1].strip()
-
-#             # add the link to the network dictionary
-#             network[link_id] = {"type": "transit", "data": link_data}
-#         elif link_type == "another Router (point-to-point)":
-#             # extract the router id and add it to the network dictionary
-#             router_id = link_data.split(" ")[0]
-#             network[router_id] = {"type": "router", "data": {}}
-
-#     print(network)
 
 
 def kamada_kawai(nodes, edges):
