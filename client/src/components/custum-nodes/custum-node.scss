@@ -1,6 +1,15 @@
 .img-updater-node {
   max-width: 100%;
   object-fit: contain;
+  transition: all 0.5s ease-in-out;
+  transform: scale(1);
+
+  z-index: 1;
+}
+
+.img-updater-node:hover {
+  transform: scale(0.9);
+  opacity: 0.7;
 }
 
 .label {
@@ -8,4 +17,6 @@
   font-weight: bold;
   text-align: center;
   color: #333;
+  z-index: 2;
+  transition: all 0.2s ease-in-out;
 }

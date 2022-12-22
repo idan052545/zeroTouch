@@ -15,7 +15,7 @@ import {
   updateFailure,
 } from "./user-actions";
 
-const API_URL = process.env.REACT_APP_API_URL || "http://127.0.0.1:8000";
+// const API_URL = process.env.REACT_APP_API_URL || "http://127.0.0.1:8000";
 
 export function* getSnapshotFromUserAuth(userAuth) {
   try {
@@ -57,7 +57,7 @@ export function* getSnapshotFromUserAuth(userAuth) {
       },
       params: { ...userAuth },
     };*/
-    
+
     let config = {
       method: "get",
       url: "http://127.0.0.1:8000/zero-touch/routers/show_ip_int_br/",
@@ -67,7 +67,7 @@ export function* getSnapshotFromUserAuth(userAuth) {
       },
       params: { ...userAuth },
     };
-    
+    // eslint-disable-next-line
     const res = yield axios(config)
       .then((response) => {
         console.log(JSON.parse(response.data));

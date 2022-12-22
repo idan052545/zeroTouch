@@ -13,6 +13,8 @@ import ZeroTouchNode from "../components/custum-nodes/zeroTouchNode";
 import ZeroTouchEdge from "../components/ZeroTouchEdge";
 
 import "../components/custum-nodes/custum-node.scss";
+import TopologyWrapper from "../assets/wrappers/topology-view-wrapper";
+import DownloadButton from "../components/downloadImage";
 
 const rfStyle = {
   backgroundColor: "#ffffff",
@@ -183,21 +185,29 @@ function TopologyView() {
   );
 
   return (
-    <ReactFlow
-      nodes={nodes}
-      edges={edges}
-      onNodesChange={onNodesChange}
-      onEdgesChange={onEdgesChange}
-      onConnect={onConnect}
-      nodeTypes={nodeTypes}
-      edgeTypes={edgeTypes}
-      fitView
-      style={rfStyle}
-    >
-      <Controls />
-      <MiniMap />
-      <Background />
-    </ReactFlow>
+    <TopologyWrapper>
+      <div className="wrapper" id="download-image" style={{ height: 800 }}>
+        <DownloadButton />
+        <ReactFlow
+          nodes={nodes}
+          edges={edges}
+          onNodesChange={onNodesChange}
+          onEdgesChange={onEdgesChange}
+          onConnect={onConnect}
+          nodeTypes={nodeTypes}
+          edgeTypes={edgeTypes}
+          // connectionLineStyle={connectionLineStyle}
+          // connectionLineType="smoothstep"
+          fitView
+          style={rfStyle}
+          // attributionPosition="bottom-left"
+        >
+          <Controls />
+          <MiniMap />
+          <Background />
+        </ReactFlow>
+      </div>
+    </TopologyWrapper>
   );
 }
 

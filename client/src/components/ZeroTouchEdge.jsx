@@ -1,7 +1,7 @@
 import React from "react";
 import {
-  EdgeProps,
-  getBezierPath,
+  // EdgeProps,
+  // getBezierPath,
   EdgeLabelRenderer,
   getSimpleBezierPath,
 } from "reactflow";
@@ -29,7 +29,13 @@ export default function ZeroTouchEdge({
 
   return (
     <>
-      <path id={id} className="react-flow__edge-path" d={edgePath} />
+      <path
+        id={id}
+        className="react-flow__edge-path"
+        d={edgePath}
+        strokeWidth={5}
+        markerEnd={markerEnd}
+      />
       <EdgeLabelRenderer>
         {/* <div
           style={{

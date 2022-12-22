@@ -1,14 +1,16 @@
-import React, { memo } from "react";
+import React, { memo, useState } from "react";
 
 import { Handle, Position } from "reactflow";
 
 import "./custum-node.scss";
 
 export default memo(({ data }) => {
-  /*const onChange = useCallback((evt) => {
-    console.log(evt.target.value);
-  }, []);*/
+  const [showLabels, setShowLabels] = useState(false); // state to track visibility of labels
 
+  // Click handler function to toggle the node's click state
+  const handleClick = () => {
+    setShowLabels(!showLabels);
+  };
   const handles = [];
 
   // Set the radius of the circle and the angle between handles
@@ -40,7 +42,15 @@ export default memo(({ data }) => {
         key={`src-${data.intf[i]}-${data.intfIP[i]}`}
         type="source"
         // position="right"
-
+        position={
+          angle >= 0 && angle <= 90
+            ? Position.Bottom
+            : angle >= 90 && angle <= 180
+            ? Position.Top
+            : angle >= 180
+            ? Position.Right
+            : Position.Left
+        }
         style={style}
       />
     );
@@ -49,44 +59,55 @@ export default memo(({ data }) => {
         id={`tgt-${data.intf[i]}-${data.intfIP[i]}`}
         key={`tgt-${data.intf[i]}-${data.intfIP[i]}`}
         type="target"
+        position={
+          angle >= 0 && angle <= 90
+            ? Position.Bottom
+            : angle >= 90 && angle <= 180
+            ? Position.Top
+            : angle >= 180
+            ? Position.Right
+            : Position.Left
+        }
         style={style}
       />
     );
   }
 
   return (
-    <div>
+    <div onClick={handleClick}>
       {/* {handles} */}
       {handles.map((handle, index) => {
         if (handle.props.type === "source") {
           return (
             <>
               {handle}
-              <div
-                style={{
-                  position: "absolute",
-                  left: handle.props.style.left - 25, // position the label centered under the handle
-                  top: handle.props.style.top + 25, // position the label below the handle
-                  width: 40, // width of the label
-                  height: 20, // height of the label
-                  borderRadius: "5px", // make the label rectangular with rounded corners
-                  background: "#f8f8f8", // background color of the label
-                  display: "flex", // make the label a flex container
-                  alignItems: "center", // center the text horizontally
-                  justifyContent: "center", // center the text vertically
-                  fontSize: 5, // smaller font size
-                  fontWeight: 700,
-                  textAlign: "center",
-                  color: "#333", // dark gray text color
-                  fontFamily: "sans-serif", // sans-serif font
-                  boxShadow: "0 2px 4px rgba(0,0,0,0.2)", // subtle box shadow
-                }}
-                className="nodrag nopan"
-              >
-                {data.intfIP[index / 2]}
-                <br />
-                {data.intf[index / 2]}
-              </div>
+              {showLabels && (
+                <div
+                  style={{
+                    position: "absolute",
+                    left: handle.props.style.left - 25 + 5, // position the label centered under the handle
+                    top: handle.props.style.top + 25 - 10, // position the label below the handle
+                    width: 40, // width of the label
+                    height: 20, // height of the label
+                    borderRadius: "5px", // make the label rectangular with rounded corners
+                    background: "#f8f8f8", // background color of the label
+                    display: "flex", // make the label a flex container
+                    alignItems: "center", // center the text horizontally
+                    justifyContent: "center", // center the text vertically
+                    fontSize: 5, // smaller font size
+                    fontWeight: 700,
+                    textAlign: "center",
+                    color: "#333", // dark gray text color
+                    fontFamily: "sans-serif", // sans-serif font
+                    boxShadow: "0 2px 4px rgba(0,0,0,0.2)", // subtle box shadow
+                  }}
+                  className="nodrag nopan label"
+                >
+                  {data.intfIP[index / 2]}
+                  <br />
+                  {data.intf[index / 2]}
+                </div>
+              )}
             </>
           );
         }

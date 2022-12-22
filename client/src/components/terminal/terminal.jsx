@@ -3,8 +3,8 @@ import FormInput from "../form-input/form-input";
 
 const Terminal = ({ text, user }) => {
   const handleChange = (e) => {
-    const name = e.target.name;
-    const value = e.target.value;
+    // const name = e.target.name;
+    // const value = e.target.value;
   };
 
   return (

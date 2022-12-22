@@ -78,7 +78,7 @@ const QuestionsPage = () => {
     }
     if (valid) {
       setCurQue(curQue + 1);
-      if (curQue == questions.length - 1) {
+      if (curQue === questions.length - 1) {
         dispatch(signInStart(values));
         navigate("/user");
       }
@@ -89,7 +89,7 @@ const QuestionsPage = () => {
     <QuestionBoxWrapper className="full-page">
       <form onSubmit={(e) => e.preventDefault()} className="form">
         {questions?.map(({ id, name, ...otherCollectionProps }) =>
-          curQue == id ? (
+          curQue === id ? (
             <QuestionBox
               key={id}
               name={name}
