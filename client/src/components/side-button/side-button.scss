@@ -1,0 +1,45 @@
+.side-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 40px;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: none;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  font-size: 14px;
+  font-weight: bold;
+  color: black;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  opacity: 1;
+
+  .icon {
+    font-size: 24px;
+    transition: all 0.3s ease;
+    color: white;
+    position: absolute;
+  }
+
+  .text {
+    opacity: 0;
+    transition: all 0.3s ease;
+  }
+}
+.sidebar:hover .side-button {
+  background: white;
+}
+
+.sidebar:hover .side-button .text {
+  opacity: 1;
+}
+
+.sidebar:hover .side-button .icon {
+  transform: rotate(360deg);
+  color: black;
+  margin-left: 0;
+  position: relative;
+}

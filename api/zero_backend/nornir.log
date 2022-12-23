@@ -2754,3 +2754,9 @@ Traceback (most recent call last):
 RuntimeError: dictionary changed size during iteration
 
 2022-12-21 19:40:51,891 -  nornir.core -     INFO -        run() - Running task 'generate_node_and_edge_dictionaries' with args {} on 2 hosts
+2022-12-23 11:12:51,712 -  nornir.core -     INFO -        run() - Running task 'send_show_command' with args {'command': 'show interface brief'} on 1 hosts
+2022-12-23 11:13:45,998 -  nornir.core -     INFO -        run() - Running task 'send_show_command' with args {'command': 'show interface brief'} on 1 hosts
+2022-12-23 11:14:03,280 -  nornir.core -     INFO -        run() - Running task 'send_show_command' with args {'command': '"show interface brief"'} on 1 hosts
+2022-12-23 11:16:59,709 -  nornir.core -     INFO -        run() - Running task 'send_show_command' with args {'command': '"show ip interface brief"'} on 1 hosts
+2022-12-23 11:17:09,973 -  nornir.core -     INFO -        run() - Running task 'send_show_command' with args {'command': 'show ip interface brief'} on 1 hosts
+2022-12-23 11:17:59,077 -  nornir.core -     INFO -        run() - Running task 'send_show_command' with args {'command': 'show ip arp'} on 1 hosts

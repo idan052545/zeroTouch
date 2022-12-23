@@ -5,26 +5,6 @@ const TopologyWrapper = styled.div`
     background: #1a365d;
   }
 
-  #download-image .react-flow__node {
-    width: 50px;
-    height: 50px;
-    color: white;
-    font-weight: 700;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-color: white;
-  }
-
-  #download-image .react-flow__node-custom {
-    font-size: 12px;
-    background: #eee;
-    border: 1px solid #555;
-    border-radius: 5px;
-    text-align: center;
-    padding: 10px;
-  }
-
   #download-image .react-flow__node-custom .react-flow__handle-right {
     transform: none;
   }
@@ -37,7 +17,7 @@ const TopologyWrapper = styled.div`
   #download-image .download-btn {
     position: absolute;
     top: 10px;
-    right: 10px;
+    right: 50px;
     z-index: 10;
     border: 1px solid #eee;
     background: #ebf8ff;
@@ -49,6 +29,25 @@ const TopologyWrapper = styled.div`
 
   #download-image .download-btn:hover {
     opacity: 0.9;
+  }
+
+  #download-image .sidebar {
+    z-index: 100;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 50px;
+    height: 100%;
+    background: black;
+    box-shadow: 0 0 10px white;
+    transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    &:hover {
+      width: 200px;
+    }
   }
 `;
 export default TopologyWrapper;

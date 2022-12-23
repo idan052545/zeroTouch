@@ -12,6 +12,8 @@ function downloadImage(dataUrl) {
 function DownloadButton() {
   const onClick = () => {
     toPng(document.querySelector(".react-flow"), {
+      mode: "no-cors",
+
       filter: (node) => {
         // we don't want to add the minimap and the controls to the image
         if (

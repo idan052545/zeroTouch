@@ -11,6 +11,7 @@ import ConfigPage from "./pages/config-page";
 import UserPage from "./pages/user-page";
 import { useDispatch } from "react-redux";
 import { fetchStart } from "./redux/field/field-actions";
+import ShowPage from "./pages/show-page";
 //const API_URL = process.env.REACT_APP_API_URL;
 
 const App = () => {
@@ -27,6 +28,7 @@ const App = () => {
         <Route path="/" element={<HomePage />} />
         <Route path="/questions" element={<QuestionsPage />} />
         <Route path="/config" element={<ConfigPage />} />
+        <Route path="/show" element={<ShowPage />} />
 
         <Route
           path="/user"

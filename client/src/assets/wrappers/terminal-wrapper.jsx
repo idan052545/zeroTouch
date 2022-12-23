@@ -138,5 +138,70 @@ const TerminalWrapper = styled.div`
       width: 95%;
     }
   }
+
+  .title {
+    font-size: 32px;
+    font-weight: bold;
+    color: #333; /* dark grey color */
+    text-align: center;
+    margin-bottom: 16px;
+  }
+
+  .search-container {
+    display: flex;
+    align-items: center;
+    border: 1px solid #333; /* dark grey color */
+    border-radius: 4px;
+    padding: 4px 8px;
+    margin-bottom: 16px;
+  }
+
+  .search-icon {
+    color: #333; /* dark grey color */
+    margin-right: 8px;
+  }
+
+  .search-input {
+    border: none;
+    background: transparent;
+    color: #333; /* dark grey color */
+    font-size: 16px;
+    outline: none;
+    width: 100%;
+  }
+
+  .set-button,
+  .cancel-button {
+    background: #333; /* dark grey color */
+    border: none;
+    color: white;
+    font-size: 14px;
+    padding: 4px 8px;
+    border-radius: 4px;
+    cursor: pointer;
+    outline: none;
+  }
+
+  .set-button:hover,
+  .cancel-button:hover {
+    background: #444; /* darker grey color */
+  }
+
+  .Terminal__Prompt .open-ospf-modal-button {
+    width: 80px;
+    height: 40px;
+    background-color: #57003f;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    margin-left: 10px;
+  }
+
+  .Terminal__Prompt .open-ospf-modal-button:hover {
+    background-color: #f57453;
+  }
 `;
 export default TerminalWrapper;

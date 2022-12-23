@@ -27,6 +27,20 @@ interfaces = {}
 LOCK = threading.Lock()
 
 
+
+def send_show_command(task,command):
+    
+    result = task.run(
+        task=netmiko_send_command,
+        command_string=command,
+        use_genie=True
+        # use_textfsm=True,
+        # //"show ip interface br"
+    )
+    task.host["facts"] = result.result
+
+
+
 def show_ip_int_br(task):
     interfaces_result = task.run(
         task=netmiko_send_command,
@@ -215,20 +229,6 @@ def generate_node_and_edge_dictionaries(task):
     use_genie=True,
     )
 
-    version_output = task.run(
-    task= netmiko_send_command,
-    command_string="show version",
-    use_genie=True,
-    )
-
-
-    parsed_version_output = version_output.result
-    print(parsed_version_output)
-
-    # hostname = parsed_version_output['version']['hostname']
-    # model = parsed_version_output['version']['os']
-    # serial_number = parsed_version_output['version']['chassis_sn']
-    # primary_ip = parsed_version_output['ip_addr']['primary']['address']
 
 
     parsed_output = ospf_output.result
@@ -327,7 +327,7 @@ def generate_node_and_edge_dictionaries(task):
                         "serial": serial,
                         "hostname": hostname,
                         "value": key,
-                        "img": "https://symbols.getvecta.com/stencil_240/204_router.7b208c1133.png"
+                        "img": "http://127.0.0.1:8000/images/router.png"
                     }
                 }
             new_dict.append(buffer_dict)

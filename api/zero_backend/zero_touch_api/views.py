@@ -34,11 +34,13 @@ from .models import Field, FieldImage, Router
 from .serializers import FieldImageSerializer, FieldSerializer, RouterSerializer
 from djongo import database
 
-from .nornir_netmiko_actions import generate_node_and_edge_dictionaries, get_interfaces_dict, load_ospf, show_ip_int_br, get_all_ip, locate_ip, get_loopback_ip, ping_test, failed_list, show_ip_ospf_database_router, string_result, target_list, duplicates, ip_list,interfaces
+from .nornir_netmiko_actions import generate_node_and_edge_dictionaries, get_interfaces_dict, load_ospf, send_show_command, show_ip_int_br, get_all_ip, locate_ip, get_loopback_ip, ping_test, failed_list, show_ip_ospf_database_router, string_result, target_list, duplicates, ip_list,interfaces
 from collections import Counter
 
 from netmiko import ConnectHandler
 from nornir import InitNornir
+from nornir.core.filter import F
+
 from genie.utils import Dq
 from nornir.core.task import Task, Result
 from genie.libs.parser.utils import get_parser_commands
@@ -167,7 +169,18 @@ class RouterViewSet(ModelViewSet):
             print_result(results)
             return Response(
                 json.dumps({}, indent=4), status=status.HTTP_200_OK
-            )            
+            )  
+    @action(detail=False, methods=['GET'], permission_classes=[IsAuthenticated])
+    def send_show_command(self, request):
+        if request.method == 'GET':
+            ip = request.GET.get('ip', '')
+            command = request.GET.get('command', '')
+            selectedHost = nr.filter(F(hostname=ip))
+            results = selectedHost.run(task=send_show_command,command=command)
+
+            return Response(
+                json.dumps(string_result(results), indent=4), status=status.HTTP_200_OK
+            )                       
 
 class FieldViewSet(ModelViewSet):
     # queryset = Field.objects.annotate(fields_count=Count("id")).all()

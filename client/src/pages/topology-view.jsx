@@ -1,4 +1,9 @@
 import { useCallback, useState } from "react";
+import { GiPathDistance } from "react-icons/gi";
+import { MdBackup, MdCompareArrows } from "react-icons/md";
+import { RiFocus2Fill, RiShutDownFill } from "react-icons/ri";
+import { TbShapeOff } from "react-icons/tb";
+
 import ReactFlow, {
   addEdge,
   applyEdgeChanges,
@@ -15,7 +20,7 @@ import ZeroTouchEdge from "../components/ZeroTouchEdge";
 import "../components/custum-nodes/custum-node.scss";
 import TopologyWrapper from "../assets/wrappers/topology-view-wrapper";
 import DownloadButton from "../components/downloadImage";
-
+import SideButton from "../components/side-button/side-button";
 const rfStyle = {
   backgroundColor: "#ffffff",
 };
@@ -34,7 +39,7 @@ const initialNodes = [
       serial: "67108912",
       hostname: "R3",
       value: "10.0.0.1",
-      img: "https://symbols.getvecta.com/stencil_240/204_router.7b208c1133.png",
+      img: "http://127.0.0.1:8000/images/router.png",
     },
   },
   {
@@ -50,7 +55,7 @@ const initialNodes = [
       serial: "67108896",
       hostname: "CiscoRouter",
       value: "192.168.19.101",
-      img: "https://symbols.getvecta.com/stencil_240/204_router.7b208c1133.png",
+      img: "http://127.0.0.1:8000/images/router.png",
     },
   },
 ];
@@ -188,6 +193,14 @@ function TopologyView() {
     <TopologyWrapper>
       <div className="wrapper" id="download-image" style={{ height: 800 }}>
         <DownloadButton />
+        <div className="sidebar">
+          <SideButton icon={<GiPathDistance />}>Shortest Paths</SideButton>
+          <SideButton icon={<MdBackup />}>Discover Backup Paths</SideButton>
+          <SideButton icon={<RiShutDownFill />}>Router Shutdown</SideButton>
+          <SideButton icon={<RiFocus2Fill />}>Focus on Node</SideButton>
+          <SideButton icon={<MdCompareArrows />}>Compare State</SideButton>
+          <SideButton icon={<TbShapeOff />}>Asymmetric Paths</SideButton>
+        </div>
         <ReactFlow
           nodes={nodes}
           edges={edges}
@@ -202,7 +215,7 @@ function TopologyView() {
           style={rfStyle}
           // attributionPosition="bottom-left"
         >
-          <Controls />
+          <Controls position="top-right" />
           <MiniMap />
           <Background />
         </ReactFlow>

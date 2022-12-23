@@ -1,0 +1,153 @@
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1000;
+  visibility: hidden;
+  background-color: rgba(0, 0, 0, 0.5);
+  transition: all 0.3s ease-in-out;
+  overflow-y: scroll;
+}
+
+.modal.open {
+  visibility: visible;
+}
+
+.modal-content {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 400px;
+  height: auto;
+  background-color: #fff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  border-radius: 6px;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.modal-title {
+  margin: 0 0 20px;
+  font-size: 24px;
+  font-weight: bold;
+  text-align: center;
+}
+
+.form-group {
+  margin: 0 0 20px;
+}
+
+.form-group label {
+  display: block;
+  margin: 0 0 10px;
+  font-size: 14px;
+}
+
+.form-group input {
+  display: block;
+  width: 100%;
+  height: 40px;
+  padding: 0 10px;
+  box-sizing: border-box;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 14px;
+}
+
+.form-group input:focus {
+  outline: none;
+  border-color: #57003f;
+}
+
+.form-subtitle {
+  margin: 0 0 10px;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.network-inputs {
+  display: flex;
+  align-items: center;
+}
+
+.network-inputs .form-group {
+  flex: 1;
+  margin: 0 10px 0 0;
+}
+
+.network-inputs .form-group:last-of-type {
+  margin: 0;
+}
+
+.network-inputs .remove-network-button,
+.add-network-button {
+  width: 40px;
+  height: 40px;
+  background-color: #57003f;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  font-size: 18px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.network-inputs .remove-network-button:hover,
+.add-network-button:hover {
+  background-color: #f57453;
+}
+
+.form-actions {
+  margin: 20px 0 0;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.form-actions .send-button,
+.form-actions .close-button {
+  width: 120px;
+  height: 40px;
+  background-color: #57003f;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.form-actions .send-button:hover,
+.form-actions .close-button:hover {
+  background-color: #f57453;
+}
+
+.form-actions .close-button {
+  margin-left: 10px;
+  background-color: #ccc;
+}
+
+.form-actions .close-button:hover {
+  background-color: #999;
+}
+.modal-content input[type="checkbox"] {
+  width: 20px;
+  height: 20px;
+  margin: 0;
+  border: 2px solid #57003f;
+  border-radius: 4px;
+  appearance: none;
+  outline: none;
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+.modal-content input[type="checkbox"]:checked {
+  background-color: #57003f;
+}
+
+.modal-content input[type="checkbox"]:hover {
+  border-color: #f57453;
+}
