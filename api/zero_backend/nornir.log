@@ -2760,3 +2760,80 @@ RuntimeError: dictionary changed size during iteration
 2022-12-23 11:16:59,709 -  nornir.core -     INFO -        run() - Running task 'send_show_command' with args {'command': '"show ip interface brief"'} on 1 hosts
 2022-12-23 11:17:09,973 -  nornir.core -     INFO -        run() - Running task 'send_show_command' with args {'command': 'show ip interface brief'} on 1 hosts
 2022-12-23 11:17:59,077 -  nornir.core -     INFO -        run() - Running task 'send_show_command' with args {'command': 'show ip arp'} on 1 hosts
+2022-12-24 15:50:51,589 -  nornir.core -  WARNING -        run() - Task 'send_show_command' has not been run – 0 hosts selected
+2022-12-24 15:52:57,481 -  nornir.core -     INFO -        run() - Running task 'send_show_command' with args {'command': 'show ip interface brief'} on 1 hosts
+2022-12-24 15:52:57,843 - nornir.core.task -    ERROR -      start() - Host 'R1': task 'netmiko_send_command' failed with traceback:
+Traceback (most recent call last):
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/nornir/core/task.py", line 99, in start
+    r = self.task(self, **self.params)
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/nornir_netmiko/tasks/netmiko_send_command.py", line 32, in netmiko_send_command
+    result = net_connect.send_command(command_string, **kwargs)
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/netmiko/utilities.py", line 592, in wrapper_decorator
+    return func(self, *args, **kwargs)
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/netmiko/base_connection.py", line 1659, in send_command
+    search_pattern = self._prompt_handler(auto_find_prompt)
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/netmiko/base_connection.py", line 1544, in _prompt_handler
+    prompt = self.find_prompt()
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/netmiko/base_connection.py", line 1335, in find_prompt
+    self.write_channel(self.RETURN)
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/netmiko/base_connection.py", line 97, in wrapper_decorator
+    return_val = func(self, *args, **kwargs)
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/netmiko/base_connection.py", line 111, in wrapper_decorator
+    func(self, out_data)
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/netmiko/base_connection.py", line 537, in write_channel
+    self.channel.write_channel(out_data)
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/netmiko/channel.py", line 74, in write_channel
+    self.remote_conn.sendall(write_bytes(out_data, encoding=self.encoding))
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/paramiko/channel.py", line 846, in sendall
+    sent = self.send(s)
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/paramiko/channel.py", line 801, in send
+    return self._send(s, m)
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/paramiko/channel.py", line 1198, in _send
+    raise socket.error("Socket is closed")
+OSError: Socket is closed
+
+2022-12-24 15:52:57,865 - nornir.core.task -    ERROR -      start() - Host 'R1': task 'send_show_command' failed with traceback:
+Traceback (most recent call last):
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/nornir/core/task.py", line 99, in start
+    r = self.task(self, **self.params)
+  File "/home/idansimantov/projects/zero_touch/api/zero_backend/zero_touch_api/nornir_netmiko_actions.py", line 33, in send_show_command
+    result = task.run(
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/nornir/core/task.py", line 174, in run
+    raise NornirSubTaskError(task=run_task, result=r)
+nornir.core.exceptions.NornirSubTaskError: Subtask: netmiko_send_command (failed)
+
+
+2022-12-24 15:54:07,539 -  nornir.core -     INFO -        run() - Running task 'send_show_command' with args {'command': 'show ip interface brief'} on 1 hosts
+2022-12-24 15:55:21,272 -  nornir.core -     INFO -        run() - Running task 'send_show_command' with args {'command': 'show ip interface brief'} on 1 hosts
+2022-12-24 15:55:44,816 -  nornir.core -     INFO -        run() - Running task 'send_show_command' with args {'command': 'show ip interface brief'} on 1 hosts
+2022-12-24 15:57:00,224 -  nornir.core -     INFO -        run() - Running task 'send_show_command' with args {'command': 'show ip interface brief'} on 1 hosts
+2022-12-24 15:58:10,273 -  nornir.core -     INFO -        run() - Running task 'send_show_command' with args {'command': 'show ip arp'} on 1 hosts
+2022-12-24 15:59:00,470 -  nornir.core -     INFO -        run() - Running task 'send_show_command' with args {'command': 'show ip arp'} on 1 hosts
+2022-12-24 15:59:43,832 -  nornir.core -     INFO -        run() - Running task 'send_show_command' with args {'command': 'show ip arp'} on 1 hosts
+2022-12-24 15:59:52,096 -  nornir.core -     INFO -        run() - Running task 'send_show_command' with args {'command': 'show ip arp'} on 1 hosts
+2022-12-24 16:00:05,770 -  nornir.core -     INFO -        run() - Running task 'send_show_command' with args {'command': 'show interface brief'} on 1 hosts
+2022-12-24 16:00:23,572 -  nornir.core -     INFO -        run() - Running task 'send_show_command' with args {'command': 'show ip interface brief'} on 1 hosts
+2022-12-24 16:00:55,831 -  nornir.core -     INFO -        run() - Running task 'send_show_command' with args {'command': 'show ip arp'} on 1 hosts
+2022-12-24 16:01:11,984 -  nornir.core -     INFO -        run() - Running task 'send_show_command' with args {'command': 'show ip arp'} on 1 hosts
+2022-12-24 16:03:06,757 -  nornir.core -     INFO -        run() - Running task 'send_show_command' with args {'command': 'show ip arp'} on 1 hosts
+2022-12-24 16:21:19,661 -  nornir.core -     INFO -        run() - Running task 'send_show_command' with args {'command': 'show ip arp'} on 1 hosts
+2022-12-24 16:24:39,179 -  nornir.core -  WARNING -        run() - Task 'send_show_command' has not been run – 0 hosts selected
+2022-12-24 16:24:56,097 -  nornir.core -     INFO -        run() - Running task 'send_show_command' with args {'command': 'show ip arp'} on 1 hosts
+2022-12-24 16:25:17,791 -  nornir.core -     INFO -        run() - Running task 'send_show_command' with args {'command': 'show ip arp'} on 1 hosts
+2022-12-24 16:26:26,859 -  nornir.core -     INFO -        run() - Running task 'send_show_command' with args {'command': 'show ip arp'} on 1 hosts
+2022-12-24 16:26:58,239 -  nornir.core -     INFO -        run() - Running task 'send_show_command' with args {'command': 'show ip interface brief'} on 1 hosts
+2022-12-24 16:31:44,896 -  nornir.core -     INFO -        run() - Running task 'send_show_command' with args {'command': 'show ip arp'} on 1 hosts
+2022-12-24 16:32:12,231 -  nornir.core -     INFO -        run() - Running task 'send_show_command' with args {'command': 'show ip arp'} on 1 hosts
+2022-12-24 16:37:52,744 -  nornir.core -     INFO -        run() - Running task 'send_show_command' with args {'command': 'show ip arp'} on 1 hosts
+2022-12-24 16:38:22,548 -  nornir.core -     INFO -        run() - Running task 'send_show_command' with args {'command': 'show ip arp'} on 1 hosts
+2022-12-24 16:44:26,743 -  nornir.core -     INFO -        run() - Running task 'send_show_command' with args {'command': 'show ip arp'} on 1 hosts
+2022-12-24 16:44:58,998 -  nornir.core -     INFO -        run() - Running task 'send_show_command' with args {'command': 'show ip arp'} on 1 hosts
+2022-12-24 16:45:11,400 -  nornir.core -     INFO -        run() - Running task 'send_show_command' with args {'command': 'show ip arp'} on 1 hosts
+2022-12-24 16:47:31,202 -  nornir.core -     INFO -        run() - Running task 'send_show_command' with args {'command': 'show ip arp'} on 1 hosts
+2022-12-24 16:49:31,361 -  nornir.core -     INFO -        run() - Running task 'send_show_command' with args {'command': 'show ip arp'} on 1 hosts
+2022-12-24 16:49:47,977 -  nornir.core -     INFO -        run() - Running task 'send_show_command' with args {'command': 'show ip interface brief'} on 1 hosts
+2022-12-24 16:52:56,783 -  nornir.core -     INFO -        run() - Running task 'send_show_command' with args {'command': 'show ip arp'} on 1 hosts
+2022-12-24 16:53:39,561 -  nornir.core -     INFO -        run() - Running task 'send_show_command' with args {'command': 'show ip ospf router'} on 1 hosts
+2022-12-24 16:53:50,796 -  nornir.core -     INFO -        run() - Running task 'send_show_command' with args {'command': 'show ip ospf router'} on 1 hosts
+2022-12-24 16:53:59,941 -  nornir.core -     INFO -        run() - Running task 'send_show_command' with args {'command': 'show ip ospf database'} on 1 hosts
+2022-12-24 16:54:20,870 -  nornir.core -     INFO -        run() - Running task 'send_show_command' with args {'command': 'show ip arp'} on 1 hosts

@@ -4,7 +4,7 @@ import "./form-input.scss";
 
 const FormInput = ({ handleChange, label, ...otherProps }) => (
   <div className="form-row">
-    <input onChange={handleChange} {...otherProps} />
+    <input value={otherProps.value} onChange={handleChange} {...otherProps} />
     {label ? (
       <label
         className={`${otherProps.value.length ? "shrink" : " "}

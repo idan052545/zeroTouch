@@ -1,15 +1,32 @@
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import TerminalWrapper from "../../assets/wrappers/terminal-wrapper";
 import FormInput from "../form-input/form-input";
 import { BiSearch } from "react-icons/bi";
 import OSPFModal from "../ospf-modal/ospf-modal";
+import { useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
+import { toast } from "react-toastify";
+
+import { sendCommandStart } from "../../redux/router/router-actions";
+import {
+  selectIsFetching,
+  selectShowResult,
+} from "../../redux/router/router-selectors";
 
 const Terminal = ({ text, user }) => {
+  const dispatch = useDispatch();
   const [searchValue, setSearchValue] = useState("");
   const [isSearchSet, setIsSearchSet] = useState(false);
   const [commandValue, setCommandValue] = useState("");
-  const [isOSPFModalOpen, setIsOSPFModalOpen] = useState(false); // add state variable to track whether OSPF modal is open or closed
+  const [isOSPFModalOpen, setIsOSPFModalOpen] = useState(false);
+  const result = useSelector(selectShowResult);
+  let isLoading = !useSelector(selectIsFetching);
 
+  useEffect(() => {
+    outputRef.current.value = outputRef.current.value + "\n" + result;
+  }, [isLoading]);
+
+  const outputRef = useRef();
   const handleOSPFModalClose = () => {
     setIsOSPFModalOpen(false); // close the modal
   };
@@ -29,6 +46,16 @@ const Terminal = ({ text, user }) => {
   const handleCancelClick = () => {
     setIsSearchSet(false); // set search as not set
     setSearchValue(""); // clear search value
+  };
+
+  const handleOnEnter = () => {
+    if (commandValue === "clear") {
+      outputRef.current.value = "";
+    } else {
+      outputRef.current.value = outputRef.current.value + "\n" + commandValue;
+      dispatch(sendCommandStart(searchValue, commandValue));
+    }
+    setCommandValue("");
   };
 
   return (
@@ -58,7 +85,8 @@ const Terminal = ({ text, user }) => {
           </button>
         )}
       </div>
-      <input disabled className="Prompt__Output" />
+      <textarea ref={outputRef} disabled className="Prompt__Output" />
+
       <div className="container">
         <div className="Terminal">
           <div className="Terminal__Toolbar">
@@ -79,7 +107,13 @@ const Terminal = ({ text, user }) => {
                 name={text}
                 placeholder={text}
                 handleChange={handleTerminalChange}
+                value={commandValue}
                 required
+                onKeyDown={(event) => {
+                  if (event.key === "Enter") {
+                    handleOnEnter();
+                  }
+                }}
               />
               <button
                 type="button"
@@ -92,6 +126,7 @@ const Terminal = ({ text, user }) => {
             <OSPFModal
               isOpen={isOSPFModalOpen}
               handleClose={handleOSPFModalClose}
+              ip={searchValue}
             />
           </div>
         </div>

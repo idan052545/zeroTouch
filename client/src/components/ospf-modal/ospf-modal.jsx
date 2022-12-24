@@ -2,7 +2,7 @@ import { useState } from "react";
 
 import "./ospf-modal.scss";
 
-const OSPFModal = ({ isOpen, handleClose }) => {
+const OSPFModal = ({ isOpen, handleClose, ip }) => {
   const [setRouterID, setSetRouterID] = useState(false); // add state variable to track whether the "set router ID" checkbox is checked
 
   const [ospfProcess, setOspfProcess] = useState(""); // initialize state variable to store OSPF process value
@@ -41,7 +41,11 @@ const OSPFModal = ({ isOpen, handleClose }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // submit form values here
+    handleClose();
+    let configOspf = { ip, ospfProcess, networks };
+    if (setRouterID) {
+      configOspf = { ...configOspf, routerId };
+    }
   };
 
   return (
@@ -61,6 +65,8 @@ const OSPFModal = ({ isOpen, handleClose }) => {
             />
           </div>
           <div className="form-group">
+            <label htmlFor="set-router-id">Set router ID</label>
+
             <input
               type="checkbox"
               id="set-router-id"
@@ -68,7 +74,6 @@ const OSPFModal = ({ isOpen, handleClose }) => {
               checked={setRouterID}
               onChange={handleSetRouterIDChange}
             />
-            <label htmlFor="set-router-id">Set router ID</label>
           </div>
           {setRouterID && (
             <div className="form-group">

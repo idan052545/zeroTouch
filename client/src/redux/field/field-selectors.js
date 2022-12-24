@@ -1,10 +1,6 @@
 import { createSelector } from "reselect";
 
 const selectFields = (state) => state.field;
-// const selectFields = (state) => {
-//   console.log(state);
-//   // state.field;
-// };
 
 export const selectFieldsArray = createSelector(
   [selectFields],

@@ -24,10 +24,6 @@ export function* fetchFieldsAsync() {
     });
 
     yield put(fetchSuccess(data));
-
-    /*.catch((error) => {
-        console.log(error);
-      });*/
   } catch (error) {
     yield put(fetchFailure(error.message));
   }

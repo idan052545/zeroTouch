@@ -177,7 +177,7 @@ class RouterViewSet(ModelViewSet):
             command = request.GET.get('command', '')
             selectedHost = nr.filter(F(hostname=ip))
             results = selectedHost.run(task=send_show_command,command=command)
-
+            print(string_result(results))
             return Response(
                 json.dumps(string_result(results), indent=4), status=status.HTTP_200_OK
             )                       

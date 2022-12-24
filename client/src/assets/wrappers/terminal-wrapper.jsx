@@ -10,19 +10,29 @@ const TerminalWrapper = styled.div`
   }
   display: grid;
   place-items: center;
+
   .container {
     display: flex;
     justify-content: center;
     align-items: center;
   }
   .Terminal {
-    width: 600px;
-    height: 80px;
+    width: 90%;
+    height: 100px;
     box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.5);
+    background: rgba(56, 4, 40, 0.9);
+    border-radius: 10px;
+    font-family: "Ubuntu Mono";
+    font-size: 18px;
+    display: flex;
+    flex-direction: column;
+    text-align: start;
+    padding: 10px;
+    box-sizing: border-box;
   }
 
   .Terminal__Toolbar {
-    background: linear-gradient(#504b45 0%, #3c3b37 100%);
+    /* background: linear-gradient(#504b45 0%, #3c3b37 100%);
     width: 100%;
     padding: 0 8px;
     box-sizing: border-box;
@@ -30,7 +40,7 @@ const TerminalWrapper = styled.div`
     display: flex;
     align-items: center;
     border-top-left-radius: 6px;
-    border-top-right-radius: 6px;
+    border-top-right-radius: 6px; */
   }
 
   .Toolbar__buttons {
@@ -74,11 +84,13 @@ const TerminalWrapper = styled.div`
     margin-bottom: 1px;
   }
   .Terminal__body {
-    background: rgba(56, 4, 40, 0.9);
-    height: calc(100% - 25px);
+    /* background: rgba(56, 4, 40, 0.9); */
+    /* height: calc(100% - 25px); */
     margin-top: -1px;
     padding-top: 2px;
     font-family: "Ubuntu mono";
+
+    /* overflow-y: auto; */
   }
   .Terminal__text {
     color: #ddd;
@@ -87,6 +99,7 @@ const TerminalWrapper = styled.div`
   .Terminal__Prompt {
     margin-top: 10px;
     display: flex;
+    justify-content: space-between;
   }
 
   .Prompt__user {
@@ -100,27 +113,53 @@ const TerminalWrapper = styled.div`
   }
 
   .Prompt__Input {
-    border-color: rgba(56, 4, 40, 0.9);
-    backface-visibility: hidden;
+    background: linear-gradient(45deg, #57003f 0%, #f57453 100%);
+    width: 80%;
+    border-radius: 10px;
+    padding: 10px;
+    box-sizing: border-box;
     display: flex;
-    width: 500px;
-    margin-left: 8px;
+    color: #fff;
     outline: none;
-    background: none;
     border: none;
     -webkit-text-fill-color: white;
+    font-size: 18px;
+    border-color: rgba(56, 4, 40, 0.9);
+    backface-visibility: hidden;
   }
   .Prompt__Output {
     background: linear-gradient(45deg, #57003f 0%, #f57453 100%);
-    width: 600px;
-    height: 600px;
-    box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.5);
-    padding: 0 8px;
-    box-sizing: border-box;
-    border-top-left-radius: 6px;
-    border-top-right-radius: 6px;
-    position: relative;
-    -webkit-text-fill-color: white;
+    width: 90%;
+    height: 400px;
+    border-radius: 10px;
+    padding: 10px;
+    /* box-sizing: border-box; */
+    color: #fff;
+    font-size: 24px;
+    overflow-y: scroll;
+    /* flex-direction: column; */
+    padding-top: 50px;
+    text-align: justify;
+    word-wrap: break-word;
+    display: block;
+    resize: none;
+
+    ::-webkit-scrollbar {
+      width: 12px;
+      height: 12px;
+    }
+
+    /* Style the thumb (the part that the user can drag) */
+    ::-webkit-scrollbar-thumb {
+      background: #57003f;
+      border-radius: 10px;
+    }
+
+    /* Style the track (the background of the scrollbar) */
+    ::-webkit-scrollbar-track {
+      background: #f57453;
+      border-radius: 10px;
+    }
   }
 
   @keyframes blink {
@@ -163,6 +202,7 @@ const TerminalWrapper = styled.div`
 
   .search-input {
     border: none;
+    border-bottom: 2px solid white;
     background: transparent;
     color: #333; /* dark grey color */
     font-size: 16px;
@@ -197,11 +237,12 @@ const TerminalWrapper = styled.div`
     font-size: 16px;
     font-weight: bold;
     cursor: pointer;
-    margin-left: 10px;
+    margin-left: auto;
   }
 
   .Terminal__Prompt .open-ospf-modal-button:hover {
     background-color: #f57453;
   }
 `;
+
 export default TerminalWrapper;

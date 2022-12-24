@@ -13,6 +13,8 @@ import math
 import networkx as nx
 from nornir.core.task import AggregatedResult, MultiResult, Result
 from genie.conf import Genie
+import pprint
+
 
 
 ip_list = []
@@ -511,7 +513,7 @@ def _print_individual_result(
         else ""
     )
     msg = "{}{}{}".format(symbol * 4, host, result.name, subtitle)
-    final_string += \
+    final_string += '\n' + \
         "{}{}".format(
              msg, symbol * (80 - len(msg)), level_name
         )
@@ -520,12 +522,14 @@ def _print_individual_result(
         x = getattr(result, attribute, "")
         if isinstance(x, BaseException):
             # for consistency between py3.6 and py3.7
-                final_string += (f"{x.__class__.__name__}{x.args}")
+                final_string += '\n' + (f"{x.__class__.__name__}{x.args}")
         elif x and not isinstance(x, str):
             if isinstance(x, OrderedDict):
-                final_string += (json.dumps(x, indent=2))
+                pretty_dict = pprint.pformat(x, indent=4)
+                final_string += '\n'+pretty_dict
+                # final_string += (json.dumps(x, indent=2))
             else:
-                final_string += str(x)
+                final_string += '\n'+ str(x)
         elif x:
             final_string += str(x)
     return "\n"+ final_string
