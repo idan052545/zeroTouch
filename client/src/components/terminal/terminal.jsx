@@ -23,7 +23,8 @@ const Terminal = ({ text, user }) => {
   let isLoading = !useSelector(selectIsFetching);
 
   useEffect(() => {
-    outputRef.current.value = outputRef.current.value + "\n" + result;
+    // outputRef.current.value = outputRef.current.value + "\n" + result;
+    outputRef.current.value = result;
   }, [isLoading]);
 
   const outputRef = useRef();
@@ -62,13 +63,13 @@ const Terminal = ({ text, user }) => {
     <TerminalWrapper>
       <div className="title">show commands</div>
       <div className="search-container">
-        <BiSearch className="search-icon" />
+        {/* <BiSearch className="search-icon" /> */}
         <FormInput
           className="search-input"
           type="text"
           id="search"
           name="search"
-          placeholder="Search for IP address"
+          placeholder="IP הכנס כתובת "
           handleChange={handleSearchChange}
           disabled={isSearchSet} // disable input if search is set
           required

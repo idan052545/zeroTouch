@@ -55,7 +55,11 @@ export function* sendCommandAsync({ payload }) {
       data = response.data;
     });
 
-    yield put(sendCommandSuccess(data.replace(/\\n/g, "\n")));
+    yield put(
+      sendCommandSuccess(
+        data.replace(/\\n/g, "\n").replace(/\\t/g, "\t").slice(1, -1)
+      )
+    );
   } catch (error) {
     yield put(sendCommandFailure(error.message));
   }

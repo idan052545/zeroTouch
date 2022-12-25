@@ -35,7 +35,7 @@ def send_show_command(task,command):
     result = task.run(
         task=netmiko_send_command,
         command_string=command,
-        use_genie=True
+        # use_genie=True
         # use_textfsm=True,
         # //"show ip interface br"
     )
@@ -531,7 +531,7 @@ def _print_individual_result(
             else:
                 final_string += '\n'+ str(x)
         elif x:
-            final_string += str(x)
+            final_string += '\n' + str(x)
     return "\n"+ final_string
 
 
@@ -549,7 +549,7 @@ def _print_result(
 
     if isinstance(result, AggregatedResult):
         msg = result.name
-        final_string +=("{}{}".format(msg, "*" * (80 - len(msg))))
+        # final_string += ("{}{}".format(msg, "*" * (80 - len(msg))))
         for host, host_data in sorted(result.items()):
             title = (
                 ""
@@ -561,6 +561,9 @@ def _print_result(
                 "{}{}".format(msg, "*" * (80 - len(msg)))
             )
             final_string += _print_result(host_data, attrs, failed, severity_level,final_string)
+            
+            
+            
     elif isinstance(result, MultiResult):
         _print_individual_result(
             result[0],
@@ -575,7 +578,7 @@ def _print_result(
            final_string += _print_result(r, attrs, failed, severity_level,final_string)
         msg = "^^^^ END {} ".format(result[0].name)
         if result[0].severity_level >= severity_level:
-            final_string +=("{}{}".format( msg, "^" * (80 - len(msg))))
+            final_string += '\n' + ("{}{}".format( msg, "^" * (80 - len(msg))))
     elif isinstance(result, Result):
         final_string += _print_individual_result(
             result, attrs, failed, severity_level,final_string, print_host=print_host
