@@ -12,29 +12,32 @@ import {
   selectIsFetching,
   selectShowResult,
 } from "../../redux/router/router-selectors";
+import useAutocomplete from "../useAutocomplete";
+import genie_parsers from "../commands";
 
 const Terminal = ({ text, user }) => {
   const dispatch = useDispatch();
   const [searchValue, setSearchValue] = useState("");
   const [isSearchSet, setIsSearchSet] = useState(false);
-  const [commandValue, setCommandValue] = useState("");
+  // const [commandValue, setCommandValue] = useState("");
   const [isOSPFModalOpen, setIsOSPFModalOpen] = useState(false);
   const result = useSelector(selectShowResult);
   let isLoading = !useSelector(selectIsFetching);
-
+  const { value, suggestion, inputRef, setValue, handleChange } =
+    useAutocomplete(genie_parsers);
   useEffect(() => {
     // outputRef.current.value = outputRef.current.value + "\n" + result;
     outputRef.current.value = result;
-  }, [isLoading]);
+  }, [result, isLoading]);
 
   const outputRef = useRef();
   const handleOSPFModalClose = () => {
     setIsOSPFModalOpen(false); // close the modal
   };
 
-  const handleTerminalChange = (e) => {
-    setCommandValue(e.target.value); // update searchValue state variable on change
-  };
+  // const handleTerminalChange = (e) => {
+  //   setCommandValue(e.target.value); // update searchValue state variable on change
+  // };
 
   const handleSearchChange = (e) => {
     setSearchValue(e.target.value); // update searchValue state variable on change
@@ -50,13 +53,33 @@ const Terminal = ({ text, user }) => {
   };
 
   const handleOnEnter = () => {
-    if (commandValue === "clear") {
+    if (value === "clear") {
       outputRef.current.value = "";
+    } else if (!isSearchSet) {
+      toast.error("IP בבקשה הכנס כתובת ");
+    } else if (!value.startsWith("sh")) {
+      toast.error("show רק יעבדו פקודות ");
     } else {
-      outputRef.current.value = outputRef.current.value + "\n" + commandValue;
-      dispatch(sendCommandStart(searchValue, commandValue));
+      outputRef.current.value = outputRef.current.value + "\n" + value;
+      dispatch(sendCommandStart(searchValue, value));
     }
-    setCommandValue("");
+    setValue("");
+  };
+
+  const copyToClipboard = () => {
+    // select the textarea element
+    outputRef.current.select();
+    // create a range object and select the textarea contents
+    const range = document.createRange();
+    range.selectNode(outputRef.current);
+    // create a selection object and add the range to it
+    const selection = window.getSelection();
+    selection.removeAllRanges();
+    selection.addRange(range);
+    // copy the selected text to the clipboard
+    document.execCommand("copy");
+    selection.removeAllRanges();
+    toast.info("הטקסט הועתק אל לוח הכתיבה");
   };
 
   return (
@@ -64,6 +87,7 @@ const Terminal = ({ text, user }) => {
       <div className="title">show commands</div>
       <div className="search-container">
         {/* <BiSearch className="search-icon" /> */}
+
         <FormInput
           className="search-input"
           type="text"
@@ -101,7 +125,7 @@ const Terminal = ({ text, user }) => {
               <span className="Prompt__location">~</span>
               <span className="Prompt__dollar">$</span>
               <span className="Prompt__cursor"></span>
-              <FormInput
+              {/* <FormInput
                 className="Prompt__Input"
                 type="text"
                 id={text}
@@ -115,13 +139,42 @@ const Terminal = ({ text, user }) => {
                     handleOnEnter();
                   }
                 }}
-              />
+              /> */}
+              <div className="autocomplete-container ">
+                <input
+                  className="Prompt__Input"
+                  type="text"
+                  id={text}
+                  name={text}
+                  placeholder="הכנס פקודה"
+                  value={value}
+                  onChange={handleChange}
+                  ref={inputRef}
+                  required
+                  onKeyDown={(event) => {
+                    if (event.key === "Enter") {
+                      handleOnEnter();
+                    }
+                  }}
+                />
+                <div className="autocomplete-suggestion">{suggestion}</div>
+              </div>
+              {/* {suggestion.length > 0 && (
+                  <ul className="autocomplete-suggestion">
+                    {suggestion.map((item, index) => (
+                      <li key={index}>{item}</li>
+                    ))}
+                  </ul>
+                )} */}
               <button
                 type="button"
                 className="open-ospf-modal-button"
                 onClick={() => setIsOSPFModalOpen(true)} // open the modal when button is clicked
               >
                 OSPF
+              </button>
+              <button onClick={copyToClipboard} className="copy-button">
+                העתק תוכן
               </button>
             </div>
             <OSPFModal

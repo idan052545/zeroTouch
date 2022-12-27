@@ -1,6 +1,7 @@
 import pprint
 from genie.libs.parser.utils import get_parser_commands
-from nornir_netmiko.tasks import netmiko_send_command,netmiko_send_config
+from netmiko import NetmikoAuthenticationException, NetmikoTimeoutException
+from nornir_netmiko.tasks import netmiko_send_command, netmiko_send_config
 from nornir_utils.plugins.tasks.data import load_yaml
 from nornir_jinja2.plugins.tasks import template_file
 import logging
@@ -16,31 +17,39 @@ from genie.conf import Genie
 import pprint
 
 
-
 ip_list = []
 duplicates = {}
 target_list = []
 failed_list = []
-final_string= ""
-topology={}
+final_string = ""
+topology = {}
 interfaces = {}
 
 
 LOCK = threading.Lock()
 
 
+def send_show_command(task, command):
+    try:
+        result = task.run(
+            task=netmiko_send_command,
+            command_string=command,
+            # use_genie=True
+            # use_textfsm=True,
+            # //"show ip interface br"
+        )
+        task.host["facts"] = result.result
+    except NetmikoTimeoutException as e:
+        # Handle NetmikoTimeoutException
+        print(e)
 
-def send_show_command(task,command):
-    
-    result = task.run(
-        task=netmiko_send_command,
-        command_string=command,
-        # use_genie=True
-        # use_textfsm=True,
-        # //"show ip interface br"
-    )
-    task.host["facts"] = result.result
+    except NetmikoAuthenticationException as e:
+        # Handle NetmikoAuthenticationException
+        print(e)
 
+    except Exception as e:
+        # Catch any other exceptions
+        print(e)
 
 
 def show_ip_int_br(task):
@@ -53,6 +62,7 @@ def show_ip_int_br(task):
     )
     task.host["facts"] = interfaces_result.result
 
+
 def get_interfaces_dict(task):
     interfaces_result = task.run(
         task=netmiko_send_command,
@@ -63,37 +73,31 @@ def get_interfaces_dict(task):
     )
     parsed_interfaces_result = interfaces_result.result
 
-    for intf_name, intf_info in parsed_interfaces_result['interface'].items():
-        ip_address = intf_info.get('ip_address', None)
+    for intf_name, intf_info in parsed_interfaces_result["interface"].items():
+        ip_address = intf_info.get("ip_address", None)
         if ip_address is not None:
             version_result = task.run(
-                task=netmiko_send_command,
-                command_string="show version",
-                use_genie=True
+                task=netmiko_send_command, command_string="show version", use_genie=True
             )
-            task.host[
-                "verfacts"
-            ] = version_result.result
-            serial = task.host["verfacts"]['version']['chassis_sn']
+            task.host["verfacts"] = version_result.result
+            serial = task.host["verfacts"]["version"]["chassis_sn"]
             data = task.host.data
             interfaces[ip_address] = {
-                "hostname": task.host["verfacts"]['version']['hostname'],
+                "hostname": task.host["verfacts"]["version"]["hostname"],
                 "intf": intf_name,
                 "serial": serial,
-                "primaryIP": task.host.hostname
+                "primaryIP": task.host.hostname,
             }
         else:
             # Check for VLAN interfaces
-            for vlan_id, vlan_info in intf_info.get('vlan_id', {}).items():
-                ip_address = vlan_info.get('ip_address', None)
+            for vlan_id, vlan_info in intf_info.get("vlan_id", {}).items():
+                ip_address = vlan_info.get("ip_address", None)
                 if ip_address is not None:
                     interfaces[ip_address] = intf_name
 
     # Print the interface names and IP addresses
     for ip_address, intf_name in interfaces.items():
         print(f"Interface name: {intf_name}, IP address: {ip_address}")
-
-
 
 
 def get_all_ip(task):
@@ -103,7 +107,7 @@ def get_all_ip(task):
     response = task.run(
         task=netmiko_send_command,
         command_string="show ip interface brief",
-        use_genie=True
+        use_genie=True,
     )
     task.host["facts"] = response.result
     interfaces = task.host["facts"]
@@ -123,9 +127,7 @@ def locate_ip(task, targets):
     Identify the interface and Device configured with duplicate address
     """
     response = task.run(
-        task=netmiko_send_command,
-        command_string="show interfaces",
-        use_genie=True
+        task=netmiko_send_command, command_string="show interfaces", use_genie=True
     )
     task.host["facts"] = response.result
     interfaces = task.host["facts"]
@@ -138,19 +140,17 @@ def locate_ip(task, targets):
                     version_result = task.run(
                         task=netmiko_send_command,
                         command="show version",
-                        use_genie=True
+                        use_genie=True,
                     )
-                    task.host[
-                        "verfacts"
-                    ] = version_result.result
-                    serial = task.host["verfacts"]['version']['chassis_sn']
+                    task.host["verfacts"] = version_result.result
+                    serial = task.host["verfacts"]["version"]["chassis_sn"]
                     data = task.host.data
                     duplicates = {
                         "host": task.host,
                         "intf": intf,
                         "ip_address": ip_addr,
                         "serial": serial,
-                        "hostname": task.host.hostname
+                        "hostname": task.host.hostname,
                     }
                     for k, v in data.items():
                         if "facts" not in k:
@@ -161,8 +161,9 @@ def locate_ip(task, targets):
 
 
 def get_loopback_ip(task):
-    result = task.run(task=netmiko_send_command,
-                      command="show ip interface brief", use_genie=True)
+    result = task.run(
+        task=netmiko_send_command, command="show ip interface brief", use_genie=True
+    )
     task.host["facts"] = result.result
     interfaces = task.host["facts"]["interface"]
     for intf in interfaces:
@@ -173,22 +174,20 @@ def get_loopback_ip(task):
 
 def ping_test(task, sorted_list):
     for ip_address in sorted_list:
-        result = task.run(task=netmiko_send_command,
-                          command="ping " + ip_address)
+        result = task.run(task=netmiko_send_command, command="ping " + ip_address)
         response = result.result
         if not "!!!" in response:
             failed_list.append({"host": task.host, "ip_address": ip_address})
 
 
-def load_ospf(task):
-    data = task.run(task=load_yaml,file=f'../host_vars/{task.host}.yaml')
-    task.host["OSPF"] = data.result["OSPF"]
-    r = task.run(task=template_file, template="ospf.j2", path="../templates")
-    task.host["config"] = r.result
-    output = task.host["config"]
-    send = output.splitlines()
-    task.run(task=netmiko_send_config, name="zeroTouch command", config_commands=send)
-
+def load_ospf(task, config):
+    # data = task.run(task=load_yaml, file=f"../host_vars/{task.host}.yaml")
+    # task.host["OSPF"] = data.result["OSPF"]
+    # r = task.run(task=template_file, template="ospf.j2", path="../templates")
+    # task.host["config"] = r.result
+    # output = task.host["config"]
+    # send = output.splitlines()
+    task.run(task=netmiko_send_config, name="zeroTouch command", config_commands=config)
 
 
 def show_ip_ospf_database_router(task):
@@ -201,12 +200,14 @@ def show_ip_ospf_database_router(task):
     )
     task.host["facts"] = interfaces_result.result
 
+
 interface_full_name_map = {
-    'Eth': 'Ethernet',
-    'Fa': 'FastEthernet',
-    'Gi': 'GigabitEthernet',
-    'Te': 'TenGigabitEthernet',
+    "Eth": "Ethernet",
+    "Fa": "FastEthernet",
+    "Gi": "GigabitEthernet",
+    "Te": "TenGigabitEthernet",
 }
+
 
 def if_fullname(ifname):
     for k, v in interface_full_name_map.items():
@@ -216,22 +217,21 @@ def if_fullname(ifname):
             return ifname.replace(k, v)
     return ifname
 
+
 def if_shortname(ifname):
     for k, v in interface_full_name_map.items():
         if ifname.startswith(v):
             return ifname.replace(v, k)
     return ifname
 
+
 def generate_node_and_edge_dictionaries(task):
 
-
     ospf_output = task.run(
-    task= netmiko_send_command,
-    command_string="show ip ospf database router",
-    use_genie=True,
+        task=netmiko_send_command,
+        command_string="show ip ospf database router",
+        use_genie=True,
     )
-
-
 
     parsed_output = ospf_output.result
 
@@ -245,156 +245,160 @@ def generate_node_and_edge_dictionaries(task):
                 for area in instance["areas"].values():
                     for lsa in area["database"]["lsa_types"].values():
                         for lsa_id, nodes_data in lsa["lsas"].items():
-                            for link_id, link_data in nodes_data["ospfv2"]["body"]["router"]["links"].items():
+                            for link_id, link_data in nodes_data["ospfv2"]["body"][
+                                "router"
+                            ]["links"].items():
 
                                 nodes[link_id] = {}
-                                
-                                if link_data['link_data'] not in nodes.keys():
-                                    nodes[link_data['link_data']] = {}
-                                
+
+                                if link_data["link_data"] not in nodes.keys():
+                                    nodes[link_data["link_data"]] = {}
 
                                 if link_id not in edges.keys():
-                                    edges[link_id]={
+                                    edges[link_id] = {
                                         "destination": [],
                                         "type": [],
-                                        "cost" : [],
+                                        "cost": [],
                                     }
 
-                                edges[link_id]["destination"].append(link_data['link_data'])
-                                edges[link_id]["type"].append(link_data['type'])
-                                edges[link_id]["cost"].append(link_data['topologies'][0]['metric'])
+                                edges[link_id]["destination"].append(
+                                    link_data["link_data"]
+                                )
+                                edges[link_id]["type"].append(link_data["type"])
+                                edges[link_id]["cost"].append(
+                                    link_data["topologies"][0]["metric"]
+                                )
 
     print(nodes)
     print(edges)
 
     # define the nodes and edges
-    
+
     # create a graph from the nodes and edges
     G = nx.Graph()
 
     list_of_edges = []
 
     for source, data in edges.items():
-        destinations = data['destination']
-        costs = data['cost']
+        destinations = data["destination"]
+        costs = data["cost"]
 
         for destination, cost in zip(destinations, costs):
             list_of_edges.append((source, destination, cost))
 
-
     G.add_nodes_from(list(nodes.keys()))
     for edge in list_of_edges:
         source, destination, cost = edge
-        G.add_edge(source,destination, weight= cost)
+        G.add_edge(source, destination, weight=cost)
     # G.add_edges_from(tuples_edges)
 
     # compute the x and y coordinates for each node using the Kamada-Kawai algorithm
-    node_positions = nx.kamada_kawai_layout(G,scale = 250)
+    node_positions = nx.kamada_kawai_layout(G, scale=250)
     pos = {node: {"x": x, "y": y} for node, (x, y) in node_positions.items()}
     print(pos)
 
-    
-    new_dict=[]
-    
+    new_dict = []
+
     for i, key in enumerate(pos.keys(), 1):
         # host = interfaces.get(key, {}).get("host", None)
         intf = interfaces.get(key, {}).get("intf", None)
         serial = interfaces.get(key, {}).get("serial", None)
         hostname = interfaces.get(key, {}).get("hostname", None)
-        isExist= False
-
+        isExist = False
 
         for dictionary in new_dict:
             # Check if the dictionary with the matching id is present in the list
-            if serial == dictionary['id']:
-                 # Append the value to the dictionary
-                 dictionary["data"]['intf'].append(intf)
-                 dictionary["data"]['intfIP'].append(key)
+            if serial == dictionary["id"]:
+                # Append the value to the dictionary
+                dictionary["data"]["intf"].append(intf)
+                dictionary["data"]["intfIP"].append(key)
 
-                 isExist = True
-                 break
+                isExist = True
+                break
 
-        if(not isExist and serial):    
+        if not isExist and serial:
             buffer_dict = {
-                    "id": serial,
-                    "type": "ZeroTouchNode",
-                    "position": {
-                        "x": pos[key]["x"],
-                        "y": pos[key]["y"]
-                    },
-                    "data": {
-                        # "host": host,
-                        "intf": [intf],
-                        "intfIP": [key],
-                        "serial": serial,
-                        "hostname": hostname,
-                        "value": key,
-                        "img": "http://127.0.0.1:8000/images/router.png"
-                    }
-                }
+                "id": serial,
+                "type": "ZeroTouchNode",
+                "position": {"x": pos[key]["x"], "y": pos[key]["y"]},
+                "data": {
+                    # "host": host,
+                    "intf": [intf],
+                    "intfIP": [key],
+                    "serial": serial,
+                    "hostname": hostname,
+                    "value": key,
+                    "img": "http://127.0.0.1:8000/images/router.png",
+                },
+            }
             new_dict.append(buffer_dict)
-    print(json.dumps(new_dict,indent=4))
+    print(json.dumps(new_dict, indent=4))
 
     new_dict_edges = []
 
     for src, data in edges.items():
-        for i, target in enumerate(data['destination']):
-            src_intf = interfaces.get(src, {}).get("intf", None)  # Look up the source interface name using the source IP address
-            target_intf = interfaces.get(target, {}).get("intf", None)   # Look up the target interface name using the destination IP address
+        for i, target in enumerate(data["destination"]):
+            src_intf = interfaces.get(src, {}).get(
+                "intf", None
+            )  # Look up the source interface name using the source IP address
+            target_intf = interfaces.get(target, {}).get(
+                "intf", None
+            )  # Look up the target interface name using the destination IP address
             srcDevice = interfaces.get(src, {}).get("serial", None)
             tgtDevice = interfaces.get(target, {}).get("serial", None)
 
-            buffer_dict = { 
-                "id":f'{src}-{target}',
+            buffer_dict = {
+                "id": f"{src}-{target}",
                 "source": srcDevice,
                 "target": tgtDevice,
-                "sourceHandle": f'src-{src_intf}-{src}',
-                "targetHandle": f'tgt-{target_intf}-{target}',
+                "sourceHandle": f"src-{src_intf}-{src}",
+                "targetHandle": f"tgt-{target_intf}-{target}",
                 "type": "ZeroTouchEdge",
-                "data":{
-                    'weight': data['cost'][i],
-                    'type': data['type'][i],
-                    'srcIfName': src_intf,
-                    'srcDevice': srcDevice,
-                    'tgtIfName': target_intf,
-                    'tgtDevice': tgtDevice,
-                    'srcIP' : src,
-                    'tgtIP' : target,
-                }
+                "data": {
+                    "weight": data["cost"][i],
+                    "type": data["type"][i],
+                    "srcIfName": src_intf,
+                    "srcDevice": srcDevice,
+                    "tgtIfName": target_intf,
+                    "tgtDevice": tgtDevice,
+                    "srcIP": src,
+                    "tgtIP": target,
+                },
             }
             new_dict_edges.append(buffer_dict)
-    
-    print(json.dumps(new_dict_edges,indent=4))
+
+    print(json.dumps(new_dict_edges, indent=4))
 
 
 icon_capability_map = {
-    'router': 'router',
-    'switch': 'switch',
-    'bridge': 'switch',
-    'station': 'host'
+    "router": "router",
+    "switch": "switch",
+    "bridge": "switch",
+    "station": "host",
 }
 
 icon_model_map = {
-    'CSR1000V': 'router',
-    'Nexus': 'switch',
-    'IOSXRv': 'router',
-    'IOSv': 'switch',
-    '2901': 'router',
-    '2911': 'router',
-    '2921': 'router',
-    '2951': 'router',
-    '4321': 'router',
-    '4331': 'router',
-    '4351': 'router',
-    '4421': 'router',
-    '4431': 'router',
-    '4451': 'router',
-    '2960': 'switch',
-    '3750': 'switch',
-    '3850': 'switch',
+    "CSR1000V": "router",
+    "Nexus": "switch",
+    "IOSXRv": "router",
+    "IOSv": "switch",
+    "2901": "router",
+    "2911": "router",
+    "2921": "router",
+    "2951": "router",
+    "4321": "router",
+    "4331": "router",
+    "4351": "router",
+    "4421": "router",
+    "4431": "router",
+    "4451": "router",
+    "2960": "switch",
+    "3750": "switch",
+    "3850": "switch",
 }
 
-def get_icon_type(device_cap_name, device_model=''):
+
+def get_icon_type(device_cap_name, device_model=""):
     """
     Device icon selection function. Selection order:
     - LLDP capabilities mapping.
@@ -411,12 +415,7 @@ def get_icon_type(device_cap_name, device_model=''):
         for model_shortname, icon_type in icon_model_map.items():
             if model_shortname in device_model:
                 return icon_type
-    return 'unknown'
-
-
-
-
-
+    return "unknown"
 
 
 def kamada_kawai(nodes, edges):
@@ -445,11 +444,14 @@ def kamada_kawai(nodes, edges):
 
     # Return the final positions of the nodes
     return nodes
+
+
 def calculate_distance(node1, node2):
     """Calculate the Euclidean distance between two nodes."""
     dx = node1["x"] - node2["x"]
     dy = node1["y"] - node2["y"]
     return math.sqrt(dx**2 + dy**2)
+
 
 def calculate_ideal_length(node1, node2):
     """Calculate the ideal length for an edge between two nodes."""
@@ -458,11 +460,13 @@ def calculate_ideal_length(node1, node2):
     dy = node1["desired_y"] - node2["desired_y"]
     return math.sqrt(dx**2 + dy**2)
 
+
 def calculate_spring_force(distance, ideal_length):
     """Calculate the spring force acting on a node."""
     # The spring force is based on the difference between the current
     # distance between the nodes and the ideal length of the edge
     return (distance - ideal_length) / ideal_length
+
 
 def has_converged(nodes):
     """Check if the positions of the nodes have converged."""
@@ -477,9 +481,7 @@ def has_converged(nodes):
     return max_change < 100
 
 
-
 # ///////////////////////////////////////////////////////////////////////////
-
 
 
 def print_title(title: str) -> str:
@@ -513,26 +515,23 @@ def _print_individual_result(
         else ""
     )
     msg = "{}{}{}".format(symbol * 4, host, result.name, subtitle)
-    final_string += '\n' + \
-        "{}{}".format(
-             msg, symbol * (80 - len(msg)), level_name
-        )
-    
+    final_string += "\n" + "{}{}".format(msg, symbol * (80 - len(msg)), level_name)
+
     for attribute in attrs:
         x = getattr(result, attribute, "")
         if isinstance(x, BaseException):
             # for consistency between py3.6 and py3.7
-                final_string += '\n' + (f"{x.__class__.__name__}{x.args}")
+            final_string += "\n" + (f"{x.__class__.__name__}{x.args}")
         elif x and not isinstance(x, str):
             if isinstance(x, OrderedDict):
                 pretty_dict = pprint.pformat(x, indent=4)
-                final_string += '\n'+pretty_dict
+                final_string += "\n" + pretty_dict
                 # final_string += (json.dumps(x, indent=2))
             else:
-                final_string += '\n'+ str(x)
+                final_string += "\n" + str(x)
         elif x:
-            final_string += '\n' + str(x)
-    return "\n"+ final_string
+            final_string += "\n" + str(x)
+    return "\n" + final_string
 
 
 def _print_result(
@@ -557,13 +556,11 @@ def _print_result(
                 else " ** changed : {} ".format(host_data.changed)
             )
             msg = "* {}{}".format(host, title)
-            final_string += (
-                "{}{}".format(msg, "*" * (80 - len(msg)))
+            final_string += "{}{}".format(msg, "*" * (80 - len(msg)))
+            final_string += _print_result(
+                host_data, attrs, failed, severity_level, final_string
             )
-            final_string += _print_result(host_data, attrs, failed, severity_level,final_string)
-            
-            
-            
+
     elif isinstance(result, MultiResult):
         _print_individual_result(
             result[0],
@@ -575,15 +572,18 @@ def _print_result(
             print_host=print_host,
         )
         for r in result[1:]:
-           final_string += _print_result(r, attrs, failed, severity_level,final_string)
+            final_string += _print_result(
+                r, attrs, failed, severity_level, final_string
+            )
         msg = "^^^^ END {} ".format(result[0].name)
         if result[0].severity_level >= severity_level:
-            final_string += '\n' + ("{}{}".format( msg, "^" * (80 - len(msg))))
+            final_string += "\n" + ("{}{}".format(msg, "^" * (80 - len(msg))))
     elif isinstance(result, Result):
         final_string += _print_individual_result(
-            result, attrs, failed, severity_level,final_string, print_host=print_host
+            result, attrs, failed, severity_level, final_string, print_host=print_host
         )
-    return "\n"+final_string
+    return "\n" + final_string
+
 
 def string_result(
     result: Result,
@@ -602,10 +602,8 @@ def string_result(
     """
     LOCK.acquire()
     try:
-        return _print_result(result, vars, failed, severity_level,final_string, print_host=True)
+        return _print_result(
+            result, vars, failed, severity_level, final_string, print_host=True
+        )
     finally:
         LOCK.release()
-
-
-
-

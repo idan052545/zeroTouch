@@ -3153,3 +3153,680 @@ nornir.core.exceptions.NornirSubTaskError: Subtask: netmiko_send_command (failed
 2022-12-25 18:09:19,049 -  nornir.core -     INFO -        run() - Running task 'send_show_command' with args {'command': 'sh ip int br'} on 1 hosts
 2022-12-25 18:09:27,853 -  nornir.core -     INFO -        run() - Running task 'send_show_command' with args {'command': 'sh ip ospf '} on 1 hosts
 2022-12-25 18:19:00,505 -  nornir.core -     INFO -        run() - Running task 'send_show_command' with args {'command': 'sh ip ospf'} on 1 hosts
+2022-12-25 18:36:53,225 -  nornir.core -  WARNING -        run() - Task 'send_show_command' has not been run – 0 hosts selected
+2022-12-25 18:36:56,496 -  nornir.core -  WARNING -        run() - Task 'send_show_command' has not been run – 0 hosts selected
+2022-12-25 18:37:08,197 -  nornir.core -  WARNING -        run() - Task 'send_show_command' has not been run – 0 hosts selected
+2022-12-25 18:37:31,643 -  nornir.core -  WARNING -        run() - Task 'send_show_command' has not been run – 0 hosts selected
+2022-12-25 18:38:15,152 -  nornir.core -  WARNING -        run() - Task 'send_show_command' has not been run – 0 hosts selected
+2022-12-25 18:38:21,891 -  nornir.core -  WARNING -        run() - Task 'send_show_command' has not been run – 0 hosts selected
+2022-12-25 18:38:25,911 -  nornir.core -  WARNING -        run() - Task 'send_show_command' has not been run – 0 hosts selected
+2022-12-25 18:38:51,083 -  nornir.core -  WARNING -        run() - Task 'send_show_command' has not been run – 0 hosts selected
+2022-12-25 18:39:13,852 -  nornir.core -  WARNING -        run() - Task 'send_show_command' has not been run – 0 hosts selected
+2022-12-25 18:39:40,246 -  nornir.core -  WARNING -        run() - Task 'send_show_command' has not been run – 0 hosts selected
+2022-12-25 18:39:56,029 -  nornir.core -     INFO -        run() - Running task 'send_show_command' with args {'command': 'sh ip int br'} on 1 hosts
+2022-12-25 18:40:07,612 -  nornir.core -     INFO -        run() - Running task 'send_show_command' with args {'command': 'sh ip ospf'} on 1 hosts
+2022-12-25 18:40:33,287 -  nornir.core -     INFO -        run() - Running task 'send_show_command' with args {'command': 'sh  ip int br'} on 1 hosts
+2022-12-25 18:40:40,139 -  nornir.core -     INFO -        run() - Running task 'send_show_command' with args {'command': 'sh version'} on 1 hosts
+2022-12-25 18:40:50,756 -  nornir.core -     INFO -        run() - Running task 'send_show_command' with args {'command': 'sh ip int br'} on 1 hosts
+2022-12-25 18:41:01,493 -  nornir.core -     INFO -        run() - Running task 'send_show_command' with args {'command': 'sh ip int br'} on 1 hosts
+2022-12-25 18:41:18,840 -  nornir.core -     INFO -        run() - Running task 'send_show_command' with args {'command': 'sh ip ospf database'} on 1 hosts
+2022-12-25 18:41:59,588 -  nornir.core -     INFO -        run() - Running task 'send_show_command' with args {'command': 'sh ip int br'} on 1 hosts
+2022-12-25 18:42:06,024 -  nornir.core -     INFO -        run() - Running task 'send_show_command' with args {'command': 'sh ver'} on 1 hosts
+2022-12-25 18:42:15,950 -  nornir.core -     INFO -        run() - Running task 'send_show_command' with args {'command': 'sh ip ospf'} on 1 hosts
+2022-12-25 19:24:40,871 -  nornir.core -     INFO -        run() - Running task 'send_show_command' with args {'command': 'sh ip int br'} on 1 hosts
+2022-12-25 19:24:40,919 - nornir.core.task -    ERROR -      start() - Host 'R1': task 'netmiko_send_command' failed with traceback:
+Traceback (most recent call last):
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/nornir/core/task.py", line 99, in start
+    r = self.task(self, **self.params)
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/nornir_netmiko/tasks/netmiko_send_command.py", line 32, in netmiko_send_command
+    result = net_connect.send_command(command_string, **kwargs)
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/netmiko/utilities.py", line 592, in wrapper_decorator
+    return func(self, *args, **kwargs)
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/netmiko/base_connection.py", line 1659, in send_command
+    search_pattern = self._prompt_handler(auto_find_prompt)
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/netmiko/base_connection.py", line 1544, in _prompt_handler
+    prompt = self.find_prompt()
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/netmiko/base_connection.py", line 1335, in find_prompt
+    self.write_channel(self.RETURN)
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/netmiko/base_connection.py", line 97, in wrapper_decorator
+    return_val = func(self, *args, **kwargs)
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/netmiko/base_connection.py", line 111, in wrapper_decorator
+    func(self, out_data)
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/netmiko/base_connection.py", line 537, in write_channel
+    self.channel.write_channel(out_data)
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/netmiko/channel.py", line 74, in write_channel
+    self.remote_conn.sendall(write_bytes(out_data, encoding=self.encoding))
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/paramiko/channel.py", line 846, in sendall
+    sent = self.send(s)
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/paramiko/channel.py", line 801, in send
+    return self._send(s, m)
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/paramiko/channel.py", line 1198, in _send
+    raise socket.error("Socket is closed")
+OSError: Socket is closed
+
+2022-12-25 19:24:40,925 - nornir.core.task -    ERROR -      start() - Host 'R1': task 'send_show_command' failed with traceback:
+Traceback (most recent call last):
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/nornir/core/task.py", line 99, in start
+    r = self.task(self, **self.params)
+  File "/home/idansimantov/projects/zero_touch/api/zero_backend/zero_touch_api/nornir_netmiko_actions.py", line 35, in send_show_command
+    result = task.run(
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/nornir/core/task.py", line 174, in run
+    raise NornirSubTaskError(task=run_task, result=r)
+nornir.core.exceptions.NornirSubTaskError: Subtask: netmiko_send_command (failed)
+
+
+2022-12-25 19:24:59,184 -  nornir.core -     INFO -        run() - Running task 'send_show_command' with args {'command': 'sh ip int br'} on 1 hosts
+2022-12-25 19:25:08,064 -  nornir.core -     INFO -        run() - Running task 'send_show_command' with args {'command': 'sh ip int br'} on 1 hosts
+2022-12-25 19:25:12,771 -  nornir.core -     INFO -        run() - Running task 'send_show_command' with args {'command': 'sh ip ospf'} on 1 hosts
+2022-12-25 19:25:48,001 -  nornir.core -     INFO -        run() - Running task 'send_show_command' with args {'command': 'sh ip int br'} on 1 hosts
+2022-12-25 19:31:15,914 -  nornir.core -     INFO -        run() - Running task 'send_show_command' with args {'command': 'sh ip int'} on 1 hosts
+2022-12-25 19:31:24,454 -  nornir.core -     INFO -        run() - Running task 'send_show_command' with args {'command': 'sh ip ospf'} on 1 hosts
+2022-12-25 19:31:27,646 -  nornir.core -     INFO -        run() - Running task 'send_show_command' with args {'command': 'sh run'} on 1 hosts
+2022-12-25 19:32:19,131 -  nornir.core -     INFO -        run() - Running task 'send_show_command' with args {'command': 'sh ip int br'} on 1 hosts
+2022-12-25 19:32:22,656 -  nornir.core -     INFO -        run() - Running task 'send_show_command' with args {'command': 'sh ip arp'} on 1 hosts
+2022-12-25 19:32:29,187 -  nornir.core -     INFO -        run() - Running task 'send_show_command' with args {'command': 'sh ip int br'} on 1 hosts
+2022-12-25 19:32:39,583 -  nornir.core -     INFO -        run() - Running task 'send_show_command' with args {'command': 'sh ip ospf'} on 1 hosts
+2022-12-25 19:32:43,304 -  nornir.core -     INFO -        run() - Running task 'send_show_command' with args {'command': 'sh ip int br'} on 1 hosts
+2022-12-25 19:58:25,199 -  nornir.core -     INFO -        run() - Running task 'send_show_command' with args {'command': 'sh ip int'} on 1 hosts
+2022-12-25 19:58:25,220 - nornir.core.task -    ERROR -      start() - Host 'R1': task 'netmiko_send_command' failed with traceback:
+Traceback (most recent call last):
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/nornir/core/task.py", line 99, in start
+    r = self.task(self, **self.params)
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/nornir_netmiko/tasks/netmiko_send_command.py", line 32, in netmiko_send_command
+    result = net_connect.send_command(command_string, **kwargs)
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/netmiko/utilities.py", line 592, in wrapper_decorator
+    return func(self, *args, **kwargs)
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/netmiko/base_connection.py", line 1659, in send_command
+    search_pattern = self._prompt_handler(auto_find_prompt)
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/netmiko/base_connection.py", line 1544, in _prompt_handler
+    prompt = self.find_prompt()
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/netmiko/base_connection.py", line 1335, in find_prompt
+    self.write_channel(self.RETURN)
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/netmiko/base_connection.py", line 97, in wrapper_decorator
+    return_val = func(self, *args, **kwargs)
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/netmiko/base_connection.py", line 111, in wrapper_decorator
+    func(self, out_data)
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/netmiko/base_connection.py", line 537, in write_channel
+    self.channel.write_channel(out_data)
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/netmiko/channel.py", line 74, in write_channel
+    self.remote_conn.sendall(write_bytes(out_data, encoding=self.encoding))
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/paramiko/channel.py", line 846, in sendall
+    sent = self.send(s)
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/paramiko/channel.py", line 801, in send
+    return self._send(s, m)
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/paramiko/channel.py", line 1198, in _send
+    raise socket.error("Socket is closed")
+OSError: Socket is closed
+
+2022-12-25 19:58:25,221 - nornir.core.task -    ERROR -      start() - Host 'R1': task 'send_show_command' failed with traceback:
+Traceback (most recent call last):
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/nornir/core/task.py", line 99, in start
+    r = self.task(self, **self.params)
+  File "/home/idansimantov/projects/zero_touch/api/zero_backend/zero_touch_api/nornir_netmiko_actions.py", line 35, in send_show_command
+    result = task.run(
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/nornir/core/task.py", line 174, in run
+    raise NornirSubTaskError(task=run_task, result=r)
+nornir.core.exceptions.NornirSubTaskError: Subtask: netmiko_send_command (failed)
+
+
+2022-12-25 19:58:37,706 -  nornir.core -     INFO -        run() - Running task 'send_show_command' with args {'command': 'sh ip int'} on 1 hosts
+2022-12-25 19:58:50,535 -  nornir.core -     INFO -        run() - Running task 'send_show_command' with args {'command': 'sh ip int br'} on 1 hosts
+2022-12-25 19:59:04,603 -  nornir.core -     INFO -        run() - Running task 'send_show_command' with args {'command': 'sh ip int br'} on 1 hosts
+2022-12-25 19:59:25,233 -  nornir.core -     INFO -        run() - Running task 'send_show_command' with args {'command': 'sh ip int br'} on 1 hosts
+2022-12-25 19:59:27,377 -  nornir.core -     INFO -        run() - Running task 'send_show_command' with args {'command': 'sh ip arp'} on 1 hosts
+2022-12-25 19:59:38,738 -  nornir.core -     INFO -        run() - Running task 'send_show_command' with args {'command': 'sh ip arp'} on 1 hosts
+2022-12-25 20:09:50,432 -  nornir.core -     INFO -        run() - Running task 'send_show_command' with args {'command': 'sh ip int br'} on 1 hosts
+2022-12-25 20:09:50,445 - nornir.core.task -    ERROR -      start() - Host 'R3': task 'netmiko_send_command' failed with traceback:
+Traceback (most recent call last):
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/nornir/core/task.py", line 99, in start
+    r = self.task(self, **self.params)
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/nornir_netmiko/tasks/netmiko_send_command.py", line 32, in netmiko_send_command
+    result = net_connect.send_command(command_string, **kwargs)
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/netmiko/utilities.py", line 592, in wrapper_decorator
+    return func(self, *args, **kwargs)
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/netmiko/base_connection.py", line 1659, in send_command
+    search_pattern = self._prompt_handler(auto_find_prompt)
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/netmiko/base_connection.py", line 1544, in _prompt_handler
+    prompt = self.find_prompt()
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/netmiko/base_connection.py", line 1335, in find_prompt
+    self.write_channel(self.RETURN)
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/netmiko/base_connection.py", line 97, in wrapper_decorator
+    return_val = func(self, *args, **kwargs)
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/netmiko/base_connection.py", line 111, in wrapper_decorator
+    func(self, out_data)
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/netmiko/base_connection.py", line 537, in write_channel
+    self.channel.write_channel(out_data)
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/netmiko/channel.py", line 74, in write_channel
+    self.remote_conn.sendall(write_bytes(out_data, encoding=self.encoding))
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/paramiko/channel.py", line 846, in sendall
+    sent = self.send(s)
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/paramiko/channel.py", line 801, in send
+    return self._send(s, m)
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/paramiko/channel.py", line 1198, in _send
+    raise socket.error("Socket is closed")
+OSError: Socket is closed
+
+2022-12-25 20:09:50,445 - nornir.core.task -    ERROR -      start() - Host 'R3': task 'send_show_command' failed with traceback:
+Traceback (most recent call last):
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/nornir/core/task.py", line 99, in start
+    r = self.task(self, **self.params)
+  File "/home/idansimantov/projects/zero_touch/api/zero_backend/zero_touch_api/nornir_netmiko_actions.py", line 35, in send_show_command
+    result = task.run(
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/nornir/core/task.py", line 174, in run
+    raise NornirSubTaskError(task=run_task, result=r)
+nornir.core.exceptions.NornirSubTaskError: Subtask: netmiko_send_command (failed)
+
+
+2022-12-25 20:10:05,624 -  nornir.core -     INFO -        run() - Running task 'send_show_command' with args {'command': 'sh ip int br'} on 1 hosts
+2022-12-25 20:10:08,940 -  nornir.core -     INFO -        run() - Running task 'send_show_command' with args {'command': 'sh ip ospf'} on 1 hosts
+2022-12-25 20:10:11,597 -  nornir.core -     INFO -        run() - Running task 'send_show_command' with args {'command': 'sh ip arp'} on 1 hosts
+2022-12-25 20:10:47,645 -  nornir.core -     INFO -        run() - Running task 'send_show_command' with args {'command': 'sh ip int br'} on 1 hosts
+2022-12-25 20:11:00,987 -  nornir.core -  WARNING -        run() - Task 'send_show_command' has not been run – 0 hosts selected
+2022-12-25 20:11:07,969 -  nornir.core -  WARNING -        run() - Task 'send_show_command' has not been run – 0 hosts selected
+2022-12-25 20:11:12,682 -  nornir.core -  WARNING -        run() - Task 'send_show_command' has not been run – 0 hosts selected
+2022-12-25 20:11:37,380 -  nornir.core -     INFO -        run() - Running task 'send_show_command' with args {'command': 'sh ip int b'} on 1 hosts
+2022-12-25 20:11:47,597 -  nornir.core -     INFO -        run() - Running task 'send_show_command' with args {'command': 'sh ip ospf br'} on 1 hosts
+2022-12-25 20:11:54,112 -  nornir.core -     INFO -        run() - Running task 'send_show_command' with args {'command': 'sh ip ospf database'} on 1 hosts
+2022-12-25 20:12:05,173 -  nornir.core -     INFO -        run() - Running task 'send_show_command' with args {'command': 'sh ip ospf database router'} on 1 hosts
+2022-12-25 20:22:33,864 -  nornir.core -     INFO -        run() - Running task 'send_show_command' with args {'command': 'sh ip int br'} on 1 hosts
+2022-12-25 20:22:33,878 - nornir.core.task -    ERROR -      start() - Host 'R1': task 'netmiko_send_command' failed with traceback:
+Traceback (most recent call last):
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/nornir/core/task.py", line 99, in start
+    r = self.task(self, **self.params)
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/nornir_netmiko/tasks/netmiko_send_command.py", line 32, in netmiko_send_command
+    result = net_connect.send_command(command_string, **kwargs)
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/netmiko/utilities.py", line 592, in wrapper_decorator
+    return func(self, *args, **kwargs)
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/netmiko/base_connection.py", line 1659, in send_command
+    search_pattern = self._prompt_handler(auto_find_prompt)
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/netmiko/base_connection.py", line 1544, in _prompt_handler
+    prompt = self.find_prompt()
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/netmiko/base_connection.py", line 1335, in find_prompt
+    self.write_channel(self.RETURN)
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/netmiko/base_connection.py", line 97, in wrapper_decorator
+    return_val = func(self, *args, **kwargs)
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/netmiko/base_connection.py", line 111, in wrapper_decorator
+    func(self, out_data)
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/netmiko/base_connection.py", line 537, in write_channel
+    self.channel.write_channel(out_data)
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/netmiko/channel.py", line 74, in write_channel
+    self.remote_conn.sendall(write_bytes(out_data, encoding=self.encoding))
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/paramiko/channel.py", line 846, in sendall
+    sent = self.send(s)
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/paramiko/channel.py", line 801, in send
+    return self._send(s, m)
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/paramiko/channel.py", line 1198, in _send
+    raise socket.error("Socket is closed")
+OSError: Socket is closed
+
+2022-12-25 20:22:33,879 - nornir.core.task -    ERROR -      start() - Host 'R1': task 'send_show_command' failed with traceback:
+Traceback (most recent call last):
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/nornir/core/task.py", line 99, in start
+    r = self.task(self, **self.params)
+  File "/home/idansimantov/projects/zero_touch/api/zero_backend/zero_touch_api/nornir_netmiko_actions.py", line 35, in send_show_command
+    result = task.run(
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/nornir/core/task.py", line 174, in run
+    raise NornirSubTaskError(task=run_task, result=r)
+nornir.core.exceptions.NornirSubTaskError: Subtask: netmiko_send_command (failed)
+
+
+2022-12-25 20:22:38,817 -  nornir.core -     INFO -        run() - Running task 'send_show_command' with args {'command': 'sh ip int br'} on 1 hosts
+2022-12-25 20:27:29,879 -  nornir.core -     INFO -        run() - Running task 'send_show_command' with args {'command': 'sh ip int br'} on 1 hosts
+2022-12-25 20:27:35,504 -  nornir.core -     INFO -        run() - Running task 'send_show_command' with args {'command': 'sh run'} on 1 hosts
+2022-12-25 20:27:45,830 -  nornir.core -     INFO -        run() - Running task 'send_show_command' with args {'command': 'conf t'} on 1 hosts
+2022-12-25 20:27:55,897 - nornir.core.task -    ERROR -      start() - Host 'R1': task 'netmiko_send_command' failed with traceback:
+Traceback (most recent call last):
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/nornir/core/task.py", line 99, in start
+    r = self.task(self, **self.params)
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/nornir_netmiko/tasks/netmiko_send_command.py", line 32, in netmiko_send_command
+    result = net_connect.send_command(command_string, **kwargs)
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/netmiko/utilities.py", line 592, in wrapper_decorator
+    return func(self, *args, **kwargs)
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/netmiko/base_connection.py", line 1721, in send_command
+    raise ReadTimeout(msg)
+netmiko.exceptions.ReadTimeout: 
+Pattern not detected: 'CiscoRouter\\#' in output.
+
+Things you might try to fix this:
+1. Explicitly set your pattern using the expect_string argument.
+2. Increase the read_timeout to a larger value.
+
+You can also look at the Netmiko session_log or debug log for more information.
+
+
+
+2022-12-25 20:27:55,899 - nornir.core.task -    ERROR -      start() - Host 'R1': task 'send_show_command' failed with traceback:
+Traceback (most recent call last):
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/nornir/core/task.py", line 99, in start
+    r = self.task(self, **self.params)
+  File "/home/idansimantov/projects/zero_touch/api/zero_backend/zero_touch_api/nornir_netmiko_actions.py", line 35, in send_show_command
+    result = task.run(
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/nornir/core/task.py", line 174, in run
+    raise NornirSubTaskError(task=run_task, result=r)
+nornir.core.exceptions.NornirSubTaskError: Subtask: netmiko_send_command (failed)
+
+
+2022-12-25 20:28:24,395 -  nornir.core -     INFO -        run() - Running task 'send_show_command' with args {'command': 'ena'} on 1 hosts
+2022-12-25 20:28:28,699 -  nornir.core -     INFO -        run() - Running task 'send_show_command' with args {'command': 'conf t'} on 1 hosts
+2022-12-25 20:28:37,274 -  nornir.core -     INFO -        run() - Running task 'send_show_command' with args {'command': 'sh ip int'} on 1 hosts
+2022-12-25 20:29:27,452 -  nornir.core -     INFO -        run() - Running task 'send_show_command' with args {'command': 'ena'} on 1 hosts
+2022-12-25 20:29:35,472 -  nornir.core -     INFO -        run() - Running task 'send_show_command' with args {'command': 'conf t'} on 1 hosts
+2022-12-25 20:29:45,540 - nornir.core.task -    ERROR -      start() - Host 'R1': task 'netmiko_send_command' failed with traceback:
+Traceback (most recent call last):
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/nornir/core/task.py", line 99, in start
+    r = self.task(self, **self.params)
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/nornir_netmiko/tasks/netmiko_send_command.py", line 32, in netmiko_send_command
+    result = net_connect.send_command(command_string, **kwargs)
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/netmiko/utilities.py", line 592, in wrapper_decorator
+    return func(self, *args, **kwargs)
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/netmiko/base_connection.py", line 1721, in send_command
+    raise ReadTimeout(msg)
+netmiko.exceptions.ReadTimeout: 
+Pattern not detected: 'CiscoRouter\\#' in output.
+
+Things you might try to fix this:
+1. Explicitly set your pattern using the expect_string argument.
+2. Increase the read_timeout to a larger value.
+
+You can also look at the Netmiko session_log or debug log for more information.
+
+
+
+2022-12-25 20:29:45,541 - nornir.core.task -    ERROR -      start() - Host 'R1': task 'send_show_command' failed with traceback:
+Traceback (most recent call last):
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/nornir/core/task.py", line 99, in start
+    r = self.task(self, **self.params)
+  File "/home/idansimantov/projects/zero_touch/api/zero_backend/zero_touch_api/nornir_netmiko_actions.py", line 35, in send_show_command
+    result = task.run(
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/nornir/core/task.py", line 174, in run
+    raise NornirSubTaskError(task=run_task, result=r)
+nornir.core.exceptions.NornirSubTaskError: Subtask: netmiko_send_command (failed)
+
+
+2022-12-25 20:33:12,803 -  nornir.core -     INFO -        run() - Running task 'send_show_command' with args {'command': 'sh ip int'} on 1 hosts
+2022-12-25 20:33:16,080 -  nornir.core -     INFO -        run() - Running task 'send_show_command' with args {'command': 'ena'} on 1 hosts
+2022-12-25 20:33:18,896 -  nornir.core -     INFO -        run() - Running task 'send_show_command' with args {'command': 'conf t'} on 1 hosts
+2022-12-25 20:33:28,955 - nornir.core.task -    ERROR -      start() - Host 'R1': task 'netmiko_send_command' failed with traceback:
+Traceback (most recent call last):
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/nornir/core/task.py", line 99, in start
+    r = self.task(self, **self.params)
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/nornir_netmiko/tasks/netmiko_send_command.py", line 32, in netmiko_send_command
+    result = net_connect.send_command(command_string, **kwargs)
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/netmiko/utilities.py", line 592, in wrapper_decorator
+    return func(self, *args, **kwargs)
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/netmiko/base_connection.py", line 1721, in send_command
+    raise ReadTimeout(msg)
+netmiko.exceptions.ReadTimeout: 
+Pattern not detected: 'CiscoRouter\\#' in output.
+
+Things you might try to fix this:
+1. Explicitly set your pattern using the expect_string argument.
+2. Increase the read_timeout to a larger value.
+
+You can also look at the Netmiko session_log or debug log for more information.
+
+
+
+2022-12-25 20:33:28,956 - nornir.core.task -    ERROR -      start() - Host 'R1': task 'send_show_command' failed with traceback:
+Traceback (most recent call last):
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/nornir/core/task.py", line 99, in start
+    r = self.task(self, **self.params)
+  File "/home/idansimantov/projects/zero_touch/api/zero_backend/zero_touch_api/nornir_netmiko_actions.py", line 34, in send_show_command
+    result = task.run(
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/nornir/core/task.py", line 174, in run
+    raise NornirSubTaskError(task=run_task, result=r)
+nornir.core.exceptions.NornirSubTaskError: Subtask: netmiko_send_command (failed)
+
+
+2022-12-25 20:33:29,492 -  nornir.core -     INFO -        run() - Running task 'send_show_command' with args {'command': 'conf t'} on 1 hosts
+2022-12-25 20:40:07,591 -  nornir.core -     INFO -        run() - Running task 'send_show_command' with args {'command': 'sh ip int br'} on 1 hosts
+2022-12-25 20:40:10,799 -  nornir.core -     INFO -        run() - Running task 'send_show_command' with args {'command': 'ena'} on 1 hosts
+2022-12-25 20:40:13,502 -  nornir.core -     INFO -        run() - Running task 'send_show_command' with args {'command': 'conf t'} on 1 hosts
+2022-12-25 20:40:23,561 - nornir.core.task -    ERROR -      start() - Host 'R1': task 'netmiko_send_command' failed with traceback:
+Traceback (most recent call last):
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/nornir/core/task.py", line 99, in start
+    r = self.task(self, **self.params)
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/nornir_netmiko/tasks/netmiko_send_command.py", line 32, in netmiko_send_command
+    result = net_connect.send_command(command_string, **kwargs)
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/netmiko/utilities.py", line 592, in wrapper_decorator
+    return func(self, *args, **kwargs)
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/netmiko/base_connection.py", line 1721, in send_command
+    raise ReadTimeout(msg)
+netmiko.exceptions.ReadTimeout: 
+Pattern not detected: 'CiscoRouter\\#' in output.
+
+Things you might try to fix this:
+1. Explicitly set your pattern using the expect_string argument.
+2. Increase the read_timeout to a larger value.
+
+You can also look at the Netmiko session_log or debug log for more information.
+
+
+
+2022-12-25 20:40:50,293 -  nornir.core -     INFO -        run() - Running task 'send_show_command' with args {'command': 'sh ip int br'} on 1 hosts
+2022-12-25 20:44:02,203 -  nornir.core -     INFO -        run() - Running task 'send_show_command' with args {'command': 'sh ip int br'} on 1 hosts
+2022-12-25 20:46:36,091 -  nornir.core -     INFO -        run() - Running task 'send_show_command' with args {'command': 'ena'} on 1 hosts
+2022-12-25 20:46:38,339 -  nornir.core -     INFO -        run() - Running task 'send_show_command' with args {'command': 'conf t'} on 1 hosts
+2022-12-25 20:46:48,400 - nornir.core.task -    ERROR -      start() - Host 'R1': task 'netmiko_send_command' failed with traceback:
+Traceback (most recent call last):
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/nornir/core/task.py", line 99, in start
+    r = self.task(self, **self.params)
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/nornir_netmiko/tasks/netmiko_send_command.py", line 32, in netmiko_send_command
+    result = net_connect.send_command(command_string, **kwargs)
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/netmiko/utilities.py", line 592, in wrapper_decorator
+    return func(self, *args, **kwargs)
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/netmiko/base_connection.py", line 1721, in send_command
+    raise ReadTimeout(msg)
+netmiko.exceptions.ReadTimeout: 
+Pattern not detected: 'CiscoRouter\\#' in output.
+
+Things you might try to fix this:
+1. Explicitly set your pattern using the expect_string argument.
+2. Increase the read_timeout to a larger value.
+
+You can also look at the Netmiko session_log or debug log for more information.
+
+
+
+2022-12-25 20:47:27,621 -  nornir.core -     INFO -        run() - Running task 'send_show_command' with args {'command': 'conf t'} on 1 hosts
+2022-12-25 20:47:37,178 -  nornir.core -     INFO -        run() - Running task 'send_show_command' with args {'command': 'sh ip int br'} on 1 hosts
+2022-12-25 20:49:06,562 -  nornir.core -     INFO -        run() - Running task 'send_show_command' with args {'command': 'conf t'} on 1 hosts
+2022-12-25 20:49:17,338 - nornir.core.task -    ERROR -      start() - Host 'R1': task 'netmiko_send_command' failed with traceback:
+Traceback (most recent call last):
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/nornir/core/task.py", line 99, in start
+    r = self.task(self, **self.params)
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/nornir_netmiko/tasks/netmiko_send_command.py", line 32, in netmiko_send_command
+    result = net_connect.send_command(command_string, **kwargs)
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/netmiko/utilities.py", line 592, in wrapper_decorator
+    return func(self, *args, **kwargs)
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/netmiko/base_connection.py", line 1721, in send_command
+    raise ReadTimeout(msg)
+netmiko.exceptions.ReadTimeout: 
+Pattern not detected: 'CiscoRouter\\#' in output.
+
+Things you might try to fix this:
+1. Explicitly set your pattern using the expect_string argument.
+2. Increase the read_timeout to a larger value.
+
+You can also look at the Netmiko session_log or debug log for more information.
+
+
+
+2022-12-25 20:49:45,065 -  nornir.core -     INFO -        run() - Running task 'send_show_command' with args {'command': 'sh ip int br'} on 1 hosts
+2022-12-25 20:53:00,484 -  nornir.core -     INFO -        run() - Running task 'send_show_command' with args {'command': 'show ip arp'} on 1 hosts
+2022-12-25 20:53:16,696 -  nornir.core -     INFO -        run() - Running task 'send_show_command' with args {'command': 'sh ip int br'} on 1 hosts
+2022-12-25 20:53:40,280 -  nornir.core -     INFO -        run() - Running task 'send_show_command' with args {'command': 'sh ip ospf'} on 1 hosts
+2022-12-25 20:53:52,753 -  nornir.core -     INFO -        run() - Running task 'send_show_command' with args {'command': 'sh ip ospf'} on 1 hosts
+2022-12-25 20:53:57,618 -  nornir.core -     INFO -        run() - Running task 'send_show_command' with args {'command': 'sh ip int br'} on 1 hosts
+2022-12-27 07:23:19,358 -  nornir.core -  WARNING -        run() - Task 'send_show_command' has not been run – 0 hosts selected
+2022-12-27 07:23:27,213 -  nornir.core -  WARNING -        run() - Task 'send_show_command' has not been run – 0 hosts selected
+2022-12-27 07:23:50,926 -  nornir.core -  WARNING -        run() - Task 'send_show_command' has not been run – 0 hosts selected
+2022-12-27 07:24:31,387 -  nornir.core -     INFO -        run() - Running task 'send_show_command' with args {'command': 'sh ip int br'} on 1 hosts
+2022-12-27 07:24:31,541 - nornir.core.task -    ERROR -      start() - Host 'R1': task 'netmiko_send_command' failed with traceback:
+Traceback (most recent call last):
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/nornir/core/task.py", line 99, in start
+    r = self.task(self, **self.params)
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/nornir_netmiko/tasks/netmiko_send_command.py", line 32, in netmiko_send_command
+    result = net_connect.send_command(command_string, **kwargs)
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/netmiko/utilities.py", line 592, in wrapper_decorator
+    return func(self, *args, **kwargs)
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/netmiko/base_connection.py", line 1659, in send_command
+    search_pattern = self._prompt_handler(auto_find_prompt)
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/netmiko/base_connection.py", line 1544, in _prompt_handler
+    prompt = self.find_prompt()
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/netmiko/base_connection.py", line 1335, in find_prompt
+    self.write_channel(self.RETURN)
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/netmiko/base_connection.py", line 97, in wrapper_decorator
+    return_val = func(self, *args, **kwargs)
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/netmiko/base_connection.py", line 111, in wrapper_decorator
+    func(self, out_data)
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/netmiko/base_connection.py", line 537, in write_channel
+    self.channel.write_channel(out_data)
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/netmiko/channel.py", line 74, in write_channel
+    self.remote_conn.sendall(write_bytes(out_data, encoding=self.encoding))
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/paramiko/channel.py", line 846, in sendall
+    sent = self.send(s)
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/paramiko/channel.py", line 801, in send
+    return self._send(s, m)
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/paramiko/channel.py", line 1198, in _send
+    raise socket.error("Socket is closed")
+OSError: Socket is closed
+
+2022-12-27 07:25:16,973 -  nornir.core -     INFO -        run() - Running task 'send_show_command' with args {'command': 'sh ip int bt'} on 1 hosts
+2022-12-27 07:25:19,772 -  nornir.core -     INFO -        run() - Running task 'send_show_command' with args {'command': 'sh ip int br'} on 1 hosts
+2022-12-27 07:26:55,711 -  nornir.core -     INFO -        run() - Running task 'send_show_command' with args {'command': 'sh ip int br'} on 1 hosts
+2022-12-27 07:27:03,523 -  nornir.core -     INFO -        run() - Running task 'send_show_command' with args {'command': 'sh ip arp'} on 1 hosts
+2022-12-27 07:27:29,644 -  nornir.core -     INFO -        run() - Running task 'send_show_command' with args {'command': 'sh ip int br'} on 1 hosts
+2022-12-27 07:27:34,165 -  nornir.core -     INFO -        run() - Running task 'send_show_command' with args {'command': 'sh ip ospf'} on 1 hosts
+2022-12-27 07:27:40,473 -  nornir.core -     INFO -        run() - Running task 'send_show_command' with args {'command': 'sh ip ospf br'} on 1 hosts
+2022-12-27 07:27:48,758 -  nornir.core -     INFO -        run() - Running task 'send_show_command' with args {'command': 'sh ip ospf database'} on 1 hosts
+2022-12-27 07:37:36,683 -  nornir.core -     INFO -        run() - Running task 'send_show_command' with args {'command': 'sh ip int br'} on 1 hosts
+2022-12-27 07:38:25,577 -  nornir.core -     INFO -        run() - Running task 'send_show_command' with args {'command': 'sh ip opsf br'} on 1 hosts
+2022-12-27 07:38:31,480 -  nornir.core -     INFO -        run() - Running task 'send_show_command' with args {'command': 'sh ip ospf database'} on 1 hosts
+2022-12-27 10:33:35,200 -  nornir.core -     INFO -        run() - Running task 'send_show_command' with args {'command': 'sh ip int br'} on 1 hosts
+2022-12-27 12:20:01,921 -  nornir.core -     INFO -        run() - Running task 'send_show_command' with args {'command': 'sh ip int br'} on 1 hosts
+2022-12-27 12:20:01,966 - nornir.core.task -    ERROR -      start() - Host 'R1': task 'netmiko_send_command' failed with traceback:
+Traceback (most recent call last):
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/nornir/core/task.py", line 99, in start
+    r = self.task(self, **self.params)
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/nornir_netmiko/tasks/netmiko_send_command.py", line 32, in netmiko_send_command
+    result = net_connect.send_command(command_string, **kwargs)
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/netmiko/utilities.py", line 592, in wrapper_decorator
+    return func(self, *args, **kwargs)
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/netmiko/base_connection.py", line 1659, in send_command
+    search_pattern = self._prompt_handler(auto_find_prompt)
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/netmiko/base_connection.py", line 1544, in _prompt_handler
+    prompt = self.find_prompt()
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/netmiko/base_connection.py", line 1335, in find_prompt
+    self.write_channel(self.RETURN)
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/netmiko/base_connection.py", line 97, in wrapper_decorator
+    return_val = func(self, *args, **kwargs)
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/netmiko/base_connection.py", line 111, in wrapper_decorator
+    func(self, out_data)
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/netmiko/base_connection.py", line 537, in write_channel
+    self.channel.write_channel(out_data)
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/netmiko/channel.py", line 74, in write_channel
+    self.remote_conn.sendall(write_bytes(out_data, encoding=self.encoding))
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/paramiko/channel.py", line 846, in sendall
+    sent = self.send(s)
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/paramiko/channel.py", line 801, in send
+    return self._send(s, m)
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/paramiko/channel.py", line 1198, in _send
+    raise socket.error("Socket is closed")
+OSError: Socket is closed
+
+2022-12-27 12:20:59,900 -  nornir.core -     INFO -        run() - Running task 'send_show_command' with args {'command': 'sh ip int br'} on 1 hosts
+2022-12-27 12:22:17,501 -  nornir.core -     INFO -        run() - Running task 'send_show_command' with args {'command': 'sh ip int br'} on 1 hosts
+2022-12-27 12:22:26,249 -  nornir.core -     INFO -        run() - Running task 'send_show_command' with args {'command': 'sh ip arp'} on 1 hosts
+2022-12-27 12:22:39,067 -  nornir.core -     INFO -        run() - Running task 'send_show_command' with args {'command': 'sh ip int br'} on 1 hosts
+2022-12-27 12:27:54,420 -  nornir.core -     INFO -        run() - Running task 'send_show_command' with args {'command': 'sh ip int br'} on 1 hosts
+2022-12-27 12:28:00,130 -  nornir.core -     INFO -        run() - Running task 'send_show_command' with args {'command': 'sh ip ospf router'} on 1 hosts
+2022-12-27 12:28:07,518 -  nornir.core -     INFO -        run() - Running task 'send_show_command' with args {'command': 'sh ip ospf database'} on 1 hosts
+2022-12-27 12:31:11,775 -  nornir.core -     INFO -        run() - Running task 'send_show_command' with args {'command': 'sh ip int br'} on 1 hosts
+2022-12-27 15:34:24,396 -  nornir.core -     INFO -        run() - Running task 'send_show_command' with args {'command': 'sh ip int br'} on 1 hosts
+2022-12-27 15:34:24,434 - nornir.core.task -    ERROR -      start() - Host 'R1': task 'netmiko_send_command' failed with traceback:
+Traceback (most recent call last):
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/nornir/core/task.py", line 99, in start
+    r = self.task(self, **self.params)
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/nornir_netmiko/tasks/netmiko_send_command.py", line 32, in netmiko_send_command
+    result = net_connect.send_command(command_string, **kwargs)
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/netmiko/utilities.py", line 592, in wrapper_decorator
+    return func(self, *args, **kwargs)
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/netmiko/base_connection.py", line 1659, in send_command
+    search_pattern = self._prompt_handler(auto_find_prompt)
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/netmiko/base_connection.py", line 1544, in _prompt_handler
+    prompt = self.find_prompt()
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/netmiko/base_connection.py", line 1335, in find_prompt
+    self.write_channel(self.RETURN)
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/netmiko/base_connection.py", line 97, in wrapper_decorator
+    return_val = func(self, *args, **kwargs)
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/netmiko/base_connection.py", line 111, in wrapper_decorator
+    func(self, out_data)
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/netmiko/base_connection.py", line 537, in write_channel
+    self.channel.write_channel(out_data)
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/netmiko/channel.py", line 74, in write_channel
+    self.remote_conn.sendall(write_bytes(out_data, encoding=self.encoding))
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/paramiko/channel.py", line 846, in sendall
+    sent = self.send(s)
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/paramiko/channel.py", line 801, in send
+    return self._send(s, m)
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/paramiko/channel.py", line 1198, in _send
+    raise socket.error("Socket is closed")
+OSError: Socket is closed
+
+2022-12-27 15:34:32,880 -  nornir.core -     INFO -        run() - Running task 'send_show_command' with args {'command': 'sh ip arp'} on 1 hosts
+2022-12-27 15:35:19,410 -  nornir.core -     INFO -        run() - Running task 'send_show_command' with args {'command': 'sh ip int br'} on 1 hosts
+2022-12-27 15:35:24,227 -  nornir.core -     INFO -        run() - Running task 'send_show_command' with args {'command': 'sh ip arp'} on 1 hosts
+2022-12-27 15:36:33,666 -  nornir.core -     INFO -        run() - Running task 'send_show_command' with args {'command': 'sh ip int rb'} on 1 hosts
+2022-12-27 15:36:36,741 -  nornir.core -     INFO -        run() - Running task 'send_show_command' with args {'command': 'sh ip int br'} on 1 hosts
+2022-12-27 15:37:11,355 -  nornir.core -     INFO -        run() - Running task 'send_show_command' with args {'command': 'sh ip arp'} on 1 hosts
+2022-12-27 15:37:31,789 -  nornir.core -     INFO -        run() - Running task 'send_show_command' with args {'command': 'sh ip int br'} on 1 hosts
+2022-12-27 15:39:52,639 -  nornir.core -     INFO -        run() - Running task 'send_show_command' with args {'command': 'sh ip opsf database '} on 1 hosts
+2022-12-27 15:39:58,062 -  nornir.core -     INFO -        run() - Running task 'send_show_command' with args {'command': 'sh ip ospf database'} on 1 hosts
+2022-12-27 15:40:09,150 -  nornir.core -     INFO -        run() - Running task 'send_show_command' with args {'command': 'sh ip int br'} on 1 hosts
+2022-12-27 17:41:47,885 -  nornir.core -     INFO -        run() - Running task 'send_show_command' with args {'command': 'sh ip int br'} on 1 hosts
+2022-12-27 17:41:47,924 - nornir.core.task -    ERROR -      start() - Host 'R1': task 'netmiko_send_command' failed with traceback:
+Traceback (most recent call last):
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/nornir/core/task.py", line 99, in start
+    r = self.task(self, **self.params)
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/nornir_netmiko/tasks/netmiko_send_command.py", line 32, in netmiko_send_command
+    result = net_connect.send_command(command_string, **kwargs)
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/netmiko/utilities.py", line 592, in wrapper_decorator
+    return func(self, *args, **kwargs)
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/netmiko/base_connection.py", line 1659, in send_command
+    search_pattern = self._prompt_handler(auto_find_prompt)
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/netmiko/base_connection.py", line 1544, in _prompt_handler
+    prompt = self.find_prompt()
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/netmiko/base_connection.py", line 1335, in find_prompt
+    self.write_channel(self.RETURN)
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/netmiko/base_connection.py", line 97, in wrapper_decorator
+    return_val = func(self, *args, **kwargs)
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/netmiko/base_connection.py", line 111, in wrapper_decorator
+    func(self, out_data)
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/netmiko/base_connection.py", line 537, in write_channel
+    self.channel.write_channel(out_data)
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/netmiko/channel.py", line 74, in write_channel
+    self.remote_conn.sendall(write_bytes(out_data, encoding=self.encoding))
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/paramiko/channel.py", line 846, in sendall
+    sent = self.send(s)
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/paramiko/channel.py", line 801, in send
+    return self._send(s, m)
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/paramiko/channel.py", line 1198, in _send
+    raise socket.error("Socket is closed")
+OSError: Socket is closed
+
+2022-12-27 17:47:42,265 -  nornir.core -     INFO -        run() - Running task 'send_show_command' with args {'command': 'sh ip int br'} on 1 hosts
+2022-12-27 17:47:44,295 -  nornir.core -     INFO -        run() - Running task 'send_show_command' with args {'command': 'sh ip int br'} on 1 hosts
+2022-12-27 17:47:45,857 -  nornir.core -     INFO -        run() - Running task 'send_show_command' with args {'command': 'sh ip int '} on 1 hosts
+2022-12-27 17:47:47,439 -  nornir.core -     INFO -        run() - Running task 'send_show_command' with args {'command': 'sh ip int br'} on 1 hosts
+2022-12-27 17:48:03,434 -  nornir.core -     INFO -        run() - Running task 'send_show_command' with args {'command': 'sh ip int br'} on 1 hosts
+2022-12-27 17:48:57,293 -  nornir.core -     INFO -        run() - Running task 'send_show_command' with args {'command': 'sh ip int br'} on 1 hosts
+2022-12-27 17:49:39,676 -  nornir.core -     INFO -        run() - Running task 'send_show_command' with args {'command': 'sh ip int br'} on 1 hosts
+2022-12-27 17:49:42,127 -  nornir.core -     INFO -        run() - Running task 'send_show_command' with args {'command': 'sh ip arp'} on 1 hosts
+2022-12-27 17:50:21,853 -  nornir.core -     INFO -        run() - Running task 'send_show_command' with args {'command': 'sh ip arp'} on 1 hosts
+2022-12-27 17:50:22,468 -  nornir.core -     INFO -        run() - Running task 'send_show_command' with args {'command': 'sh ip arp'} on 1 hosts
+2022-12-27 17:50:23,006 -  nornir.core -     INFO -        run() - Running task 'send_show_command' with args {'command': 'sh ip arp'} on 1 hosts
+2022-12-27 17:50:23,531 -  nornir.core -     INFO -        run() - Running task 'send_show_command' with args {'command': 'sh ip arp'} on 1 hosts
+2022-12-27 17:50:24,102 -  nornir.core -     INFO -        run() - Running task 'send_show_command' with args {'command': 'sh ip arp'} on 1 hosts
+2022-12-27 17:50:24,546 -  nornir.core -     INFO -        run() - Running task 'send_show_command' with args {'command': 'sh ip arp'} on 1 hosts
+2022-12-27 17:50:25,061 -  nornir.core -     INFO -        run() - Running task 'send_show_command' with args {'command': 'sh ip arp'} on 1 hosts
+2022-12-27 17:50:25,569 -  nornir.core -     INFO -        run() - Running task 'send_show_command' with args {'command': 'sh ip arp'} on 1 hosts
+2022-12-27 17:50:26,046 -  nornir.core -     INFO -        run() - Running task 'send_show_command' with args {'command': 'sh ip arp'} on 1 hosts
+2022-12-27 17:50:26,474 -  nornir.core -     INFO -        run() - Running task 'send_show_command' with args {'command': 'sh ip arp'} on 1 hosts
+2022-12-27 17:50:27,096 -  nornir.core -     INFO -        run() - Running task 'send_show_command' with args {'command': 'sh ip arp'} on 1 hosts
+2022-12-27 17:50:32,210 -  nornir.core -     INFO -        run() - Running task 'send_show_command' with args {'command': 'sh ip int br'} on 1 hosts
+2022-12-27 17:52:06,053 -  nornir.core -     INFO -        run() - Running task 'send_show_command' with args {'command': 'sh ip int br'} on 1 hosts
+2022-12-27 17:52:08,558 -  nornir.core -     INFO -        run() - Running task 'send_show_command' with args {'command': 'sh ip arp'} on 1 hosts
+2022-12-27 17:53:01,545 -  nornir.core -     INFO -        run() - Running task 'send_show_command' with args {'command': 'sh ip int br'} on 1 hosts
+2022-12-27 17:58:57,433 -  nornir.core -     INFO -        run() - Running task 'send_show_command' with args {'command': 'sh ip int br'} on 1 hosts
+2022-12-27 17:59:03,300 -  nornir.core -     INFO -        run() - Running task 'send_show_command' with args {'command': 'sh ip arp'} on 1 hosts
+2022-12-27 17:59:14,918 -  nornir.core -     INFO -        run() - Running task 'send_show_command' with args {'command': 'sh ip ospf'} on 1 hosts
+2022-12-27 18:04:31,209 -  nornir.core -     INFO -        run() - Running task 'send_show_command' with args {'command': 'show '} on 1 hosts
+2022-12-27 18:04:34,317 -  nornir.core -     INFO -        run() - Running task 'send_show_command' with args {'command': 'show ip int br'} on 1 hosts
+2022-12-27 18:08:56,990 -  nornir.core -     INFO -        run() - Running task 'send_show_command' with args {'command': 'sh ip int br'} on 1 hosts
+2022-12-27 18:34:48,269 -  nornir.core -     INFO -        run() - Running task 'send_show_command' with args {'command': 'sh ip int br'} on 1 hosts
+2022-12-27 18:34:48,289 - nornir.core.task -    ERROR -      start() - Host 'R1': task 'netmiko_send_command' failed with traceback:
+Traceback (most recent call last):
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/nornir/core/task.py", line 99, in start
+    r = self.task(self, **self.params)
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/nornir_netmiko/tasks/netmiko_send_command.py", line 32, in netmiko_send_command
+    result = net_connect.send_command(command_string, **kwargs)
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/netmiko/utilities.py", line 592, in wrapper_decorator
+    return func(self, *args, **kwargs)
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/netmiko/base_connection.py", line 1659, in send_command
+    search_pattern = self._prompt_handler(auto_find_prompt)
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/netmiko/base_connection.py", line 1544, in _prompt_handler
+    prompt = self.find_prompt()
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/netmiko/base_connection.py", line 1335, in find_prompt
+    self.write_channel(self.RETURN)
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/netmiko/base_connection.py", line 97, in wrapper_decorator
+    return_val = func(self, *args, **kwargs)
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/netmiko/base_connection.py", line 111, in wrapper_decorator
+    func(self, out_data)
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/netmiko/base_connection.py", line 537, in write_channel
+    self.channel.write_channel(out_data)
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/netmiko/channel.py", line 74, in write_channel
+    self.remote_conn.sendall(write_bytes(out_data, encoding=self.encoding))
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/paramiko/channel.py", line 846, in sendall
+    sent = self.send(s)
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/paramiko/channel.py", line 801, in send
+    return self._send(s, m)
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/paramiko/channel.py", line 1198, in _send
+    raise socket.error("Socket is closed")
+OSError: Socket is closed
+
+2022-12-27 20:20:26,981 -  nornir.core -     INFO -        run() - Running task 'send_show_command' with args {'command': 'show ip interface brief'} on 1 hosts
+2022-12-27 20:20:34,710 -  nornir.core -     INFO -        run() - Running task 'send_show_command' with args {'command': 'show ip arp'} on 1 hosts
+2022-12-27 20:20:44,169 -  nornir.core -     INFO -        run() - Running task 'send_show_command' with args {'command': 'show ip ospf database external'} on 1 hosts
+2022-12-27 20:20:49,964 -  nornir.core -     INFO -        run() - Running task 'send_show_command' with args {'command': 'show ip ospf database summary'} on 1 hosts
+2022-12-27 20:20:57,605 -  nornir.core -     INFO -        run() - Running task 'send_show_command' with args {'command': 'show ip ospf database '} on 1 hosts
+2022-12-27 20:21:53,299 -  nornir.core -     INFO -        run() - Running task 'send_show_command' with args {'command': 'show ip mroute'} on 1 hosts
+2022-12-27 20:22:02,283 -  nornir.core -     INFO -        run() - Running task 'send_show_command' with args {'command': 'show ip ospf'} on 1 hosts
+2022-12-27 20:22:09,620 -  nornir.core -     INFO -        run() - Running task 'send_show_command' with args {'command': 'show ip pim interface'} on 1 hosts
+2022-12-27 20:24:48,888 -  nornir.core -     INFO -        run() - Running task 'send_show_command' with args {'command': 'show ip arp summary'} on 1 hosts
+2022-12-27 20:24:58,433 -  nornir.core -     INFO -        run() - Running task 'send_show_command' with args {'command': 'show ip route'} on 1 hosts
+2022-12-27 20:52:07,232 -  nornir.core -     INFO -        run() - Running task 'send_show_command' with args {'command': 'show ip route '} on 1 hosts
+2022-12-27 20:52:07,305 - nornir.core.task -    ERROR -      start() - Host 'R1': task 'netmiko_send_command' failed with traceback:
+Traceback (most recent call last):
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/nornir/core/task.py", line 99, in start
+    r = self.task(self, **self.params)
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/nornir_netmiko/tasks/netmiko_send_command.py", line 32, in netmiko_send_command
+    result = net_connect.send_command(command_string, **kwargs)
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/netmiko/utilities.py", line 592, in wrapper_decorator
+    return func(self, *args, **kwargs)
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/netmiko/base_connection.py", line 1659, in send_command
+    search_pattern = self._prompt_handler(auto_find_prompt)
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/netmiko/base_connection.py", line 1544, in _prompt_handler
+    prompt = self.find_prompt()
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/netmiko/base_connection.py", line 1335, in find_prompt
+    self.write_channel(self.RETURN)
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/netmiko/base_connection.py", line 97, in wrapper_decorator
+    return_val = func(self, *args, **kwargs)
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/netmiko/base_connection.py", line 111, in wrapper_decorator
+    func(self, out_data)
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/netmiko/base_connection.py", line 537, in write_channel
+    self.channel.write_channel(out_data)
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/netmiko/channel.py", line 74, in write_channel
+    self.remote_conn.sendall(write_bytes(out_data, encoding=self.encoding))
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/paramiko/channel.py", line 846, in sendall
+    sent = self.send(s)
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/paramiko/channel.py", line 801, in send
+    return self._send(s, m)
+  File "/home/idansimantov/projects/zero_touch/api/.venv/lib/python3.10/site-packages/paramiko/channel.py", line 1198, in _send
+    raise socket.error("Socket is closed")
+OSError: Socket is closed
+
+2022-12-27 20:52:11,548 -  nornir.core -     INFO -        run() - Running task 'send_show_command' with args {'command': 'show interfaces'} on 1 hosts
+2022-12-27 21:20:19,169 -  nornir.core -     INFO -        run() - Running task 'send_show_command' with args {'command': 'show ip interface brief'} on 1 hosts
+2022-12-27 21:24:29,884 -  nornir.core -     INFO -        run() - Running task 'send_show_command' with args {'command': 'show ip arp'} on 1 hosts
+2022-12-27 21:27:20,142 -  nornir.core -     INFO -        run() - Running task 'send_show_command' with args {'command': 'show ip interface'} on 1 hosts
+2022-12-27 21:27:29,092 -  nornir.core -     INFO -        run() - Running task 'send_show_command' with args {'command': 'show ip interface brief'} on 1 hosts
+2022-12-27 21:27:58,630 -  nornir.core -     INFO -        run() - Running task 'send_show_command' with args {'command': 'show ip igmp groups detail'} on 1 hosts
+2022-12-27 21:28:39,227 -  nornir.core -     INFO -        run() - Running task 'send_show_command' with args {'command': 'show interfaces trunk'} on 1 hosts
+2022-12-27 21:28:42,937 -  nornir.core -     INFO -        run() - Running task 'send_show_command' with args {'command': 'show interfaces trunk'} on 1 hosts
+2022-12-27 21:28:47,873 -  nornir.core -     INFO -        run() - Running task 'send_show_command' with args {'command': 'show inventory'} on 1 hosts
+2022-12-27 21:28:51,288 -  nornir.core -     INFO -        run() - Running task 'send_show_command' with args {'command': 'show ip arp'} on 1 hosts
+2022-12-27 21:28:54,796 -  nornir.core -     INFO -        run() - Running task 'send_show_command' with args {'command': 'show ip arp {{intf_or_ip}}'} on 1 hosts
+2022-12-27 21:28:57,157 -  nornir.core -     INFO -        run() - Running task 'send_show_command' with args {'command': 'show ip bgp all dampening parameters'} on 1 hosts
+2022-12-27 21:29:06,870 -  nornir.core -     INFO -        run() - Running task 'send_show_command' with args {'command': 'show ip interface brief'} on 1 hosts
+2022-12-27 21:29:33,045 -  nornir.core -     INFO -        run() - Running task 'send_show_command' with args {'command': 'sh ip int br'} on 1 hosts

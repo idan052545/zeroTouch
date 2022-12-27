@@ -68,14 +68,15 @@ export function* sendCommandAsync({ payload }) {
 export function* sendOspfConfigAsync({ payload }) {
   try {
     let config = {
-      method: "get",
+      method: "post",
       url: "http://127.0.0.1:8000/zero-touch/routers/send_ospf_config/",
       headers: {
         Authorization: "Basic aWRhbjA1MjU0NTppZGFuMTIzNDU2",
         "Content-Type": "application/json",
       },
-      params: {
-        ...payload,
+      data: {
+        ip: payload["ip"],
+        config: payload["config"],
       },
     };
 
@@ -85,7 +86,11 @@ export function* sendOspfConfigAsync({ payload }) {
       data = response.data;
     });
 
-    yield put(sendOspfConfigSuccess(data));
+    yield put(
+      sendOspfConfigSuccess(
+        data.replace(/\\n/g, "\n").replace(/\\t/g, "\t").slice(1, -1)
+      )
+    );
   } catch (error) {
     yield put(sendOspfConfigFailure(error.message));
   }

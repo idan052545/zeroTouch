@@ -114,7 +114,7 @@ const TerminalWrapper = styled.div`
 
   .Prompt__Input {
     background: linear-gradient(45deg, #57003f 0%, #f57453 100%);
-    width: 80%;
+    width: 100%;
     border-radius: 10px;
     padding: 10px;
     box-sizing: border-box;
@@ -141,6 +141,8 @@ const TerminalWrapper = styled.div`
     padding-top: 50px;
     text-align: justify;
     word-wrap: break-word;
+    /* display: block; */
+    position: relative;
     display: block;
     resize: none;
 
@@ -161,6 +163,48 @@ const TerminalWrapper = styled.div`
       border-radius: 10px;
     }
   }
+  .Prompt__Input::placeholder {
+    color: #ccc;
+  }
+  .Prompt__Input::before {
+    content: attr(data-suggestion);
+    position: absolute;
+    top: 0;
+    left: 0;
+    color: #ccc;
+    pointer-events: none;
+    visibility: hidden;
+  }
+  .Prompt__Input[value]:before {
+    visibility: visible;
+  }
+  .Prompt__Input:focus {
+    box-shadow: 0 0 0 2px #ffffff;
+    outline: none;
+  }
+
+  .autocomplete-container .autocomplete-suggestion {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    overflow: auto;
+    width: 100%;
+    position: relative;
+    box-sizing: border-box;
+    z-index: 1;
+  }
+
+  /* .autocomplete-suggestion li {
+    list-style: none;
+    padding: 10px;
+  }
+
+  .autocomplete-suggestion li:hover {
+    background-color: #f5f5f5;
+  }
+
+  .autocomplete-suggestion li.selected {
+    background-color: #eaeaea;
+  } */
 
   @keyframes blink {
     0% {
@@ -241,6 +285,28 @@ const TerminalWrapper = styled.div`
   }
 
   .Terminal__Prompt .open-ospf-modal-button:hover {
+    background-color: #f57453;
+  }
+
+  .Terminal__Prompt .copy-button {
+    /* add your styles here */
+    width: 80px;
+    height: 40px;
+    background-color: #57003f;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    /* add the glow effect and shadows */
+    box-shadow: 0 0 10px #57003f;
+    /* position the button near the .open-ospf-modal-button element */
+    margin-left: 10px;
+  }
+
+  .Terminal__Prompt .copy-button:hover {
+    /* add your hover styles here */
     background-color: #f57453;
   }
 `;

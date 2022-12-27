@@ -36,14 +36,25 @@
   text-align: center;
 }
 
+// .form-group {
+//   margin: 0 0 20px;
+// }
+
+// .form-group label {
+//   display: block;
+//   margin: 0 0 10px;
+//   font-size: 14px;
+// }
+
 .form-group {
-  margin: 0 0 20px;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1rem;
 }
 
 .form-group label {
-  display: block;
-  margin: 0 0 10px;
-  font-size: 14px;
+  font-size: 1rem;
+  margin-bottom: 0.5rem;
 }
 
 .form-group input {
@@ -150,4 +161,74 @@
 
 .modal-content input[type="checkbox"]:hover {
   border-color: #f57453;
+}
+
+.form-group button[type="button"] {
+  height: 2rem;
+  font-size: 1rem;
+  padding: 0 1rem;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  border-radius: 0.25rem;
+  transition: background-color 0.2s;
+}
+
+.form-group button[type="button"]:hover {
+  background-color: #0069d9;
+}
+
+.form-group button[type="button"]:active {
+  background-color: #0062cc;
+}
+
+.form-group button[type="button"]:disabled {
+  background-color: #6c757d;
+  cursor: not-allowed;
+}
+.form-group input[type="file"] {
+  height: 2rem;
+  font-size: 1rem;
+  padding: 0 0.5rem;
+  border: 1px solid #ced4da;
+  border-radius: 0.25rem;
+  background-color: #fff;
+  cursor: pointer;
+  appearance: none; /* removes default styles for file input */
+  background-image: url("data:image/png;base64,iVBORw0KGg...."); /* add custom background image */
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.form-group input[type="file"]::-webkit-file-upload-button {
+  appearance: none; /* removes default styles for file input button */
+  height: 2rem;
+  font-size: 1rem;
+  padding: 0 1rem;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 0.25rem;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.form-group input[type="file"]::-webkit-file-upload-button:hover {
+  background-color: #0069d9;
+}
+
+.form-group input[type="file"]::-webkit-file-upload-button:active {
+  background-color: #0062cc;
+}
+
+.form-group input[type="file"]:focus {
+  outline: none;
+  border-color: #4285f4;
+  box-shadow: 0 0 0 0.2rem rgba(66, 133, 244, 0.25);
+}
+
+.form-group input[type="file"]:disabled {
+  background-color: #e9ecef;
+  cursor: not-allowed;
 }

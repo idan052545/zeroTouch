@@ -1,6 +1,7 @@
-
-router ospf {{ host.OSPF.process }}
-router-id {{ host.OSPF.id }}
-{% for n in host.OSPF.networks %}
-network {{ n.net }} {{ n.wildcard }} area {{ n.area }}
+router ospf {{ host.ospfProcess }}
+{% if host.routerId is defined %}
+router-id {{ host.routerId }}
+{% endif %}
+{% for n in host.networks %}
+network {{ n.network }} {{ n.wildcard }} area {{ n.area }}
 {% endfor %}

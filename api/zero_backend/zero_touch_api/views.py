@@ -1,6 +1,9 @@
 # from django_filters.rest_framework import DjangoFilterBackend
 from xml.etree.ElementTree import tostring
+from django.core.exceptions import SuspiciousOperation
+
 from django.db.models.aggregates import Count
+from django.http import HttpResponseServerError
 from rest_framework.decorators import action, permission_classes
 from .pagination import DefaultPagination
 import yaml
@@ -34,10 +37,35 @@ from .models import Field, FieldImage, Router
 from .serializers import FieldImageSerializer, FieldSerializer, RouterSerializer
 from djongo import database
 
-from .nornir_netmiko_actions import generate_node_and_edge_dictionaries, get_interfaces_dict, load_ospf, send_show_command, show_ip_int_br, get_all_ip, locate_ip, get_loopback_ip, ping_test, failed_list, show_ip_ospf_database_router, string_result, target_list, duplicates, ip_list,interfaces
+from .nornir_netmiko_actions import (
+    generate_node_and_edge_dictionaries,
+    get_interfaces_dict,
+    load_ospf,
+    send_show_command,
+    show_ip_int_br,
+    get_all_ip,
+    locate_ip,
+    get_loopback_ip,
+    ping_test,
+    failed_list,
+    show_ip_ospf_database_router,
+    string_result,
+    target_list,
+    duplicates,
+    ip_list,
+    interfaces,
+)
 from collections import Counter
 
-from netmiko import ConnectHandler
+from netmiko import (
+    ConnectHandler,
+    NetmikoAuthenticationException,
+    NetmikoTimeoutException,
+)
+
+import jinja2
+
+
 from nornir import InitNornir
 from nornir.core.filter import F
 
@@ -46,6 +74,8 @@ from nornir.core.task import Task, Result
 from genie.libs.parser.utils import get_parser_commands
 from nornir_netmiko.tasks import netmiko_send_command
 from nornir_utils.plugins.functions import print_result
+from nornir.core.exceptions import NornirExecutionError
+
 nr = InitNornir(config_file="../config.yaml")
 
 
@@ -104,30 +134,27 @@ class RouterViewSet(ModelViewSet):
             serializer.data, status=status.HTTP_201_CREATED, headers=headers
         )
 
-    @action(detail=False, methods=['GET'], permission_classes=[IsAuthenticated])
+    @action(detail=False, methods=["GET"], permission_classes=[IsAuthenticated])
     def show_ip_int_br(self, request):
-        if request.method == 'GET':
+        if request.method == "GET":
             results = nr.run(task=show_ip_int_br)
             print_result(results)
             return Response(
-                json.dumps(nr.inventory.hosts["R1"]["facts"], indent=4), status=status.HTTP_200_OK
+                json.dumps(nr.inventory.hosts["R1"]["facts"], indent=4),
+                status=status.HTTP_200_OK,
             )
 
-    @action(detail=False, methods=['GET'], permission_classes=[IsAuthenticated])
+    @action(detail=False, methods=["GET"], permission_classes=[IsAuthenticated])
     def get_duplicates(self, request):
         nr.run(task=get_all_ip)
         targets = [k for k, v in Counter(ip_list).items() if v > 1]
         if targets:
             nr.run(task=locate_ip)
-            return Response(
-                json.dumps(duplicates, indent=4), status=status.HTTP_200_OK
-            )
+            return Response(json.dumps(duplicates, indent=4), status=status.HTTP_200_OK)
         else:
-            return Response(
-                json.dumps({}, indent=4), status=status.HTTP_200_OK
-            )
+            return Response(json.dumps({}, indent=4), status=status.HTTP_200_OK)
 
-    @action(detail=False, methods=['GET'], permission_classes=[IsAuthenticated])
+    @action(detail=False, methods=["GET"], permission_classes=[IsAuthenticated])
     def get_unreachable_routers(self, request):
         nr.run(task=get_loopback_ip)
         sorted_list = sorted(target_list)
@@ -138,49 +165,83 @@ class RouterViewSet(ModelViewSet):
                 json.dumps(sorted_fails, indent=4), status=status.HTTP_200_OK
             )
         else:
-            return Response(
-                json.dumps({}, indent=4), status=status.HTTP_200_OK
-            )
+            return Response(json.dumps({}, indent=4), status=status.HTTP_200_OK)
 
-    @action(detail=False, methods=['GET'], permission_classes=[IsAuthenticated])
+    @action(
+        detail=False, methods=["POST", "PATCH"], permission_classes=[IsAuthenticated]
+    )
     def send_ospf_config(self, request):
-        results =  nr.run(load_ospf)
-        print_result(results)
-        return Response(
-            json.dumps(string_result(results), indent=4), status=status.HTTP_200_OK
-        )          
+        # results =  nr.run(load_ospf)
+        # print_result(results)
+        # return Response(
+        #     json.dumps(string_result(results), indent=4), status=status.HTTP_200_OK
+        # )
+        DataRequest = json.loads(request.body.decode("utf-8"))
+        ip = DataRequest["ip"]
+        config = DataRequest["config"]
 
-    @action(detail=False, methods=['GET'], permission_classes=[IsAuthenticated])
+        template_loader = jinja2.FileSystemLoader(searchpath="../templates")
+        template_env = jinja2.Environment(loader=template_loader)
+        template = template_env.get_template("ospf.j2")
+        jinjaConfig = template.render(host=config)
+
+        # selectedHost = nr.filter(F(hostname=ip))
+        # results = selectedHost.run(task=load_ospf, config=jinjaConfig)
+        # results.raise_on_error()
+        # print(string_result(results))
+
+        return Response(
+            json.dumps(jinjaConfig, indent=4),
+            status=status.HTTP_200_OK,
+        )
+
+    @action(detail=False, methods=["GET"], permission_classes=[IsAuthenticated])
     def show_ip_ospf_database_router(self, request):
-        if request.method == 'GET':
+        if request.method == "GET":
             results = nr.run(task=show_ip_ospf_database_router)
             print_result(results)
             return Response(
-                json.dumps(nr.inventory.hosts["R1"]["facts"], indent=4), status=status.HTTP_200_OK
+                json.dumps(nr.inventory.hosts["R1"]["facts"], indent=4),
+                status=status.HTTP_200_OK,
             )
-    @action(detail=False, methods=['GET'], permission_classes=[IsAuthenticated])
+
+    @action(detail=False, methods=["GET"], permission_classes=[IsAuthenticated])
     def generate_node_and_edge_dictionaries(self, request):
-        if request.method == 'GET':
+        if request.method == "GET":
             # interfaces= {}
             results1 = nr.run(task=get_interfaces_dict)
             print_result(results1)
 
             results = nr.run(task=generate_node_and_edge_dictionaries)
             print_result(results)
-            return Response(
-                json.dumps({}, indent=4), status=status.HTTP_200_OK
-            )  
-    @action(detail=False, methods=['GET'], permission_classes=[IsAuthenticated])
+            return Response(json.dumps({}, indent=4), status=status.HTTP_200_OK)
+
+    @action(detail=False, methods=["GET"], permission_classes=[IsAuthenticated])
     def send_show_command(self, request):
-        if request.method == 'GET':
-            ip = request.GET.get('ip', '')
-            command = request.GET.get('command', '')
-            selectedHost = nr.filter(F(hostname=ip))
-            results = selectedHost.run(task=send_show_command,command=command)
-            print(string_result(results))
-            return Response(
-                json.dumps(string_result(results), indent=4), status=status.HTTP_200_OK
-            )                       
+        if request.method == "GET":
+
+            try:
+                ip = request.GET.get("ip", "")
+                command = request.GET.get("command", "")
+                selectedHost = nr.filter(F(hostname=ip))
+                results = selectedHost.run(task=send_show_command, command=command)
+                results.raise_on_error()
+                print(string_result(results))
+                return Response(
+                    json.dumps(string_result(results), indent=4),
+                    status=status.HTTP_200_OK,
+                )
+            except NornirExecutionError as e:
+                print(e)
+                return Response(
+                    {"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR
+                )
+            except Exception as e:
+                print(e)
+                return Response(
+                    {"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR
+                )
+
 
 class FieldViewSet(ModelViewSet):
     # queryset = Field.objects.annotate(fields_count=Count("id")).all()
@@ -207,5 +268,3 @@ class FieldImageViewSet(ModelViewSet):
 
     def get_queryset(self):
         return FieldImage.objects.filter(field_id=self.kwargs["field_pk"])
-
-

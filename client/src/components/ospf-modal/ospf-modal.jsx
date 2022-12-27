@@ -1,15 +1,51 @@
 import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { sendOspfConfigStart } from "../../redux/router/router-actions";
 
 import "./ospf-modal.scss";
 
 const OSPFModal = ({ isOpen, handleClose, ip }) => {
+  const dispatch = useDispatch();
+  const [file, setFile] = useState(null);
+  const [fileData, setFileData] = useState(null);
   const [setRouterID, setSetRouterID] = useState(false); // add state variable to track whether the "set router ID" checkbox is checked
-
   const [ospfProcess, setOspfProcess] = useState(""); // initialize state variable to store OSPF process value
   const [routerId, setRouterId] = useState(""); // initialize state variable to store router ID value
   const [networks, setNetworks] = useState([
     { network: "", wildcard: "", area: "" },
   ]); // initialize state variable to store network values
+
+  const handleFileSelect = (e) => {
+    const file = e.target.files[0];
+    const reader = new FileReader();
+    reader.onload = (event) => {
+      const fileContent = event.target.result;
+      // parse file content and update form fields
+      const ospfProcessMatch = fileContent.match(/router ospf (\d+)/);
+      if (ospfProcessMatch) {
+        setOspfProcess(ospfProcessMatch[1]);
+      }
+      const routerIdMatch = fileContent.match(/router-id (\d+\.\d+\.\d+\.\d+)/);
+      if (routerIdMatch) {
+        setSetRouterID(true);
+        setRouterId(routerIdMatch[1]);
+      }
+      const networkMatches = fileContent.match(
+        /network (\d+\.\d+\.\d+\.\d+) (\d+\.\d+\.\d+\.\d+) area (\d+)/g
+      );
+      if (networkMatches) {
+        setNetworks(
+          networkMatches.map((networkMatch) => {
+            const [, network, wildcard, area] = networkMatch.match(
+              /network (\d+\.\d+\.\d+\.\d+) (\d+\.\d+\.\d+\.\d+) area (\d+)/
+            );
+            return { network, wildcard, area };
+          })
+        );
+      }
+    };
+    reader.readAsText(file);
+  };
 
   const handleOspfProcessChange = (e) => {
     setOspfProcess(e.target.value); // update ospfProcess state variable on change
@@ -42,10 +78,11 @@ const OSPFModal = ({ isOpen, handleClose, ip }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     handleClose();
-    let configOspf = { ip, ospfProcess, networks };
+    let configOspf = { ip, config: { ospfProcess, networks } };
     if (setRouterID) {
-      configOspf = { ...configOspf, routerId };
+      configOspf = { ip, config: { ospfProcess, networks, routerId } };
     }
+    dispatch(sendOspfConfigStart(configOspf));
   };
 
   return (
@@ -53,6 +90,16 @@ const OSPFModal = ({ isOpen, handleClose, ip }) => {
       <div className="modal-content">
         <h1 className="modal-title">Set OSPF</h1>
         <form onSubmit={handleSubmit}>
+          <div className="form-group">
+            <label htmlFor="file-input">Import Configuration</label>
+            <input
+              type="file"
+              id="file-input"
+              name="file-input"
+              onChange={handleFileSelect}
+              required
+            />
+          </div>
           <div className="form-group">
             <label htmlFor="ospf-process">OSPF Process</label>
             <input
