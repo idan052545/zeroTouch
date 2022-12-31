@@ -1,0 +1,27 @@
+version: "3.9"
+services:
+  web:
+    build: .
+    command: ./wait-for-it.sh mongodb:27017 -- ./docker-entrypoint.sh
+    ports:
+      - 8000:8000
+    depends_on:
+      - mongodb
+    restart: on-failure
+    volumes:
+      - .:/app
+  mongodb:
+    image: mongo:4.4.0
+    ports:
+      - 27017:27017
+    restart: always
+    environment:
+      - MONGO_INITDB_DATABASE=zeroTouchDB
+      - MONGO_INITDB_ROOT_USERNAME=root
+      - MONGO_INITDB_ROOT_PASSWORD=MyPassword
+      - DJANGO_SETTINGS_MODULE=myproject.settings
+      - SECRET_KEY=mysecretkey
+    volumes:
+      - mongodbdata:/data/db
+volumes:
+  mongodbdata:
