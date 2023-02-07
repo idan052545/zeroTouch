@@ -9,18 +9,11 @@ import HomePage from "./pages/home-page";
 import ProtectedRoute from "./pages/protected-route";
 import ConfigPage from "./pages/config-page";
 import UserPage from "./pages/user-page";
-import { useDispatch } from "react-redux";
-import { fetchStart } from "./redux/field/field-actions";
+
 import ShowPage from "./pages/show-page";
 //const API_URL = process.env.REACT_APP_API_URL;
 
 const App = () => {
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(fetchStart());
-  }, [dispatch]);
-
   return (
     <div>
       <Header />

@@ -3,8 +3,7 @@ import TerminalWrapper from "../../assets/wrappers/terminal-wrapper";
 import FormInput from "../form-input/form-input";
 import { BiSearch } from "react-icons/bi";
 import OSPFModal from "../ospf-modal/ospf-modal";
-import { useDispatch } from "react-redux";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 
 import { sendCommandStart } from "../../redux/router/router-actions";

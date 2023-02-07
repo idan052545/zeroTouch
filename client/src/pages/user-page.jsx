@@ -8,14 +8,21 @@ import {
   selectFieldsArray,
   selectIsFieldsLoaded,
 } from "../redux/field/field-selectors";
+import { useDispatch } from "react-redux";
+import { fetchStart } from "../redux/field/field-actions";
 //import WithSpinner from "../components/withSpinner/withSpinner";
 
 const UserPage = () => {
   const currentUser = useSelector(selectCurrentUser);
   const fields = useSelector(selectFieldsArray);
   let isLoading = !useSelector(selectIsFieldsLoaded);
+  const dispatch = useDispatch();
 
   useEffect(() => {}, [isLoading]);
+
+  useEffect(() => {
+    dispatch(fetchStart());
+  }, []);
 
   /* <button className="btn btn-close btn-reverse btn-block center">
   קנפג

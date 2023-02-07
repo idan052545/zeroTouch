@@ -38,9 +38,15 @@ from .serializers import FieldImageSerializer, FieldSerializer, RouterSerializer
 from djongo import database
 
 from .nornir_netmiko_actions import (
+    backup_paths_link_outage,
+    build_shortests_paths,
+    discover_asymmetric,
     generate_node_and_edge_dictionaries,
     get_interfaces_dict,
+    get_topology_diff,
     load_ospf,
+    print_diff,
+    router_shutdown,
     send_show_command,
     show_ip_int_br,
     get_all_ip,
@@ -54,6 +60,7 @@ from .nornir_netmiko_actions import (
     duplicates,
     ip_list,
     interfaces,
+    topology,
 )
 from collections import Counter
 
@@ -210,11 +217,60 @@ class RouterViewSet(ModelViewSet):
         if request.method == "GET":
             # interfaces= {}
             results1 = nr.run(task=get_interfaces_dict)
-            print_result(results1)
-
+            # print_result(results1)
             results = nr.run(task=generate_node_and_edge_dictionaries)
-            print_result(results)
-            return Response(json.dumps({}, indent=4), status=status.HTTP_200_OK)
+            # print_result(results)
+            return Response(json.dumps(topology, indent=4), status=status.HTTP_200_OK)
+
+    @action(detail=False, methods=["POST"], permission_classes=[IsAuthenticated])
+    def check_diff(self, request):
+        DataRequest = json.loads(request.body.decode("utf-8"))
+        results1 = nr.run(task=get_interfaces_dict)
+        results = nr.run(task=generate_node_and_edge_dictionaries)
+
+        DIFF_DATA = get_topology_diff(topology, DataRequest["topology"])
+        return Response(
+            json.dumps(print_diff(DIFF_DATA), indent=4), status=status.HTTP_200_OK
+        )
+
+    @action(detail=False, methods=["GET"], permission_classes=[IsAuthenticated])
+    def build_shortests_paths(self, request):
+
+        return Response(
+            json.dumps(
+                build_shortests_paths(
+                    request.GET.get("source", ""), request.GET.get("target", "")
+                ),
+                indent=4,
+            ),
+            status=status.HTTP_200_OK,
+        )
+
+    @action(detail=False, methods=["GET"], permission_classes=[IsAuthenticated])
+    def backup_paths_link_outage(self, request):
+        return Response(
+            json.dumps(
+                backup_paths_link_outage(
+                    request.GET.get("srcIP", ""), request.GET.get("trtIP", "")
+                ),
+                indent=4,
+            ),
+            status=status.HTTP_200_OK,
+        )
+
+    @action(detail=False, methods=["GET"], permission_classes=[IsAuthenticated])
+    def router_shutdown(self, request):
+        return Response(
+            json.dumps(router_shutdown(request.GET.get("shutRouter", "")), indent=4),
+            status=status.HTTP_200_OK,
+        )
+
+    @action(detail=False, methods=["GET"], permission_classes=[IsAuthenticated])
+    def discover_asymmetric(self, request):
+        return Response(
+            json.dumps(discover_asymmetric(), indent=4),
+            status=status.HTTP_200_OK,
+        )
 
     @action(detail=False, methods=["GET"], permission_classes=[IsAuthenticated])
     def send_show_command(self, request):

@@ -24,6 +24,8 @@ failed_list = []
 final_string = ""
 topology = {}
 interfaces = {}
+good_list = []
+bad_list = []
 
 
 LOCK = threading.Lock()
@@ -180,6 +182,28 @@ def ping_test(task, sorted_list):
             failed_list.append({"host": task.host, "ip_address": ip_address})
 
 
+def clean_ospf(task):
+    result = task.run(
+        task=netmiko_send_command,
+        name="Identifying Current OSPF",
+        command_string="show run | s ospf",
+    )
+    output = result.result
+    my_list = []
+    num = [int(s) for s in output.split() if s.isdigit()]
+    for x in num:
+        if x == 0:
+            continue
+        my_list.append("no router ospf " + str(x))
+    my_list = list(dict.fromkeys(my_list))
+    for commands in my_list:
+        task.run(
+            task=netmiko_send_config,
+            name="Removing Current OSPF",
+            config_commands=commands,
+        )
+
+
 def load_ospf(task, config):
     # data = task.run(task=load_yaml, file=f"../host_vars/{task.host}.yaml")
     # task.host["OSPF"] = data.result["OSPF"]
@@ -239,15 +263,19 @@ def generate_node_and_edge_dictionaries(task):
     edges = {}
 
     # extract the relevant information from the input dictionary
-    for vrf in parsed_output["vrf"].values():
-        for af in vrf["address_family"].values():
-            for instance in af["instance"].values():
-                for area in instance["areas"].values():
-                    for lsa in area["database"]["lsa_types"].values():
-                        for lsa_id, nodes_data in lsa["lsas"].items():
-                            for link_id, link_data in nodes_data["ospfv2"]["body"][
-                                "router"
-                            ]["links"].items():
+    for vrf in parsed_output.get("vrf", {}).values():
+        for af in vrf.get("address_family", {}).values():
+            for instance in af.get("instance", {}).values():
+                for area in instance.get("areas", {}).values():
+                    for lsa in area.get("database", {}).get("lsa_types", {}).values():
+                        for lsa_id, nodes_data in lsa.get("lsas", {}).items():
+                            for link_id, link_data in (
+                                nodes_data.get("ospfv2", {})
+                                .get("body", {})
+                                .get("router", {})
+                                .get("links", {})
+                                .items()
+                            ):
 
                                 nodes[link_id] = {}
 
@@ -332,6 +360,8 @@ def generate_node_and_edge_dictionaries(task):
                 },
             }
             new_dict.append(buffer_dict)
+
+    topology["nodes"] = new_dict
     print(json.dumps(new_dict, indent=4))
 
     new_dict_edges = []
@@ -367,6 +397,7 @@ def generate_node_and_edge_dictionaries(task):
             }
             new_dict_edges.append(buffer_dict)
 
+    topology["edges"] = new_dict_edges
     print(json.dumps(new_dict_edges, indent=4))
 
 
@@ -479,6 +510,357 @@ def has_converged(nodes):
         max_change = max(max_change, dx, dy)
 
     return max_change < 100
+
+
+def get_topology_diff(cached, current):
+    """
+    Topology diff analyzer and generator.
+    Accepts two valid topology dicts as an input.
+    Returns:
+    - dict with added and deleted nodes,
+    - dict with added and deleted links,
+    - dict with merged input topologies with extended
+      attributes for topology changes visualization
+    """
+    diff_nodes = {"added": [], "deleted": []}
+    diff_links = {"added": [], "deleted": []}
+    diff_merged_topology = {"nodes": [], "links": []}
+    # Parse links from topology dicts into the following format:
+    # (topology_link_obj, (source_hostname, source_port), (dest_hostname, dest_port))
+    cached_links = [
+        (x, ((x["source"], x["sourceHandle"]), (x["target"], x["targetHandle"])))
+        for x in cached["edges"]
+    ]
+    links = [
+        (x, ((x["source"], x["sourceHandle"]), (x["target"], x["targetHandle"])))
+        for x in current["edges"]
+    ]
+    # Parse nodes from topology dicts into the following format:
+    # (topology_node_obj, (hostname,))
+    # Some additional values might be added for comparison later on to the tuple above.
+    cached_nodes = [(x, (x["data"]["hostname"],)) for x in cached["nodes"]]
+    nodes = [(x, (x["data"]["hostname"],)) for x in current["nodes"]]
+    # Search for deleted and added hostnames.
+    node_id = 0
+    host_id_map = {}
+    for raw_data, node in nodes:
+        if node in [x[1] for x in cached_nodes]:
+            raw_data["id"] = node_id
+            host_id_map[raw_data["data"]["hostname"]] = node_id
+            raw_data["is_new"] = "no"
+            raw_data["is_dead"] = "no"
+            diff_merged_topology["nodes"].append(raw_data)
+            node_id += 1
+            continue
+        diff_nodes["added"].append(
+            {
+                "id": node_id,
+                "hostname": node[0],
+                "is_new": "yes",
+                "is_dead": "no",
+            }
+        )
+        host_id_map[raw_data["data"]["hostname"]] = node_id
+        diff_merged_topology["nodes"].append(raw_data)
+        node_id += 1
+    for raw_data, node in cached_nodes:
+        if node not in [x[1] for x in nodes]:
+            raw_data["id"] = node_id
+            host_id_map[raw_data["data"]["hostname"]] = node_id
+            raw_data["is_new"] = "no"
+            raw_data["is_dead"] = "yes"
+            diff_merged_topology["nodes"].append(raw_data)
+            node_id += 1
+            diff_nodes["deleted"].append(
+                {
+                    "id": node_id,
+                    "hostname": node[0],
+                    "is_new": "no",
+                    "is_dead": "yes",
+                }
+            )
+    # Search for added and deleted links.
+    for link, src_dst in links:
+        if src_dst not in [x[1] for x in cached_links]:
+            diff_links["added"].append(
+                {
+                    "source": src_dst[0][0],
+                    "source_port": src_dst[0][1],
+                    "destination": src_dst[1][0],
+                    "destination_port": src_dst[1][1],
+                }
+            )
+            link["source"] = host_id_map[link["source"]]
+            link["target"] = host_id_map[link["target"]]
+            diff_merged_topology["links"].append(link)
+    for link, src_dst in cached_links:
+        if src_dst not in [x[1] for x in links]:
+            diff_links["deleted"].append(
+                {
+                    "source": src_dst[0][0],
+                    "source_port": src_dst[0][1],
+                    "destination": src_dst[1][0],
+                    "destination_port": src_dst[1][1],
+                }
+            )
+            link["source"] = host_id_map[link["source"]]
+            link["target"] = host_id_map[link["target"]]
+            diff_merged_topology["links"].append(link)
+    return diff_nodes, diff_links, diff_merged_topology
+
+
+def topology_is_changed(diff_result):
+    diff_nodes, diff_links, *ignore = diff_result
+    changed = (
+        diff_nodes["added"]
+        or diff_nodes["deleted"]
+        or diff_links["added"]
+        or diff_links["deleted"]
+    )
+    if changed:
+        return True
+    return False
+
+
+def print_diff(diff_result):
+    """
+    Formatted get_topology_diff result
+    console print function.
+    """
+    diff_nodes, diff_links, *ignore = diff_result
+    output = ""
+    if not (
+        diff_nodes["added"]
+        or diff_nodes["deleted"]
+        or diff_links["added"]
+        or diff_links["deleted"]
+    ):
+        output += "No topology changes since last run."
+        return output
+    output += "Topology changes have been discovered:"
+    if diff_nodes["added"]:
+        output += (
+            "\n\n^^^^^^^^^^^^^^^^^^^^\nNew Network Devices:\nvvvvvvvvvvvvvvvvvvvv\n"
+        )
+        for node in diff_nodes["added"]:
+            output += f"Hostname: {node[0]}\n"
+    if diff_nodes["deleted"]:
+        output += "\n\n^^^^^^^^^^^^^^^^^^^^^^^^\nDeleted Network Devices:\nvvvvvvvvvvvvvvvvvvvvvvvv\n"
+        for node in diff_nodes["deleted"]:
+            output += f"Hostname: {node[0]}\n"
+    if diff_links["added"]:
+        output += "\n\n^^^^^^^^^^^^^^^^^^^^^^\nNew Interconnections:\nvvvvvvvvvvvvvvvvvvvvvv\n"
+        for src, dst in diff_links["added"]:
+            output += f"From {src[0]}({src[1]}) To {dst[0]}({dst[1]})\n"
+    if diff_links["deleted"]:
+        output += "\n\n^^^^^^^^^^^^^^^^^^^^^^^^^\nDeleted Interconnections:\nvvvvvvvvvvvvvvvvvvvvvvvvv\n"
+        for src, dst in diff_links["deleted"]:
+            output += f"From {src[0]}({src[1]}) To {dst[0]}({dst[1]})\n"
+    output += "\n"
+    return output
+
+
+def ospf_check(task):
+    get_brief = task.run(
+        task=netmiko_send_command,
+        command_string="show ip ospf int brief",
+        use_genie=True,
+    )
+    get_inter = task.run(
+        task=netmiko_send_command, command_string="show interfaces", use_genie=True
+    )
+    get_neighbor = task.run(
+        task=netmiko_send_command,
+        command_string="show ip ospf neighbor",
+        use_genie=True,
+    )
+    get_ospf = task.run(
+        task=netmiko_send_command, command_string="show ip ospf", use_genie=True
+    )
+    task.host["brief_facts"] = get_brief.result
+    task.host["inter_facts"] = get_inter.result
+    task.host["neigh_facts"] = get_neighbor.result
+    task.host["ospf_facts"] = get_ospf.result
+    outer = task.host["brief_facts"]["instance"]
+    interface_outer = task.host["inter_facts"]
+    neigh_outer = task.host["neigh_facts"]["interfaces"]
+    ip_ospf_outer = task.host["ospf_facts"]["vrf"]["default"]["address_family"]["ipv4"][
+        "instance"
+    ]
+    for inner in outer:
+        areas = outer[inner]["areas"]
+        ip_ospf_instance = ip_ospf_outer[inner]["areas"]
+        for area in areas:
+            split_area = area.split(".")
+            short_area = split_area[3]
+            interfaces = areas[area]["interfaces"]
+            area_type = ip_ospf_instance[area]["area_type"]
+            try:
+                for ospf_intf in interfaces:
+                    ipaddr = interfaces[ospf_intf]["ip_address"]
+                    mtu = interface_outer[ospf_intf]["mtu"]
+                    neigh_inner = neigh_outer[ospf_intf]["neighbors"]
+                    for key in neigh_inner:
+                        state = neigh_inner[key]["state"]
+                        neigh_ip = neigh_inner[key]["address"]
+                        good_output = (
+                            f"{task.host}: {ospf_intf}"
+                            f" is in Area {short_area} with IP: {ipaddr}"
+                            f" - neighboring {neigh_ip}"
+                        )
+
+                        bad_output = (
+                            f"ERROR: {task.host}:"
+                            f" {ospf_intf} (IP = {ipaddr} | MTU = {mtu})"
+                            f" is in Area {short_area} (Type: {area_type})"
+                            "- neighbor in DOWN/EXSTART!"
+                        )
+
+                        if "EXSTART" in state:
+                            bad_list.append(bad_output)
+                        elif "DOWN" in state:
+                            bad_list.append(bad_output)
+                        elif "2WAY" in state:
+                            good_list.append(good_output)
+                        elif "FULL" in state:
+                            good_list.append(good_output)
+
+            except KeyError:
+                bad_output = (
+                    f"ERROR: {task.host}:"
+                    f" {ospf_intf} (IP = {ipaddr} | MTU = {mtu})"
+                    f" is in Area {short_area} (Type: {area_type}) with no neighbor!"
+                )
+                bad_list.append(bad_output)
+
+
+def arrays_to_networkx(graph):
+    G = nx.Graph()
+    for node in graph["nodes"]:
+        G.add_node(
+            node["id"], type=node["type"], position=node["position"], data=node["data"]
+        )
+
+    for edge in graph["edges"]:
+        if edge["target"]:
+            G.add_edge(
+                edge["source"],
+                edge["target"],
+                id=edge["id"],
+                weight=edge["data"]["weight"],
+                data=edge["data"],
+            )
+
+    return G
+
+
+def build_shortests_paths(start, end):
+    G = arrays_to_networkx(topology)
+    shortest_path = nx.shortest_path(G, start, end)
+    return "Shortest path from node %s to node %s is: %s" % (start, end, shortest_path)
+
+
+def build_shortests_paths_all():
+    G = arrays_to_networkx(topology)
+    all_shortest_paths = nx.all_pairs_shortest_path(G)
+    result = ""
+    for start, end_to_path in all_shortest_paths:
+        for end, path in end_to_path.items():
+            result += "Shortest path from node %s to node %s is: %s\n" % (
+                start,
+                end,
+                path,
+            )
+    return result
+
+
+def backup_paths_link_outage(srcIP, tarIP):
+    G = arrays_to_networkx(topology)
+
+    # Find the edge with specified srcIP and tarIP
+    found = False
+    for u, v, d in G.edges(data=True):
+        if d["data"]["srcIP"] == srcIP and d["data"]["tgtIP"] == tarIP:
+            outage_edge = (u, v)
+            found = True
+            break
+    if not found:
+        raise ValueError(
+            "Edge with srcIP {} and tarIP {} not found".format(srcIP, tarIP)
+        )
+
+    # Remove the found edge from the graph
+    G.remove_edge(*outage_edge)
+
+    # Find the shortest path between the nodes that were connected by the removed edge
+    start, end = outage_edge
+    try:
+        shortest_path = nx.shortest_path(G, start, end, weight="weight")
+    except nx.NetworkXNoPath:
+        return f"There is no path between {start} and {end}"
+    # Check if there is a backup path between the two nodes
+    if len(shortest_path) > 1:
+        backup_path = shortest_path
+    else:
+        # If there is no direct backup path, find the next backup path or backup-of-backup path
+        backup_path = []
+        for node in shortest_path:
+            neighbors = list(G.neighbors(node))
+            if neighbors:
+                backup_node = neighbors[0]
+                backup_path.append((node, backup_node))
+
+    return "Backup path: " + str(backup_path)
+
+
+def router_shutdown(routerID):
+    G = arrays_to_networkx(topology)
+
+    # Remove the failed router from the graph
+    G.remove_node(routerID)
+
+    for node in topology["nodes"]:
+        if G.has_node(node["id"]):
+            source = node["id"]
+            break
+    reachable_nodes = nx.descendants(G, source=source)
+
+    # Check if the failed router is reachable or not
+    reachability = (
+        f"{routerID} is still reachable"
+        if routerID in reachable_nodes
+        else f"{routerID} is not reachable"
+    )
+
+    # Get all the node pairs with the new network topology
+    node_pairs = [(n1, n2) for n1, n2, _ in G.edges()]
+
+    # Check if there is a path between each node pair after the shutdown
+    paths = []
+    for n1, n2 in node_pairs:
+        try:
+            path = nx.shortest_path(G, n1, n2)
+            paths.append(f"There is a path between {n1} and {n2}: {path}")
+        except nx.NetworkXNoPath:
+            paths.append(f"There is no path between {n1} and {n2}")
+
+    return reachability + "\n".join(paths)
+
+
+def discover_asymmetric():
+
+    # Load graph G
+    G = arrays_to_networkx(topology)
+
+    # Find asymmetric paths
+    asymmetric_paths = []
+    for u, v in G.edges():
+        path_u_to_v = nx.shortest_path(G, u, v)
+        path_v_to_u = nx.shortest_path(G, v, u)
+        if len(path_u_to_v) != len(path_v_to_u):
+            asymmetric_paths.append((u, v))
+
+    return "Asymmetric paths: " + str(asymmetric_paths)
 
 
 # ///////////////////////////////////////////////////////////////////////////

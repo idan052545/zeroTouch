@@ -19,9 +19,12 @@ RUN apt-get update && apt-get install -y libffi-dev libssl-dev
 # Copy the application files into the image
 COPY . /app/
 
-# Set environment variables
-ENV DJANGO_SETTINGS_MODULE=myproject.settings
-ENV SECRET_KEY=mysecretkey
+# Include the patched autoreload.py file in the image
+COPY autoreload.py /usr/local/lib/python3.9/site-packages/django/utils/autoreload.py
+
+# # Set environment variables
+# ENV DJANGO_SETTINGS_MODULE=myproject.settings
+# ENV SECRET_KEY=mysecretkey
 
 # Expose port 8000 on the container
 EXPOSE 8000

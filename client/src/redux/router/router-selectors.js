@@ -26,3 +26,8 @@ export const selectShowResult = createSelector(
   [selectRouter],
   (router) => router.command_result
 );
+
+export const selectFuncResult = createSelector(
+  [selectRouter],
+  (router) => router.topology_func_result
+);
