@@ -124,7 +124,9 @@ export function* getShortestPathAsync({ payload }) {
       data = JSON.parse(response.data);
     });
 
-    yield put(getShortestPathSuccess(data));
+    yield put(
+      getShortestPathSuccess(data.replace(/\\n/g, "\n").replace(/\\t/g, "\t"))
+    );
   } catch (error) {
     yield put(getShortestPathFailure(error.message));
   }
@@ -139,7 +141,7 @@ export function* getBackupPathAsync({ payload }) {
         Authorization: "Basic aWRhbjA1MjU0NTppZGFuMTIzNDU2",
         "Content-Type": "application/json",
       },
-      params: { srcIP: payload["srcIPEdge"], trtIP: payload["trtIPEdge"] },
+      params: { srcIP: payload["srcIPEdge"], tgtIP: payload["tgtIPEdge"] },
     };
 
     let data;
@@ -148,7 +150,9 @@ export function* getBackupPathAsync({ payload }) {
       data = JSON.parse(response.data);
     });
 
-    yield put(getBackupPathSuccess(data));
+    yield put(
+      getBackupPathSuccess(data.replace(/\\n/g, "\n").replace(/\\t/g, "\t"))
+    );
   } catch (error) {
     yield put(getBackupPathFailure(error.message));
   }
@@ -171,7 +175,9 @@ export function* getAsymmetricPathAsync() {
       data = JSON.parse(response.data);
     });
 
-    yield put(getAsymmetricPathSuccess(data));
+    yield put(
+      getAsymmetricPathSuccess(data.replace(/\\n/g, "\n").replace(/\\t/g, "\t"))
+    );
   } catch (error) {
     yield put(getAsymmetricPathFailure(error.message));
   }
@@ -195,7 +201,9 @@ export function* routerShutdownAsync({ payload }) {
       data = JSON.parse(response.data);
     });
 
-    yield put(routerShutdownSuccess(data));
+    yield put(
+      routerShutdownSuccess(data.replace(/\\n/g, "\n").replace(/\\t/g, "\t"))
+    );
   } catch (error) {
     yield put(routerShutdownFailure(error.message));
   }
@@ -214,14 +222,15 @@ export function* compareStateAsync({ payload }) {
         topology: payload["currentTopology"],
       },
     };
-
     let data;
 
     yield axios(config).then((response) => {
       data = response.data;
     });
 
-    yield put(compareStateSuccess());
+    yield put(
+      compareStateSuccess(data.replace(/\\n/g, "\n").replace(/\\t/g, "\t").slice(1, -1))
+    );
   } catch (error) {
     yield put(compareStateFailure(error.message));
   }

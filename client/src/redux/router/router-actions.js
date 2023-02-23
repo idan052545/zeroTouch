@@ -57,7 +57,7 @@ export const compareStateFailure = (error) => ({
 
 export const compareStateStart = (currentTopology) => ({
   type: RouterActionTypes.COMPARE_STATE_START,
-  payload: currentTopology,
+  payload: { currentTopology },
 });
 
 export const getShortestPathStart = (source, target) => ({
@@ -75,9 +75,9 @@ export const getShortestPathFailure = (error) => ({
   payload: error,
 });
 
-export const getBackupPathStart = (srcIPEdge, tatIPEdge) => ({
+export const getBackupPathStart = (srcIPEdge, tgtIPEdge) => ({
   type: RouterActionTypes.GET_BACKUP_PATH_START,
-  payload: { srcIPEdge, tatIPEdge },
+  payload: { srcIPEdge, tgtIPEdge },
 });
 
 export const getBackupPathSuccess = (result) => ({
@@ -92,7 +92,7 @@ export const getBackupPathFailure = (error) => ({
 
 export const routerShutdownStart = (shutRouter) => ({
   type: RouterActionTypes.ROUTER_SHUTDOWN_START,
-  payload: shutRouter,
+  payload: { shutRouter },
 });
 
 export const routerShutdownSuccess = (result) => ({
@@ -106,15 +106,15 @@ export const routerShutdownFailure = (error) => ({
 });
 
 export const getAsymmetricPathStart = () => ({
-  type: RouterActionTypes.GET_ASYMMETRIC_PATH_START,
+  type: RouterActionTypes.GET_ASYMETRIC_PATH_START,
 });
 
 export const getAsymmetricPathSuccess = (result) => ({
-  type: RouterActionTypes.GET_ASYMMETRIC_PATH_SUCCESS,
+  type: RouterActionTypes.GET_ASYMETRIC_PATH_SUCCESS,
   payload: result,
 });
 
 export const getAsymmetricPathFailure = (error) => ({
-  type: RouterActionTypes.GET_ASYMMETRIC_PATH_FAILURE,
+  type: RouterActionTypes.GET_ASYMETRIC_PATH_FAILURE,
   payload: error,
 });

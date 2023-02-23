@@ -33,6 +33,7 @@ LOCK = threading.Lock()
 
 def send_show_command(task, command):
     try:
+
         result = task.run(
             task=netmiko_send_command,
             command_string=command,
@@ -735,7 +736,7 @@ def ospf_check(task):
 
 
 def arrays_to_networkx(graph):
-    G = nx.Graph()
+    G = nx.MultiGraph()
     for node in graph["nodes"]:
         G.add_node(
             node["id"], type=node["type"], position=node["position"], data=node["data"]
@@ -746,6 +747,7 @@ def arrays_to_networkx(graph):
             G.add_edge(
                 edge["source"],
                 edge["target"],
+                key=edge["id"],
                 id=edge["id"],
                 weight=edge["data"]["weight"],
                 data=edge["data"],
@@ -756,8 +758,16 @@ def arrays_to_networkx(graph):
 
 def build_shortests_paths(start, end):
     G = arrays_to_networkx(topology)
-    shortest_path = nx.shortest_path(G, start, end)
-    return "Shortest path from node %s to node %s is: %s" % (start, end, shortest_path)
+    shortest_path = nx.shortest_path(G, start, end, weight="weight")
+    shortest_path_hostnames = [
+        G.nodes[node]["data"]["hostname"] for node in shortest_path
+    ]
+
+    return "Shortest path from node %s to node %s is: %s" % (
+        G.nodes[start]["data"]["hostname"],
+        G.nodes[end]["data"]["hostname"],
+        shortest_path_hostnames,
+    )
 
 
 def build_shortests_paths_all():
@@ -766,20 +776,24 @@ def build_shortests_paths_all():
     result = ""
     for start, end_to_path in all_shortest_paths:
         for end, path in end_to_path.items():
+            shortest_path_hostnames = [
+                G.nodes[node]["data"]["hostname"] for node in path
+            ]
+
             result += "Shortest path from node %s to node %s is: %s\n" % (
-                start,
-                end,
-                path,
+                G.nodes[start]["data"]["hostname"],
+                G.nodes[end]["data"]["hostname"],
+                shortest_path_hostnames,
             )
     return result
 
 
 def backup_paths_link_outage(srcIP, tarIP):
     G = arrays_to_networkx(topology)
-
     # Find the edge with specified srcIP and tarIP
     found = False
     for u, v, d in G.edges(data=True):
+
         if d["data"]["srcIP"] == srcIP and d["data"]["tgtIP"] == tarIP:
             outage_edge = (u, v)
             found = True
@@ -810,11 +824,14 @@ def backup_paths_link_outage(srcIP, tarIP):
                 backup_node = neighbors[0]
                 backup_path.append((node, backup_node))
 
-    return "Backup path: " + str(backup_path)
+    backup_hostnames = [G.nodes[node]["data"]["hostname"] for node in backup_path]
+
+    return "Backup path: " + str(backup_hostnames)
 
 
 def router_shutdown(routerID):
     G = arrays_to_networkx(topology)
+    GTemp = arrays_to_networkx(topology)
 
     # Remove the failed router from the graph
     G.remove_node(routerID)
@@ -827,23 +844,28 @@ def router_shutdown(routerID):
 
     # Check if the failed router is reachable or not
     reachability = (
-        f"{routerID} is still reachable"
+        f"{GTemp.nodes[routerID]['data']['hostname']} is still reachable \n"
         if routerID in reachable_nodes
-        else f"{routerID} is not reachable"
+        else f"{GTemp.nodes[routerID]['data']['hostname']} is not reachable \n"
     )
 
     # Get all the node pairs with the new network topology
-    node_pairs = [(n1, n2) for n1, n2, _ in G.edges()]
+    node_pairs = [(n1, n2) for n1, n2 in G.edges()]
 
     # Check if there is a path between each node pair after the shutdown
     paths = []
     for n1, n2 in node_pairs:
         try:
-            path = nx.shortest_path(G, n1, n2)
-            paths.append(f"There is a path between {n1} and {n2}: {path}")
+            path = nx.shortest_path(G, n1, n2, weight="weight")
+            path = [G.nodes[node]["data"]["hostname"] for node in path]
+            paths.append(
+                f"There is a path between {GTemp.nodes[n1]['data']['hostname']} and {GTemp.nodes[n2]['data']['hostname']}: {path} \n"
+            )
         except nx.NetworkXNoPath:
-            paths.append(f"There is no path between {n1} and {n2}")
-
+            paths.append(
+                f"There is no path between {GTemp.nodes[n1]['data']['hostname']} and {GTemp.nodes[n2]['data']['hostname']} \n"
+            )
+    print(reachability + "\n".join(paths))
     return reachability + "\n".join(paths)
 
 

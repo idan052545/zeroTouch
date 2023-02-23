@@ -227,7 +227,7 @@ class RouterViewSet(ModelViewSet):
         DataRequest = json.loads(request.body.decode("utf-8"))
         results1 = nr.run(task=get_interfaces_dict)
         results = nr.run(task=generate_node_and_edge_dictionaries)
-
+        # DIFF_DATA = get_topology_diff(topology, DataRequest["topology"])
         DIFF_DATA = get_topology_diff(topology, DataRequest["topology"])
         return Response(
             json.dumps(print_diff(DIFF_DATA), indent=4), status=status.HTTP_200_OK
@@ -251,7 +251,7 @@ class RouterViewSet(ModelViewSet):
         return Response(
             json.dumps(
                 backup_paths_link_outage(
-                    request.GET.get("srcIP", ""), request.GET.get("trtIP", "")
+                    request.GET.get("srcIP", ""), request.GET.get("tgtIP", "")
                 ),
                 indent=4,
             ),

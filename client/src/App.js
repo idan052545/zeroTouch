@@ -9,8 +9,9 @@ import HomePage from "./pages/home-page";
 import ProtectedRoute from "./pages/protected-route";
 import ConfigPage from "./pages/config-page";
 import UserPage from "./pages/user-page";
-
 import ShowPage from "./pages/show-page";
+import ReactFlow, { ReactFlowProvider } from "reactflow";
+
 //const API_URL = process.env.REACT_APP_API_URL;
 
 const App = () => {
@@ -20,7 +21,14 @@ const App = () => {
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/questions" element={<QuestionsPage />} />
-        <Route path="/config" element={<ConfigPage />} />
+        <Route
+          path="/config"
+          element={
+            <ReactFlowProvider>
+              <ConfigPage />
+            </ReactFlowProvider>
+          }
+        />
         <Route path="/show" element={<ShowPage />} />
 
         <Route

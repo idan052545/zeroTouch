@@ -125,5 +125,85 @@ const TopologyWrapper = styled.div`
   .app-show-modal .app-modal {
     display: block;
   }
+
+  .result-modal-overlay {
+    display: block;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 10;
+  }
+
+  .result-modal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #fff;
+    border-radius: 5px;
+    padding: 30px;
+    box-shadow: 0 0 10px #999;
+    width: 50%;
+    text-align: center;
+    z-index: 12;
+  }
+
+  .result-title {
+    margin-bottom: 20px;
+    font-weight: bold;
+    font-size: 22px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+  }
+
+  .result-text {
+    font-size: 18px;
+    margin-bottom: 20px;
+    text-align: justify;
+    word-wrap: break-word;
+    position: relative;
+    display: block;
+    white-space: pre-wrap;
+  }
+
+  .result-close-btn {
+    padding: 10px 20px;
+    border-radius: 5px;
+    border: 1px solid #eee;
+    background-color: #ebf8ff;
+    font-weight: 700;
+    cursor: pointer;
+    margin-right: 20px;
+    margin-bottom: 20px;
+    width: 100px;
+    display: inline-block;
+  }
+
+  .result-close-btn:hover {
+    opacity: 0.9;
+  }
+
+  .app-copy-btn {
+    padding: 10px 20px;
+    border-radius: 5px;
+    border: 1px solid #eee;
+    background-color: #ebf8ff;
+    font-weight: 700;
+    cursor: pointer;
+    margin-right: 20px;
+    margin-bottom: 20px;
+  }
+
+  .app-copy-btn:hover {
+    opacity: 0.9;
+  }
+
+  .selected-edge {
+    stroke-width: 5px;
+    stroke: blue;
+  }
 `;
 export default TopologyWrapper;
